@@ -12,11 +12,14 @@ from components.empty_state import empty_state
 from components.placeholders import character_portrait, cover_band, sticker_art
 from components.rarity_chip import rarity_chip
 from models.catalog import Character, Sticker
-from models.draft import DraftCollection
-from models.rarity import RARITY_PATTERN
+from models.draft import SLOTS_PER_CHARACTER, DraftCollection
+from models.rarity import slot_rarity
 from repositories.errors import AppError
 from services.creator_service import character_id, sticker_id, sticker_number
 from views.errors_ui import show_error, show_info
+
+_TOTAL_STICKERS = 10 * SLOTS_PER_CHARACTER  # 150 per collection
+_SPICY_COLOR = "#ff7043"
 
 _THEME_COLORS = {
     "Purple": "#7c4dff",
@@ -53,9 +56,10 @@ def _draft_sticker(draft: DraftCollection, char_index: int, position: int) -> St
         character_id=character_id(draft.id, char_index),
         number=sticker_number(char_index, position),
         name=s.name or f"Sticker #{position}",
-        rarity=RARITY_PATTERN[position - 1],
+        rarity=slot_rarity(position),
         image=s.image,
         flavor_text=s.flavor_text,
+        spicy=s.spicy,
     )
 
 
@@ -111,9 +115,9 @@ def build_creator(page: ft.Page, ctx, nav) -> ft.Control:
             title=ft.Text(f"Publish {draft.name}?"),
             content=ft.Text(
                 f"'{draft.name}' ({draft.id}) will appear in Collections and its "
-                "100 stickers become collectible. Add packs for it in "
-                "data/packs.json to make them obtainable. Publishing can't be "
-                "undone from the app.",
+                "150 stickers (100 regular + 50 spicy) become collectible. Add "
+                "packs for it in data/packs.json to make them obtainable. "
+                "Publishing can't be undone from the app.",
                 size=14,
             ),
         )
@@ -233,6 +237,7 @@ def build_creator(page: ft.Page, ctx, nav) -> ft.Control:
         chars_done, chars_total = creator.collection_progress(draft)
         stickers_done = sum(creator.character_progress(c)[0] for c in draft.characters)
         complete = creator.collection_complete(draft)
+        total = _TOTAL_STICKERS
         return ft.Container(
             width=330, bgcolor=_CARD_BG, border_radius=14, border=_BORDER,
             clip_behavior=ft.ClipBehavior.ANTI_ALIAS,
@@ -251,11 +256,11 @@ def build_creator(page: ft.Page, ctx, nav) -> ft.Control:
                     ]),
                     ft.Text(
                         f"{chars_done} / {chars_total} characters · "
-                        f"{stickers_done} / 100 stickers named",
+                        f"{stickers_done} / {total} stickers named",
                         size=12, color=ft.Colors.GREY_400,
                     ),
                     ft.ProgressBar(
-                        value=stickers_done / 100,
+                        value=stickers_done / total,
                         color=draft.theme_color or "#7c4dff",
                         bgcolor=ft.Colors.with_opacity(0.1, ft.Colors.WHITE),
                     ),
@@ -265,7 +270,8 @@ def build_creator(page: ft.Page, ctx, nav) -> ft.Control:
                         ft.FilledButton(
                             "Publish", icon=ft.Icons.ROCKET_LAUNCH, disabled=not complete,
                             tooltip=None if complete else
-                            "Every character needs a name and 10 named stickers",
+                            "Every character needs a name and 15 named stickers "
+                            "(10 regular + 5 spicy)",
                             on_click=lambda e, d=draft: publish(d),
                         ),
                         ft.IconButton(ft.Icons.DELETE_OUTLINE, tooltip="Delete draft",
@@ -274,6 +280,105 @@ def build_creator(page: ft.Page, ctx, nav) -> ft.Control:
                 ], spacing=10)),
             ], spacing=0),
         )
+
+    # ---- catalog backup / restore / reset ----------------------------------
+
+    def on_catalog_save_result(e: ft.FilePickerResultEvent):
+        if not e.path:
+            return
+        try:
+            ctx.backup.export_catalog(e.path)
+        except AppError as exc:
+            show_error(page, str(exc))
+            return
+        show_info(page, f"Catalog backed up to {e.path}")
+
+    def on_catalog_open_result(e: ft.FilePickerResultEvent):
+        if not e.files:
+            return
+        path = e.files[0].path
+        if not path:
+            show_error(page, "Restore is only available in the desktop app.")
+            return
+        dialog = ft.AlertDialog(
+            modal=True,
+            title=ft.Text("Restore catalog from backup?"),
+            content=ft.Text(
+                "This replaces ALL current collections, characters, stickers, "
+                "and drafts with the backup's contents.", size=14,
+            ),
+        )
+
+        def do_restore(ev):
+            page.close(dialog)
+            try:
+                ctx.backup.import_catalog(path)
+            except AppError as exc:
+                show_error(page, str(exc))
+                return
+            nav.reload_catalog()
+            show_info(page, "Catalog restored.")
+            nav.go_creator()
+
+        dialog.actions = [
+            ft.TextButton("Cancel", on_click=lambda ev: page.close(dialog)),
+            ft.FilledButton("Restore", icon=ft.Icons.RESTORE, on_click=do_restore),
+        ]
+        page.open(dialog)
+
+    catalog_save_picker = ft.FilePicker(on_result=on_catalog_save_result)
+    catalog_open_picker = ft.FilePicker(on_result=on_catalog_open_result)
+    page.overlay.extend([catalog_save_picker, catalog_open_picker])
+
+    def backup_catalog(e):
+        catalog_save_picker.save_file(
+            dialog_title="Save catalog backup",
+            file_name="album-catalog-backup.json",
+            allowed_extensions=["json"],
+        )
+
+    def restore_catalog(e):
+        catalog_open_picker.pick_files(
+            dialog_title="Choose a catalog backup",
+            allow_multiple=False,
+            allowed_extensions=["json"],
+        )
+
+    def reset_catalog(e):
+        dialog = ft.AlertDialog(
+            modal=True,
+            title=ft.Text("Delete ALL collections?"),
+            content=ft.Text(
+                "Every collection, character, and sticker is removed — drafts "
+                "too. Your playthrough progress file is kept but will point at "
+                "stickers that no longer exist. Packs in data/packs.json are "
+                "not touched; remove entries for deleted collections by hand. "
+                "Consider a catalog backup first.",
+                size=14,
+            ),
+        )
+
+        def do_reset(ev):
+            page.close(dialog)
+            try:
+                ctx.backup.reset_catalog()
+            except AppError as exc:
+                show_error(page, str(exc))
+                return
+            nav.reload_catalog()
+            show_info(page, "Catalog reset: all collections deleted.")
+            nav.go_creator()
+
+        dialog.actions = [
+            ft.TextButton("Cancel", on_click=lambda ev: page.close(dialog)),
+            ft.FilledButton(
+                "Delete everything",
+                icon=ft.Icons.DELETE_FOREVER,
+                style=ft.ButtonStyle(bgcolor="#b71c1c", color=ft.Colors.WHITE),
+                on_click=do_reset,
+            ),
+        ]
+        page.open(dialog)
 
     def render_list():
         drafts = ctx.drafts.list_all()
@@ -293,11 +398,35 @@ def build_creator(page: ft.Page, ctx, nav) -> ft.Control:
             ]),
             ft.Text(
                 "Drafts live only here until they're complete: 10 characters, "
-                "each with 10 named stickers (3 common, 3 uncommon, 2 rare, "
-                "1 epic, 1 legendary — assigned by slot).",
+                "each with 15 named stickers — 10 regular (3 common, "
+                "3 uncommon, 2 rare, 1 epic, 1 legendary) plus 5 spicy, one "
+                "per rarity.",
                 size=13, color=ft.Colors.GREY_400,
             ),
             body,
+            ft.Container(
+                padding=ft.padding.only(top=8),
+                content=ft.Column([
+                    ft.Text("Catalog data", size=14, weight=ft.FontWeight.BOLD,
+                            color=ft.Colors.GREY_300),
+                    ft.Text(
+                        "The authored collections, characters, and stickers "
+                        "(not your playthrough progress).",
+                        size=12, color=ft.Colors.GREY_500,
+                    ),
+                    ft.Row([
+                        ft.FilledTonalButton("Backup catalog…", icon=ft.Icons.UPLOAD,
+                                             on_click=backup_catalog),
+                        ft.FilledTonalButton("Restore backup…", icon=ft.Icons.DOWNLOAD,
+                                             on_click=restore_catalog),
+                        ft.OutlinedButton(
+                            "Reset catalog…", icon=ft.Icons.DELETE_FOREVER,
+                            style=ft.ButtonStyle(color="#e57373"),
+                            on_click=reset_catalog,
+                        ),
+                    ], wrap=True, spacing=12),
+                ], spacing=8),
+            ),
         ], spacing=18, scroll=ft.ScrollMode.AUTO, expand=True)
         page.update()
 
@@ -305,7 +434,7 @@ def build_creator(page: ft.Page, ctx, nav) -> ft.Control:
 
     def sticker_dialog(draft: DraftCollection, char_index: int, position: int):
         s = draft.characters[char_index - 1].stickers[position - 1]
-        rarity = RARITY_PATTERN[position - 1]
+        rarity = slot_rarity(position)
         name_field = ft.TextField(label="Sticker name", value=s.name)
         flavor_field = ft.TextField(label="Flavor text", value=s.flavor_text,
                                     multiline=True, min_lines=2, max_lines=3)
@@ -313,12 +442,21 @@ def build_creator(page: ft.Page, ctx, nav) -> ft.Control:
             content=sticker_art(_draft_sticker(draft, char_index, position), 200, 200),
             alignment=ft.alignment.center,
         )
+        spicy_marker = (
+            [ft.Container(
+                content=ft.Text("SPICY 🌶️", size=10, weight=ft.FontWeight.BOLD,
+                                color="#101014"),
+                bgcolor=_SPICY_COLOR, border_radius=8,
+                padding=ft.padding.symmetric(horizontal=8, vertical=2),
+            )] if s.spicy else []
+        )
         dialog = ft.AlertDialog(
             modal=True,
-            title=ft.Text(f"Sticker #{sticker_number(char_index, position):02d}"),
+            title=ft.Text(f"Sticker #{sticker_number(char_index, position):02d}"
+                          + (" 🌶️" if s.spicy else "")),
             content=ft.Column([
                 preview,
-                ft.Row([rarity_chip(rarity),
+                ft.Row([*spicy_marker, rarity_chip(rarity),
                         ft.Text(sticker_id(draft.id, char_index, position),
                                 size=12, color=ft.Colors.GREY_500)],
                        alignment=ft.MainAxisAlignment.CENTER, spacing=10),
@@ -402,7 +540,8 @@ def build_creator(page: ft.Page, ctx, nav) -> ft.Control:
             publish_button.disabled = not complete
             publish_button.tooltip = (
                 None if complete
-                else "Every character needs a name and 10 named stickers"
+                else "Every character needs a name and 15 named stickers "
+                     "(10 regular + 5 spicy)"
             )
             page.update()
 
@@ -439,17 +578,22 @@ def build_creator(page: ft.Page, ctx, nav) -> ft.Control:
 
         def sticker_tile(position: int) -> ft.Control:
             s = character.stickers[position - 1]
-            rarity = RARITY_PATTERN[position - 1]
+            rarity = slot_rarity(position)
             named = creator.sticker_complete(s)
+            if s.spicy:
+                border_color = _SPICY_COLOR if named else "#5a3028"
+            else:
+                border_color = "#3a3a48" if named else "#26262f"
             return ft.Container(
                 width=148, height=150, bgcolor=_CARD_BG, border_radius=12,
-                border=ft.border.all(1, "#3a3a48" if named else "#26262f"),
+                border=ft.border.all(1, border_color),
                 padding=10, ink=True,
                 on_click=lambda e, p=position: sticker_dialog(draft, ci, p),
                 content=ft.Column([
                     ft.Row([
                         ft.Text(f"#{sticker_number(ci, position):02d}", size=12,
                                 weight=ft.FontWeight.BOLD, color=ft.Colors.GREY_400),
+                        *([ft.Text("🌶️", size=12)] if s.spicy else []),
                         ft.Container(expand=True),
                         ft.Icon(ft.Icons.IMAGE, size=14,
                                 color="#81c784" if s.image else ft.Colors.GREY_700,
@@ -462,7 +606,7 @@ def build_creator(page: ft.Page, ctx, nav) -> ft.Control:
                             expand=True),
                     rarity_chip(rarity, size=8),
                 ], spacing=6),
-                tooltip="Edit sticker",
+                tooltip="Edit spicy sticker" if s.spicy else "Edit sticker",
             )
 
         header = ft.Row([
@@ -505,7 +649,15 @@ def build_creator(page: ft.Page, ctx, nav) -> ft.Control:
             ft.Column([
                 ft.Row([sticker_tile(p) for p in range(1, 11)],
                        wrap=True, spacing=12, run_spacing=12),
-            ], scroll=ft.ScrollMode.AUTO, expand=True),
+                ft.Row([
+                    ft.Text("🌶️", size=16),
+                    ft.Text("Spicy stickers — required before publishing, "
+                            "hidden in the album unless enabled in Settings",
+                            size=12, weight=ft.FontWeight.BOLD, color=_SPICY_COLOR),
+                ], spacing=8),
+                ft.Row([sticker_tile(p) for p in range(11, SLOTS_PER_CHARACTER + 1)],
+                       wrap=True, spacing=12, run_spacing=12),
+            ], scroll=ft.ScrollMode.AUTO, expand=True, spacing=14),
         ], spacing=14, expand=True)
 
         root.content = ft.Column([

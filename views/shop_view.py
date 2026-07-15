@@ -52,7 +52,11 @@ def build_shop(page: ft.Page, ctx, nav) -> ft.Control:
             name, theme = collection.name, collection.theme_color
         except AppError:
             name, theme = pack.collection_id, None
-        cards.append(pack_card(pack, name, theme, on_open=lambda p=pack: confirm_and_open(p)))
+        cards.append(pack_card(
+            pack, name, theme,
+            on_open=lambda p=pack: confirm_and_open(p),
+            spicy_enabled=ctx.settings.state.spicy_enabled,
+        ))
 
     return ft.Column(
         [

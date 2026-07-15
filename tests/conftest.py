@@ -6,10 +6,11 @@ import pytest
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from models.catalog import Character, Collection, Pack, PackDistribution, Sticker
-from models.rarity import RARITY_PATTERN
+from models.rarity import RARITY_PATTERN, SPICY_RARITY_PATTERN
 from repositories.character_repository import CharacterRepository
 from repositories.collection_repository import CollectionRepository
 from repositories.pack_repository import PackRepository
+from repositories.settings_repository import SettingsRepository
 from repositories.sticker_repository import StickerRepository
 from repositories.user_state_repository import UserStateRepository
 from services.album_service import AlbumService
@@ -17,7 +18,7 @@ from services.pack_service import PackOpeningService
 
 
 def make_catalog():
-    """Tiny but complete test collection: 10 characters x 10 stickers."""
+    """Tiny but complete test collection: 10 characters x (10 + 5 spicy)."""
     collection = Collection(id="TST", name="Testland", description="test")
     characters = []
     stickers = []
@@ -34,6 +35,17 @@ def make_catalog():
                 name=f"Sticker {number}",
                 rarity=RARITY_PATTERN[pos - 1],
             ))
+        for spos in range(1, 6):
+            number = 100 + (ci - 1) * 5 + spos
+            stickers.append(Sticker(
+                id=f"TST_{number:03d}",
+                collection_id="TST",
+                character_id=cid,
+                number=number,
+                name=f"Spicy {number}",
+                rarity=SPICY_RARITY_PATTERN[spos - 1],
+                spicy=True,
+            ))
     packs = [
         Pack(
             id="TST_standard",
@@ -42,6 +54,7 @@ def make_catalog():
             description="",
             price=2500,
             foil_rate=0.0,
+            spicy_rate=0.0,
             distribution=(
                 PackDistribution(pool="TST", value="standard", quantity=4),
                 PackDistribution(pool="TST", value="rare+", quantity=1),
@@ -80,11 +93,17 @@ def album_service(repos, state_repo):
     return AlbumService(repos["stickers"], repos["characters"], state_repo)
 
 
-def make_pack_service(repos, state_repo, seed=42, packs=None):
+@pytest.fixture
+def settings_repo(tmp_path):
+    return SettingsRepository(tmp_path / "settings.json")
+
+
+def make_pack_service(repos, state_repo, seed=42, packs=None, settings=None):
     import random
     return PackOpeningService(
         repos["stickers"],
         packs or repos["packs"],
         state_repo,
+        settings=settings,
         rng=random.Random(seed),
     )

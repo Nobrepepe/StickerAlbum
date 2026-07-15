@@ -11,20 +11,26 @@ class CollectionRepository:
         self._ordered = list(collections)
 
     @classmethod
-    def from_file(cls, path: Path) -> "CollectionRepository":
-        raw = load_json_file(path)
+    def from_raw(cls, raw, source: str = "collections.json") -> "CollectionRepository":
         if not isinstance(raw, list):
-            raise CatalogError(f"{path.name}: expected a list of collections")
-        return cls([
-            Collection(
-                id=str(r["id"]),
-                name=str(r["name"]),
-                description=str(r.get("description", "")),
-                cover_image=r.get("cover_image"),
-                theme_color=r.get("theme_color"),
-            )
-            for r in raw
-        ])
+            raise CatalogError(f"{source}: expected a list of collections")
+        try:
+            return cls([
+                Collection(
+                    id=str(r["id"]),
+                    name=str(r["name"]),
+                    description=str(r.get("description", "")),
+                    cover_image=r.get("cover_image"),
+                    theme_color=r.get("theme_color"),
+                )
+                for r in raw
+            ])
+        except (KeyError, TypeError, ValueError, AttributeError) as exc:
+            raise CatalogError(f"{source}: malformed collection record: {exc}") from exc
+
+    @classmethod
+    def from_file(cls, path: Path) -> "CollectionRepository":
+        return cls.from_raw(load_json_file(path), path.name)
 
     def list_all(self) -> list[Collection]:
         return list(self._ordered)

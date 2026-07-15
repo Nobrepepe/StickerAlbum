@@ -32,6 +32,8 @@ def build_pack_result(page: ft.Page, ctx, nav, result: PackOpenResult) -> ft.Con
         ]
         if item.style == "foil":
             badges.append(_result_badge("FOIL ✨", _FOIL_GOLD))
+        if item.sticker.spicy:
+            badges.append(_result_badge("SPICY 🌶️", "#ff7043"))
         border = _FOIL_GOLD if item.style == "foil" else ft.Colors.with_opacity(
             0.8, RARITY_COLORS.get(item.sticker.rarity, "#9e9e9e"))
         return ft.Container(

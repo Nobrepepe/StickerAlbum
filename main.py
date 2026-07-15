@@ -15,6 +15,7 @@ from views.creator_view import build_creator
 from views.errors_ui import show_info
 from views.home_view import build_home
 from views.pack_result_view import build_pack_result
+from views.settings_view import build_settings
 from views.shop_view import build_shop
 
 logging.basicConfig(
@@ -25,7 +26,8 @@ log = logging.getLogger("album")
 
 
 class AppShell:
-    """Persistent navigation rail + swappable content area."""
+    """Persistent navigation rail + swappable content area. The rail is
+    rebuilt when settings change (the Creator tab is optional)."""
 
     def __init__(self, page: ft.Page, ctx: AppContext):
         self.page = page
@@ -36,66 +38,81 @@ class AppShell:
             label_type=ft.NavigationRailLabelType.ALL,
             min_width=84,
             group_alignment=-0.9,
-            destinations=[
-                ft.NavigationRailDestination(
-                    icon=ft.Icons.HOME_OUTLINED, selected_icon=ft.Icons.HOME, label="Home"
-                ),
-                ft.NavigationRailDestination(
-                    icon=ft.Icons.COLLECTIONS_BOOKMARK_OUTLINED,
-                    selected_icon=ft.Icons.COLLECTIONS_BOOKMARK,
-                    label="Collections",
-                ),
-                ft.NavigationRailDestination(
-                    icon=ft.Icons.STOREFRONT_OUTLINED,
-                    selected_icon=ft.Icons.STOREFRONT,
-                    label="Shop",
-                ),
-                ft.NavigationRailDestination(
-                    icon=ft.Icons.DESIGN_SERVICES_OUTLINED,
-                    selected_icon=ft.Icons.DESIGN_SERVICES,
-                    label="Creator",
-                ),
-            ],
             on_change=self._on_rail_change,
         )
+        self._entries: list[tuple] = []
+        self._build_rail()
         self.root = ft.Row(
             [self.rail, ft.VerticalDivider(width=1), self.content],
             expand=True,
             spacing=0,
         )
 
-    def _on_rail_change(self, e):
-        [self.go_home, self.go_collections, self.go_shop, self.go_creator][
-            e.control.selected_index
-        ]()
+    def _build_rail(self):
+        entries = [
+            ("home", ft.Icons.HOME_OUTLINED, ft.Icons.HOME, "Home", self.go_home),
+            ("collections", ft.Icons.COLLECTIONS_BOOKMARK_OUTLINED,
+             ft.Icons.COLLECTIONS_BOOKMARK, "Collections", self.go_collections),
+            ("shop", ft.Icons.STOREFRONT_OUTLINED, ft.Icons.STOREFRONT, "Shop",
+             self.go_shop),
+        ]
+        if self.ctx.settings.state.creator_enabled:
+            entries.append(("creator", ft.Icons.DESIGN_SERVICES_OUTLINED,
+                            ft.Icons.DESIGN_SERVICES, "Creator", self.go_creator))
+        entries.append(("settings", ft.Icons.SETTINGS_OUTLINED, ft.Icons.SETTINGS,
+                        "Settings", self.go_settings))
+        self._entries = entries
+        self.rail.destinations = [
+            ft.NavigationRailDestination(icon=icon, selected_icon=sel, label=label)
+            for _, icon, sel, label, _ in entries
+        ]
 
-    def _set(self, index: int, control: ft.Control):
-        self.rail.selected_index = index
+    def rebuild_rail(self):
+        """Called after a settings change; keeps the current selection valid."""
+        current = self._entries[self.rail.selected_index][0] if self._entries else "home"
+        self._build_rail()
+        self.rail.selected_index = self._index_of(current)
+        self.page.update()
+
+    def _index_of(self, key: str) -> int:
+        for i, entry in enumerate(self._entries):
+            if entry[0] == key:
+                return i
+        return 0
+
+    def _on_rail_change(self, e):
+        self._entries[e.control.selected_index][4]()
+
+    def _set(self, key: str, control: ft.Control):
+        self.rail.selected_index = self._index_of(key)
         self.content.content = control
         self.page.update()
 
     def go_home(self):
-        self._set(0, build_home(self.page, self.ctx, self))
+        self._set("home", build_home(self.page, self.ctx, self))
 
     def go_collections(self):
-        self._set(1, build_collections(self.page, self.ctx, self))
+        self._set("collections", build_collections(self.page, self.ctx, self))
 
     def go_album(self, collection_id: str):
         self.ctx.state.set_last_collection(collection_id)
-        self._set(1, build_album(self.page, self.ctx, self, collection_id))
+        self._set("collections", build_album(self.page, self.ctx, self, collection_id))
 
     def go_shop(self):
-        self._set(2, build_shop(self.page, self.ctx, self))
+        self._set("shop", build_shop(self.page, self.ctx, self))
 
     def go_pack_result(self, result):
-        self._set(2, build_pack_result(self.page, self.ctx, self, result))
+        self._set("shop", build_pack_result(self.page, self.ctx, self, result))
 
     def go_creator(self):
-        self._set(3, build_creator(self.page, self.ctx, self))
+        self._set("creator", build_creator(self.page, self.ctx, self))
+
+    def go_settings(self):
+        self._set("settings", build_settings(self.page, self.ctx, self))
 
     def reload_catalog(self):
-        """Rebuild repositories/services after publishing a collection so the
-        rest of the app sees it without a restart."""
+        """Rebuild repositories/services after the catalog changed (publish,
+        restore, reset) so the rest of the app sees it without a restart."""
         self.ctx = AppContext.build()
 
 

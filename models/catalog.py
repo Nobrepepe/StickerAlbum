@@ -31,6 +31,7 @@ class Sticker:
     rarity: str
     image: str | None = None
     flavor_text: str = ""
+    spicy: bool = False  # hidden bonus sticker, only visible when enabled
 
 
 @dataclass(frozen=True)
@@ -50,6 +51,7 @@ class Pack:
     foil_rate: float
     distribution: tuple[PackDistribution, ...]
     image: str | None = None
+    spicy_rate: float = 0.2  # chance of bonus spicy drops (chained until a miss)
 
     @property
     def sticker_count(self) -> int:

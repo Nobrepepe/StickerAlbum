@@ -61,9 +61,16 @@ class AlbumService:
         return previous is None
 
     # ---- progress --------------------------------------------------------
+    # Album completion is always measured on regular stickers only; spicy
+    # stickers are a hidden bonus and never gate completion.
 
     def character_progress(self, character_id: str) -> tuple[int, int]:
-        stickers = self._stickers.list_by_character(character_id)
+        stickers = self._stickers.list_by_character(character_id, spicy=False)
+        applied = sum(1 for s in stickers if self._state.get_placement(s.id))
+        return applied, len(stickers)
+
+    def spicy_character_progress(self, character_id: str) -> tuple[int, int]:
+        stickers = self._stickers.list_by_character(character_id, spicy=True)
         applied = sum(1 for s in stickers if self._state.get_placement(s.id))
         return applied, len(stickers)
 
@@ -72,7 +79,7 @@ class AlbumService:
         return total > 0 and applied == total
 
     def collection_progress(self, collection_id: str) -> tuple[int, int]:
-        stickers = self._stickers.list_by_collection(collection_id)
+        stickers = self._stickers.list_by_collection(collection_id, spicy=False)
         applied = sum(1 for s in stickers if self._state.get_placement(s.id))
         return applied, len(stickers)
 

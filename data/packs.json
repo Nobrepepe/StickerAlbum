@@ -5,6 +5,7 @@
     "description": "5 random Alturas Heights stickers: 4 standard, 1 guaranteed rare or better.",
     "price": 2500,
     "foil_rate": 0.1,
+    "spicy_rate": 0.2,
     "image": "packs/HGT_standard.png",
     "distribution": [
       {
@@ -25,6 +26,7 @@
     "description": "5 Alturas Heights stickers with a guaranteed epic or legendary.",
     "price": 5000,
     "foil_rate": 0.25,
+    "spicy_rate": 0.2,
     "image": "packs/HGT_premium.png",
     "distribution": [
       {
@@ -50,6 +52,7 @@
     "description": "5 random Tidelow Reef stickers: 4 standard, 1 guaranteed rare or better.",
     "price": 2500,
     "foil_rate": 0.1,
+    "spicy_rate": 0.2,
     "image": "packs/TDL_standard.png",
     "distribution": [
       {
@@ -70,6 +73,7 @@
     "description": "5 Tidelow Reef stickers with a guaranteed epic or legendary.",
     "price": 5000,
     "foil_rate": 0.25,
+    "spicy_rate": 0.2,
     "image": "packs/TDL_premium.png",
     "distribution": [
       {
@@ -95,6 +99,7 @@
     "description": "8 completely random Tidelow Reef stickers of any rarity.",
     "price": 3500,
     "foil_rate": 0.15,
+    "spicy_rate": 0.2,
     "image": "packs/TDL_wave.png",
     "distribution": [
       {

@@ -29,32 +29,42 @@ class StickerRepository:
             group.sort(key=lambda s: s.number)
 
     @classmethod
-    def from_file(cls, path: Path) -> "StickerRepository":
-        raw = load_json_file(path)
+    def from_raw(cls, raw, source: str = "stickers.json") -> "StickerRepository":
         if not isinstance(raw, list):
-            raise CatalogError(f"{path.name}: expected a list of stickers")
-        return cls([
-            Sticker(
-                id=str(r["id"]),
-                collection_id=str(r["collection_id"]),
-                character_id=str(r["character_id"]),
-                number=int(r["number"]),
-                name=str(r["name"]),
-                rarity=str(r["rarity"]),
-                image=r.get("image"),
-                flavor_text=str(r.get("flavor_text", "")),
-            )
-            for r in raw
-        ])
+            raise CatalogError(f"{source}: expected a list of stickers")
+        try:
+            return cls([
+                Sticker(
+                    id=str(r["id"]),
+                    collection_id=str(r["collection_id"]),
+                    character_id=str(r["character_id"]),
+                    number=int(r["number"]),
+                    name=str(r["name"]),
+                    rarity=str(r["rarity"]),
+                    image=r.get("image"),
+                    flavor_text=str(r.get("flavor_text", "")),
+                    spicy=bool(r.get("spicy", False)),
+                )
+                for r in raw
+            ])
+        except (KeyError, TypeError, ValueError, AttributeError) as exc:
+            raise CatalogError(f"{source}: malformed sticker record: {exc}") from exc
+
+    @classmethod
+    def from_file(cls, path: Path) -> "StickerRepository":
+        return cls.from_raw(load_json_file(path), path.name)
 
     def all_ids(self) -> set[str]:
         return set(self._by_id)
 
-    def list_by_collection(self, collection_id: str) -> list[Sticker]:
-        return list(self._by_collection.get(collection_id, []))
+    def list_by_collection(self, collection_id: str, *, spicy: bool | None = None) -> list[Sticker]:
+        """spicy=None returns all; True/False filters to spicy/regular only."""
+        stickers = self._by_collection.get(collection_id, [])
+        return [s for s in stickers if spicy is None or s.spicy == spicy]
 
-    def list_by_character(self, character_id: str) -> list[Sticker]:
-        return list(self._by_character.get(character_id, []))
+    def list_by_character(self, character_id: str, *, spicy: bool | None = None) -> list[Sticker]:
+        stickers = self._by_character.get(character_id, [])
+        return [s for s in stickers if spicy is None or s.spicy == spicy]
 
     def list_by_rarity(self, collection_id: str, rarity: str) -> list[Sticker]:
         return [s for s in self._by_collection.get(collection_id, []) if s.rarity == rarity]

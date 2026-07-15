@@ -89,7 +89,8 @@ class DraftRepository:
             dc.portrait_image = c.get("portrait_image")
             for s in c.get("stickers", []) or []:
                 pos = s.get("position")
-                if not isinstance(pos, int) or not 1 <= pos <= 10:
+                # Old drafts had 10 slots; the fresh skeleton pads to 15.
+                if not isinstance(pos, int) or not 1 <= pos <= 15:
                     self._warn(f"Draft {code}: ignored sticker with bad position {pos!r}")
                     continue
                 ds = dc.stickers[pos - 1]

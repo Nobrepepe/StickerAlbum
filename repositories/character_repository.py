@@ -13,20 +13,26 @@ class CharacterRepository:
             self._by_collection.setdefault(c.collection_id, []).append(c)
 
     @classmethod
-    def from_file(cls, path: Path) -> "CharacterRepository":
-        raw = load_json_file(path)
+    def from_raw(cls, raw, source: str = "characters.json") -> "CharacterRepository":
         if not isinstance(raw, list):
-            raise CatalogError(f"{path.name}: expected a list of characters")
-        return cls([
-            Character(
-                id=str(r["id"]),
-                collection_id=str(r["collection_id"]),
-                name=str(r["name"]),
-                description=str(r.get("description", "")),
-                portrait_image=r.get("portrait_image"),
-            )
-            for r in raw
-        ])
+            raise CatalogError(f"{source}: expected a list of characters")
+        try:
+            return cls([
+                Character(
+                    id=str(r["id"]),
+                    collection_id=str(r["collection_id"]),
+                    name=str(r["name"]),
+                    description=str(r.get("description", "")),
+                    portrait_image=r.get("portrait_image"),
+                )
+                for r in raw
+            ])
+        except (KeyError, TypeError, ValueError, AttributeError) as exc:
+            raise CatalogError(f"{source}: malformed character record: {exc}") from exc
+
+    @classmethod
+    def from_file(cls, path: Path) -> "CharacterRepository":
+        return cls.from_raw(load_json_file(path), path.name)
 
     def list_all(self) -> list[Character]:
         return list(self._by_id.values())

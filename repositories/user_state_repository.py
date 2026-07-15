@@ -97,11 +97,26 @@ class UserStateRepository:
         log.warning("%s", msg)
         self.load_warnings.append(msg)
 
+    # ---- backup / restore ------------------------------------------------
+
+    def import_data(self, raw: dict) -> list[str]:
+        """Replace the current state with imported data (validated the same
+        way as a normal load), persist it, and return any warnings."""
+        if not isinstance(raw, dict):
+            raise ValueError("progress backup root is not an object")
+        before = len(self.load_warnings)
+        self.state = self._parse(raw)
+        self.save()
+        return self.load_warnings[before:]
+
+    def reset(self) -> None:
+        self.state = UserState()
+        self.save()
+
     # ---- saving --------------------------------------------------------
 
-    def save(self) -> None:
-        """Atomic write: temp file in the same directory, then os.replace."""
-        payload = {
+    def to_payload(self) -> dict:
+        return {
             "schema_version": self.state.schema_version,
             "favorite_character_id": self.state.favorite_character_id,
             "total_saved": self.state.total_saved,
@@ -115,8 +130,11 @@ class UserStateRepository:
                 for sid, style in sorted(self.state.placements.items())
             ],
         }
+
+    def save(self) -> None:
+        """Atomic write: temp file in the same directory, then os.replace."""
         try:
-            atomic_write_json(self._path, payload)
+            atomic_write_json(self._path, self.to_payload())
         except OSError as exc:
             raise StateSaveError(f"Could not save your progress: {exc}") from exc
 

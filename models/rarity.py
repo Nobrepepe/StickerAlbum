@@ -40,6 +40,20 @@ RARITY_PATTERN: tuple[str, ...] = (
     "legendary",
 )
 
+# Spicy stickers: 5 hidden bonus stickers per character, one per rarity.
+# They never count toward the 10/100 album completion.
+SPICY_PER_CHARACTER = 5
+SPICY_RARITY_PATTERN: tuple[str, ...] = ("common", "uncommon", "rare", "epic", "legendary")
+
+
+def slot_rarity(position: int) -> str:
+    """Rarity for a character slot: 1-10 are regular, 11-15 are spicy."""
+    if 1 <= position <= 10:
+        return RARITY_PATTERN[position - 1]
+    if 11 <= position <= 15:
+        return SPICY_RARITY_PATTERN[position - 11]
+    raise ValueError(f"Invalid slot position: {position}")
+
 # Pack distribution selectors -> set of eligible rarities.
 SELECTORS: dict[str, set[str]] = {
     "common": {"common"},

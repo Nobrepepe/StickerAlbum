@@ -9,6 +9,7 @@ def build_album(page: ft.Page, ctx, nav, collection_id: str) -> ft.Control:
     collection = ctx.collections.get(collection_id)
     characters = ctx.characters.list_by_collection(collection_id)
     theme = collection.theme_color or "#7c4dff"
+    spicy_on = ctx.settings.state.spicy_enabled
 
     selected = {"index": 0}
 
@@ -16,6 +17,7 @@ def build_album(page: ft.Page, ctx, nav, collection_id: str) -> ft.Control:
     char_list = ft.Column(spacing=4, scroll=ft.ScrollMode.AUTO, expand=True)
     header = ft.Container()
     grid = ft.Row(wrap=True, spacing=12, run_spacing=12)
+    spicy_section = ft.Column(spacing=10, visible=False)
     collection_progress_text = ft.Text(size=13, color=ft.Colors.GREY_300)
     collection_progress_bar = ft.ProgressBar(
         color=theme, bgcolor=ft.Colors.with_opacity(0.1, ft.Colors.WHITE), width=220
@@ -92,8 +94,34 @@ def build_album(page: ft.Page, ctx, nav, collection_id: str) -> ft.Control:
         )
         grid.controls = [
             build_sticker_slot(ctx.album, s, on_slot_tap)
-            for s in ctx.stickers.list_by_character(char.id)
+            for s in ctx.stickers.list_by_character(char.id, spicy=False)
         ]
+        spicy_stickers = (
+            ctx.stickers.list_by_character(char.id, spicy=True) if spicy_on else []
+        )
+        spicy_section.visible = bool(spicy_stickers)
+        if spicy_stickers:
+            s_applied, s_total = ctx.album.spicy_character_progress(char.id)
+            spicy_section.controls = [
+                ft.Row(
+                    [
+                        ft.Text("🌶️", size=18),
+                        ft.Text("Spicy stickers", size=14, weight=ft.FontWeight.BOLD,
+                                color="#ff7043"),
+                        ft.Text(f"{s_applied} / {s_total}", size=12,
+                                color=ft.Colors.GREY_400),
+                        ft.Container(
+                            content=ft.Divider(height=1, color="#3a2a26"), expand=True
+                        ),
+                    ],
+                    spacing=10,
+                    vertical_alignment=ft.CrossAxisAlignment.CENTER,
+                ),
+                ft.Row(
+                    [build_sticker_slot(ctx.album, s, on_slot_tap) for s in spicy_stickers],
+                    wrap=True, spacing=12, run_spacing=12,
+                ),
+            ]
         char_list.controls = [char_tile(i, c) for i, c in enumerate(characters)]
         col_applied, col_total = ctx.album.collection_progress(collection_id)
         collection_progress_text.value = f"{col_applied} / {col_total} stickers"
@@ -133,7 +161,9 @@ def build_album(page: ft.Page, ctx, nav, collection_id: str) -> ft.Control:
                         content=char_list,
                     ),
                     ft.Column(
-                        [header, ft.Column([grid], scroll=ft.ScrollMode.AUTO, expand=True)],
+                        [header,
+                         ft.Column([grid, spicy_section],
+                                   scroll=ft.ScrollMode.AUTO, expand=True, spacing=16)],
                         spacing=16,
                         expand=True,
                     ),

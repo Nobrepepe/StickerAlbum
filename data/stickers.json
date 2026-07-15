@@ -7,7 +7,8 @@
     "name": "Aria — First Steps",
     "rarity": "common",
     "image": "stickers/HGT_001.png",
-    "flavor_text": "Where every story begins."
+    "flavor_text": "Where every story begins.",
+    "spicy": false
   },
   {
     "id": "HGT_002",
@@ -17,7 +18,8 @@
     "name": "Aria — Daily Ritual",
     "rarity": "common",
     "image": "stickers/HGT_002.png",
-    "flavor_text": "The small habit that keeps them going."
+    "flavor_text": "The small habit that keeps them going.",
+    "spicy": false
   },
   {
     "id": "HGT_003",
@@ -27,7 +29,8 @@
     "name": "Aria — Quiet Moment",
     "rarity": "common",
     "image": "stickers/HGT_003.png",
-    "flavor_text": "Even heroes need to breathe."
+    "flavor_text": "Even heroes need to breathe.",
+    "spicy": false
   },
   {
     "id": "HGT_004",
@@ -37,7 +40,8 @@
     "name": "Aria — Tools of the Trade",
     "rarity": "uncommon",
     "image": "stickers/HGT_004.png",
-    "flavor_text": "Never leaves home without them."
+    "flavor_text": "Never leaves home without them.",
+    "spicy": false
   },
   {
     "id": "HGT_005",
@@ -47,7 +51,8 @@
     "name": "Aria — Among Friends",
     "rarity": "uncommon",
     "image": "stickers/HGT_005.png",
-    "flavor_text": "Stronger together, always."
+    "flavor_text": "Stronger together, always.",
+    "spicy": false
   },
   {
     "id": "HGT_006",
@@ -57,7 +62,8 @@
     "name": "Aria — Against the Wind",
     "rarity": "uncommon",
     "image": "stickers/HGT_006.png",
-    "flavor_text": "The day everything pushed back."
+    "flavor_text": "The day everything pushed back.",
+    "spicy": false
   },
   {
     "id": "HGT_007",
@@ -67,7 +73,8 @@
     "name": "Aria — Signature Move",
     "rarity": "rare",
     "image": "stickers/HGT_007.png",
-    "flavor_text": "You'd know it anywhere."
+    "flavor_text": "You'd know it anywhere.",
+    "spicy": false
   },
   {
     "id": "HGT_008",
@@ -77,7 +84,8 @@
     "name": "Aria — Night Shift",
     "rarity": "rare",
     "image": "stickers/HGT_008.png",
-    "flavor_text": "The city looks different after dark."
+    "flavor_text": "The city looks different after dark.",
+    "spicy": false
   },
   {
     "id": "HGT_009",
@@ -87,7 +95,8 @@
     "name": "Aria — Moment of Glory",
     "rarity": "epic",
     "image": "stickers/HGT_009.png",
-    "flavor_text": "The one everybody still talks about."
+    "flavor_text": "The one everybody still talks about.",
+    "spicy": false
   },
   {
     "id": "HGT_010",
@@ -97,7 +106,63 @@
     "name": "Aria — Golden Portrait",
     "rarity": "legendary",
     "image": "stickers/HGT_010.png",
-    "flavor_text": "A legend, captured in gold."
+    "flavor_text": "A legend, captured in gold.",
+    "spicy": false
+  },
+  {
+    "id": "HGT_101",
+    "collection_id": "HGT",
+    "character_id": "HGT_C01",
+    "number": 101,
+    "name": "Aria — Secret Side",
+    "rarity": "common",
+    "image": "stickers/HGT_101.png",
+    "flavor_text": "Not everyone gets to see this.",
+    "spicy": true
+  },
+  {
+    "id": "HGT_102",
+    "collection_id": "HGT",
+    "character_id": "HGT_C01",
+    "number": 102,
+    "name": "Aria — After Hours",
+    "rarity": "uncommon",
+    "image": "stickers/HGT_102.png",
+    "flavor_text": "When the day job ends, the real story begins.",
+    "spicy": true
+  },
+  {
+    "id": "HGT_103",
+    "collection_id": "HGT",
+    "character_id": "HGT_C01",
+    "number": 103,
+    "name": "Aria — Guilty Pleasure",
+    "rarity": "rare",
+    "image": "stickers/HGT_103.png",
+    "flavor_text": "Everybody has one. Theirs is showing.",
+    "spicy": true
+  },
+  {
+    "id": "HGT_104",
+    "collection_id": "HGT",
+    "character_id": "HGT_C01",
+    "number": 104,
+    "name": "Aria — Masquerade",
+    "rarity": "epic",
+    "image": "stickers/HGT_104.png",
+    "flavor_text": "Behind the mask, another mask.",
+    "spicy": true
+  },
+  {
+    "id": "HGT_105",
+    "collection_id": "HGT",
+    "character_id": "HGT_C01",
+    "number": 105,
+    "name": "Aria — Heart of Fire",
+    "rarity": "legendary",
+    "image": "stickers/HGT_105.png",
+    "flavor_text": "Too hot for the regular album pages.",
+    "spicy": true
   },
   {
     "id": "HGT_011",
@@ -107,7 +172,8 @@
     "name": "Bruno — First Steps",
     "rarity": "common",
     "image": "stickers/HGT_011.png",
-    "flavor_text": "Where every story begins."
+    "flavor_text": "Where every story begins.",
+    "spicy": false
   },
   {
     "id": "HGT_012",
@@ -117,7 +183,8 @@
     "name": "Bruno — Daily Ritual",
     "rarity": "common",
     "image": "stickers/HGT_012.png",
-    "flavor_text": "The small habit that keeps them going."
+    "flavor_text": "The small habit that keeps them going.",
+    "spicy": false
   },
   {
     "id": "HGT_013",
@@ -127,7 +194,8 @@
     "name": "Bruno — Quiet Moment",
     "rarity": "common",
     "image": "stickers/HGT_013.png",
-    "flavor_text": "Even heroes need to breathe."
+    "flavor_text": "Even heroes need to breathe.",
+    "spicy": false
   },
   {
     "id": "HGT_014",
@@ -137,7 +205,8 @@
     "name": "Bruno — Tools of the Trade",
     "rarity": "uncommon",
     "image": "stickers/HGT_014.png",
-    "flavor_text": "Never leaves home without them."
+    "flavor_text": "Never leaves home without them.",
+    "spicy": false
   },
   {
     "id": "HGT_015",
@@ -147,7 +216,8 @@
     "name": "Bruno — Among Friends",
     "rarity": "uncommon",
     "image": "stickers/HGT_015.png",
-    "flavor_text": "Stronger together, always."
+    "flavor_text": "Stronger together, always.",
+    "spicy": false
   },
   {
     "id": "HGT_016",
@@ -157,7 +227,8 @@
     "name": "Bruno — Against the Wind",
     "rarity": "uncommon",
     "image": "stickers/HGT_016.png",
-    "flavor_text": "The day everything pushed back."
+    "flavor_text": "The day everything pushed back.",
+    "spicy": false
   },
   {
     "id": "HGT_017",
@@ -167,7 +238,8 @@
     "name": "Bruno — Signature Move",
     "rarity": "rare",
     "image": "stickers/HGT_017.png",
-    "flavor_text": "You'd know it anywhere."
+    "flavor_text": "You'd know it anywhere.",
+    "spicy": false
   },
   {
     "id": "HGT_018",
@@ -177,7 +249,8 @@
     "name": "Bruno — Night Shift",
     "rarity": "rare",
     "image": "stickers/HGT_018.png",
-    "flavor_text": "The city looks different after dark."
+    "flavor_text": "The city looks different after dark.",
+    "spicy": false
   },
   {
     "id": "HGT_019",
@@ -187,7 +260,8 @@
     "name": "Bruno — Moment of Glory",
     "rarity": "epic",
     "image": "stickers/HGT_019.png",
-    "flavor_text": "The one everybody still talks about."
+    "flavor_text": "The one everybody still talks about.",
+    "spicy": false
   },
   {
     "id": "HGT_020",
@@ -197,7 +271,63 @@
     "name": "Bruno — Golden Portrait",
     "rarity": "legendary",
     "image": "stickers/HGT_020.png",
-    "flavor_text": "A legend, captured in gold."
+    "flavor_text": "A legend, captured in gold.",
+    "spicy": false
+  },
+  {
+    "id": "HGT_106",
+    "collection_id": "HGT",
+    "character_id": "HGT_C02",
+    "number": 106,
+    "name": "Bruno — Secret Side",
+    "rarity": "common",
+    "image": "stickers/HGT_106.png",
+    "flavor_text": "Not everyone gets to see this.",
+    "spicy": true
+  },
+  {
+    "id": "HGT_107",
+    "collection_id": "HGT",
+    "character_id": "HGT_C02",
+    "number": 107,
+    "name": "Bruno — After Hours",
+    "rarity": "uncommon",
+    "image": "stickers/HGT_107.png",
+    "flavor_text": "When the day job ends, the real story begins.",
+    "spicy": true
+  },
+  {
+    "id": "HGT_108",
+    "collection_id": "HGT",
+    "character_id": "HGT_C02",
+    "number": 108,
+    "name": "Bruno — Guilty Pleasure",
+    "rarity": "rare",
+    "image": "stickers/HGT_108.png",
+    "flavor_text": "Everybody has one. Theirs is showing.",
+    "spicy": true
+  },
+  {
+    "id": "HGT_109",
+    "collection_id": "HGT",
+    "character_id": "HGT_C02",
+    "number": 109,
+    "name": "Bruno — Masquerade",
+    "rarity": "epic",
+    "image": "stickers/HGT_109.png",
+    "flavor_text": "Behind the mask, another mask.",
+    "spicy": true
+  },
+  {
+    "id": "HGT_110",
+    "collection_id": "HGT",
+    "character_id": "HGT_C02",
+    "number": 110,
+    "name": "Bruno — Heart of Fire",
+    "rarity": "legendary",
+    "image": "stickers/HGT_110.png",
+    "flavor_text": "Too hot for the regular album pages.",
+    "spicy": true
   },
   {
     "id": "HGT_021",
@@ -207,7 +337,8 @@
     "name": "Cielo — First Steps",
     "rarity": "common",
     "image": "stickers/HGT_021.png",
-    "flavor_text": "Where every story begins."
+    "flavor_text": "Where every story begins.",
+    "spicy": false
   },
   {
     "id": "HGT_022",
@@ -217,7 +348,8 @@
     "name": "Cielo — Daily Ritual",
     "rarity": "common",
     "image": "stickers/HGT_022.png",
-    "flavor_text": "The small habit that keeps them going."
+    "flavor_text": "The small habit that keeps them going.",
+    "spicy": false
   },
   {
     "id": "HGT_023",
@@ -227,7 +359,8 @@
     "name": "Cielo — Quiet Moment",
     "rarity": "common",
     "image": "stickers/HGT_023.png",
-    "flavor_text": "Even heroes need to breathe."
+    "flavor_text": "Even heroes need to breathe.",
+    "spicy": false
   },
   {
     "id": "HGT_024",
@@ -237,7 +370,8 @@
     "name": "Cielo — Tools of the Trade",
     "rarity": "uncommon",
     "image": "stickers/HGT_024.png",
-    "flavor_text": "Never leaves home without them."
+    "flavor_text": "Never leaves home without them.",
+    "spicy": false
   },
   {
     "id": "HGT_025",
@@ -247,7 +381,8 @@
     "name": "Cielo — Among Friends",
     "rarity": "uncommon",
     "image": "stickers/HGT_025.png",
-    "flavor_text": "Stronger together, always."
+    "flavor_text": "Stronger together, always.",
+    "spicy": false
   },
   {
     "id": "HGT_026",
@@ -257,7 +392,8 @@
     "name": "Cielo — Against the Wind",
     "rarity": "uncommon",
     "image": "stickers/HGT_026.png",
-    "flavor_text": "The day everything pushed back."
+    "flavor_text": "The day everything pushed back.",
+    "spicy": false
   },
   {
     "id": "HGT_027",
@@ -267,7 +403,8 @@
     "name": "Cielo — Signature Move",
     "rarity": "rare",
     "image": "stickers/HGT_027.png",
-    "flavor_text": "You'd know it anywhere."
+    "flavor_text": "You'd know it anywhere.",
+    "spicy": false
   },
   {
     "id": "HGT_028",
@@ -277,7 +414,8 @@
     "name": "Cielo — Night Shift",
     "rarity": "rare",
     "image": "stickers/HGT_028.png",
-    "flavor_text": "The city looks different after dark."
+    "flavor_text": "The city looks different after dark.",
+    "spicy": false
   },
   {
     "id": "HGT_029",
@@ -287,7 +425,8 @@
     "name": "Cielo — Moment of Glory",
     "rarity": "epic",
     "image": "stickers/HGT_029.png",
-    "flavor_text": "The one everybody still talks about."
+    "flavor_text": "The one everybody still talks about.",
+    "spicy": false
   },
   {
     "id": "HGT_030",
@@ -297,7 +436,63 @@
     "name": "Cielo — Golden Portrait",
     "rarity": "legendary",
     "image": "stickers/HGT_030.png",
-    "flavor_text": "A legend, captured in gold."
+    "flavor_text": "A legend, captured in gold.",
+    "spicy": false
+  },
+  {
+    "id": "HGT_111",
+    "collection_id": "HGT",
+    "character_id": "HGT_C03",
+    "number": 111,
+    "name": "Cielo — Secret Side",
+    "rarity": "common",
+    "image": "stickers/HGT_111.png",
+    "flavor_text": "Not everyone gets to see this.",
+    "spicy": true
+  },
+  {
+    "id": "HGT_112",
+    "collection_id": "HGT",
+    "character_id": "HGT_C03",
+    "number": 112,
+    "name": "Cielo — After Hours",
+    "rarity": "uncommon",
+    "image": "stickers/HGT_112.png",
+    "flavor_text": "When the day job ends, the real story begins.",
+    "spicy": true
+  },
+  {
+    "id": "HGT_113",
+    "collection_id": "HGT",
+    "character_id": "HGT_C03",
+    "number": 113,
+    "name": "Cielo — Guilty Pleasure",
+    "rarity": "rare",
+    "image": "stickers/HGT_113.png",
+    "flavor_text": "Everybody has one. Theirs is showing.",
+    "spicy": true
+  },
+  {
+    "id": "HGT_114",
+    "collection_id": "HGT",
+    "character_id": "HGT_C03",
+    "number": 114,
+    "name": "Cielo — Masquerade",
+    "rarity": "epic",
+    "image": "stickers/HGT_114.png",
+    "flavor_text": "Behind the mask, another mask.",
+    "spicy": true
+  },
+  {
+    "id": "HGT_115",
+    "collection_id": "HGT",
+    "character_id": "HGT_C03",
+    "number": 115,
+    "name": "Cielo — Heart of Fire",
+    "rarity": "legendary",
+    "image": "stickers/HGT_115.png",
+    "flavor_text": "Too hot for the regular album pages.",
+    "spicy": true
   },
   {
     "id": "HGT_031",
@@ -307,7 +502,8 @@
     "name": "Dario — First Steps",
     "rarity": "common",
     "image": "stickers/HGT_031.png",
-    "flavor_text": "Where every story begins."
+    "flavor_text": "Where every story begins.",
+    "spicy": false
   },
   {
     "id": "HGT_032",
@@ -317,7 +513,8 @@
     "name": "Dario — Daily Ritual",
     "rarity": "common",
     "image": "stickers/HGT_032.png",
-    "flavor_text": "The small habit that keeps them going."
+    "flavor_text": "The small habit that keeps them going.",
+    "spicy": false
   },
   {
     "id": "HGT_033",
@@ -327,7 +524,8 @@
     "name": "Dario — Quiet Moment",
     "rarity": "common",
     "image": "stickers/HGT_033.png",
-    "flavor_text": "Even heroes need to breathe."
+    "flavor_text": "Even heroes need to breathe.",
+    "spicy": false
   },
   {
     "id": "HGT_034",
@@ -337,7 +535,8 @@
     "name": "Dario — Tools of the Trade",
     "rarity": "uncommon",
     "image": "stickers/HGT_034.png",
-    "flavor_text": "Never leaves home without them."
+    "flavor_text": "Never leaves home without them.",
+    "spicy": false
   },
   {
     "id": "HGT_035",
@@ -347,7 +546,8 @@
     "name": "Dario — Among Friends",
     "rarity": "uncommon",
     "image": "stickers/HGT_035.png",
-    "flavor_text": "Stronger together, always."
+    "flavor_text": "Stronger together, always.",
+    "spicy": false
   },
   {
     "id": "HGT_036",
@@ -357,7 +557,8 @@
     "name": "Dario — Against the Wind",
     "rarity": "uncommon",
     "image": "stickers/HGT_036.png",
-    "flavor_text": "The day everything pushed back."
+    "flavor_text": "The day everything pushed back.",
+    "spicy": false
   },
   {
     "id": "HGT_037",
@@ -367,7 +568,8 @@
     "name": "Dario — Signature Move",
     "rarity": "rare",
     "image": "stickers/HGT_037.png",
-    "flavor_text": "You'd know it anywhere."
+    "flavor_text": "You'd know it anywhere.",
+    "spicy": false
   },
   {
     "id": "HGT_038",
@@ -377,7 +579,8 @@
     "name": "Dario — Night Shift",
     "rarity": "rare",
     "image": "stickers/HGT_038.png",
-    "flavor_text": "The city looks different after dark."
+    "flavor_text": "The city looks different after dark.",
+    "spicy": false
   },
   {
     "id": "HGT_039",
@@ -387,7 +590,8 @@
     "name": "Dario — Moment of Glory",
     "rarity": "epic",
     "image": "stickers/HGT_039.png",
-    "flavor_text": "The one everybody still talks about."
+    "flavor_text": "The one everybody still talks about.",
+    "spicy": false
   },
   {
     "id": "HGT_040",
@@ -397,7 +601,63 @@
     "name": "Dario — Golden Portrait",
     "rarity": "legendary",
     "image": "stickers/HGT_040.png",
-    "flavor_text": "A legend, captured in gold."
+    "flavor_text": "A legend, captured in gold.",
+    "spicy": false
+  },
+  {
+    "id": "HGT_116",
+    "collection_id": "HGT",
+    "character_id": "HGT_C04",
+    "number": 116,
+    "name": "Dario — Secret Side",
+    "rarity": "common",
+    "image": "stickers/HGT_116.png",
+    "flavor_text": "Not everyone gets to see this.",
+    "spicy": true
+  },
+  {
+    "id": "HGT_117",
+    "collection_id": "HGT",
+    "character_id": "HGT_C04",
+    "number": 117,
+    "name": "Dario — After Hours",
+    "rarity": "uncommon",
+    "image": "stickers/HGT_117.png",
+    "flavor_text": "When the day job ends, the real story begins.",
+    "spicy": true
+  },
+  {
+    "id": "HGT_118",
+    "collection_id": "HGT",
+    "character_id": "HGT_C04",
+    "number": 118,
+    "name": "Dario — Guilty Pleasure",
+    "rarity": "rare",
+    "image": "stickers/HGT_118.png",
+    "flavor_text": "Everybody has one. Theirs is showing.",
+    "spicy": true
+  },
+  {
+    "id": "HGT_119",
+    "collection_id": "HGT",
+    "character_id": "HGT_C04",
+    "number": 119,
+    "name": "Dario — Masquerade",
+    "rarity": "epic",
+    "image": "stickers/HGT_119.png",
+    "flavor_text": "Behind the mask, another mask.",
+    "spicy": true
+  },
+  {
+    "id": "HGT_120",
+    "collection_id": "HGT",
+    "character_id": "HGT_C04",
+    "number": 120,
+    "name": "Dario — Heart of Fire",
+    "rarity": "legendary",
+    "image": "stickers/HGT_120.png",
+    "flavor_text": "Too hot for the regular album pages.",
+    "spicy": true
   },
   {
     "id": "HGT_041",
@@ -407,7 +667,8 @@
     "name": "Elba — First Steps",
     "rarity": "common",
     "image": "stickers/HGT_041.png",
-    "flavor_text": "Where every story begins."
+    "flavor_text": "Where every story begins.",
+    "spicy": false
   },
   {
     "id": "HGT_042",
@@ -417,7 +678,8 @@
     "name": "Elba — Daily Ritual",
     "rarity": "common",
     "image": "stickers/HGT_042.png",
-    "flavor_text": "The small habit that keeps them going."
+    "flavor_text": "The small habit that keeps them going.",
+    "spicy": false
   },
   {
     "id": "HGT_043",
@@ -427,7 +689,8 @@
     "name": "Elba — Quiet Moment",
     "rarity": "common",
     "image": "stickers/HGT_043.png",
-    "flavor_text": "Even heroes need to breathe."
+    "flavor_text": "Even heroes need to breathe.",
+    "spicy": false
   },
   {
     "id": "HGT_044",
@@ -437,7 +700,8 @@
     "name": "Elba — Tools of the Trade",
     "rarity": "uncommon",
     "image": "stickers/HGT_044.png",
-    "flavor_text": "Never leaves home without them."
+    "flavor_text": "Never leaves home without them.",
+    "spicy": false
   },
   {
     "id": "HGT_045",
@@ -447,7 +711,8 @@
     "name": "Elba — Among Friends",
     "rarity": "uncommon",
     "image": "stickers/HGT_045.png",
-    "flavor_text": "Stronger together, always."
+    "flavor_text": "Stronger together, always.",
+    "spicy": false
   },
   {
     "id": "HGT_046",
@@ -457,7 +722,8 @@
     "name": "Elba — Against the Wind",
     "rarity": "uncommon",
     "image": "stickers/HGT_046.png",
-    "flavor_text": "The day everything pushed back."
+    "flavor_text": "The day everything pushed back.",
+    "spicy": false
   },
   {
     "id": "HGT_047",
@@ -467,7 +733,8 @@
     "name": "Elba — Signature Move",
     "rarity": "rare",
     "image": "stickers/HGT_047.png",
-    "flavor_text": "You'd know it anywhere."
+    "flavor_text": "You'd know it anywhere.",
+    "spicy": false
   },
   {
     "id": "HGT_048",
@@ -477,7 +744,8 @@
     "name": "Elba — Night Shift",
     "rarity": "rare",
     "image": "stickers/HGT_048.png",
-    "flavor_text": "The city looks different after dark."
+    "flavor_text": "The city looks different after dark.",
+    "spicy": false
   },
   {
     "id": "HGT_049",
@@ -487,7 +755,8 @@
     "name": "Elba — Moment of Glory",
     "rarity": "epic",
     "image": "stickers/HGT_049.png",
-    "flavor_text": "The one everybody still talks about."
+    "flavor_text": "The one everybody still talks about.",
+    "spicy": false
   },
   {
     "id": "HGT_050",
@@ -497,7 +766,63 @@
     "name": "Elba — Golden Portrait",
     "rarity": "legendary",
     "image": "stickers/HGT_050.png",
-    "flavor_text": "A legend, captured in gold."
+    "flavor_text": "A legend, captured in gold.",
+    "spicy": false
+  },
+  {
+    "id": "HGT_121",
+    "collection_id": "HGT",
+    "character_id": "HGT_C05",
+    "number": 121,
+    "name": "Elba — Secret Side",
+    "rarity": "common",
+    "image": "stickers/HGT_121.png",
+    "flavor_text": "Not everyone gets to see this.",
+    "spicy": true
+  },
+  {
+    "id": "HGT_122",
+    "collection_id": "HGT",
+    "character_id": "HGT_C05",
+    "number": 122,
+    "name": "Elba — After Hours",
+    "rarity": "uncommon",
+    "image": "stickers/HGT_122.png",
+    "flavor_text": "When the day job ends, the real story begins.",
+    "spicy": true
+  },
+  {
+    "id": "HGT_123",
+    "collection_id": "HGT",
+    "character_id": "HGT_C05",
+    "number": 123,
+    "name": "Elba — Guilty Pleasure",
+    "rarity": "rare",
+    "image": "stickers/HGT_123.png",
+    "flavor_text": "Everybody has one. Theirs is showing.",
+    "spicy": true
+  },
+  {
+    "id": "HGT_124",
+    "collection_id": "HGT",
+    "character_id": "HGT_C05",
+    "number": 124,
+    "name": "Elba — Masquerade",
+    "rarity": "epic",
+    "image": "stickers/HGT_124.png",
+    "flavor_text": "Behind the mask, another mask.",
+    "spicy": true
+  },
+  {
+    "id": "HGT_125",
+    "collection_id": "HGT",
+    "character_id": "HGT_C05",
+    "number": 125,
+    "name": "Elba — Heart of Fire",
+    "rarity": "legendary",
+    "image": "stickers/HGT_125.png",
+    "flavor_text": "Too hot for the regular album pages.",
+    "spicy": true
   },
   {
     "id": "HGT_051",
@@ -507,7 +832,8 @@
     "name": "Falk — First Steps",
     "rarity": "common",
     "image": "stickers/HGT_051.png",
-    "flavor_text": "Where every story begins."
+    "flavor_text": "Where every story begins.",
+    "spicy": false
   },
   {
     "id": "HGT_052",
@@ -517,7 +843,8 @@
     "name": "Falk — Daily Ritual",
     "rarity": "common",
     "image": "stickers/HGT_052.png",
-    "flavor_text": "The small habit that keeps them going."
+    "flavor_text": "The small habit that keeps them going.",
+    "spicy": false
   },
   {
     "id": "HGT_053",
@@ -527,7 +854,8 @@
     "name": "Falk — Quiet Moment",
     "rarity": "common",
     "image": "stickers/HGT_053.png",
-    "flavor_text": "Even heroes need to breathe."
+    "flavor_text": "Even heroes need to breathe.",
+    "spicy": false
   },
   {
     "id": "HGT_054",
@@ -537,7 +865,8 @@
     "name": "Falk — Tools of the Trade",
     "rarity": "uncommon",
     "image": "stickers/HGT_054.png",
-    "flavor_text": "Never leaves home without them."
+    "flavor_text": "Never leaves home without them.",
+    "spicy": false
   },
   {
     "id": "HGT_055",
@@ -547,7 +876,8 @@
     "name": "Falk — Among Friends",
     "rarity": "uncommon",
     "image": "stickers/HGT_055.png",
-    "flavor_text": "Stronger together, always."
+    "flavor_text": "Stronger together, always.",
+    "spicy": false
   },
   {
     "id": "HGT_056",
@@ -557,7 +887,8 @@
     "name": "Falk — Against the Wind",
     "rarity": "uncommon",
     "image": "stickers/HGT_056.png",
-    "flavor_text": "The day everything pushed back."
+    "flavor_text": "The day everything pushed back.",
+    "spicy": false
   },
   {
     "id": "HGT_057",
@@ -567,7 +898,8 @@
     "name": "Falk — Signature Move",
     "rarity": "rare",
     "image": "stickers/HGT_057.png",
-    "flavor_text": "You'd know it anywhere."
+    "flavor_text": "You'd know it anywhere.",
+    "spicy": false
   },
   {
     "id": "HGT_058",
@@ -577,7 +909,8 @@
     "name": "Falk — Night Shift",
     "rarity": "rare",
     "image": "stickers/HGT_058.png",
-    "flavor_text": "The city looks different after dark."
+    "flavor_text": "The city looks different after dark.",
+    "spicy": false
   },
   {
     "id": "HGT_059",
@@ -587,7 +920,8 @@
     "name": "Falk — Moment of Glory",
     "rarity": "epic",
     "image": "stickers/HGT_059.png",
-    "flavor_text": "The one everybody still talks about."
+    "flavor_text": "The one everybody still talks about.",
+    "spicy": false
   },
   {
     "id": "HGT_060",
@@ -597,7 +931,63 @@
     "name": "Falk — Golden Portrait",
     "rarity": "legendary",
     "image": "stickers/HGT_060.png",
-    "flavor_text": "A legend, captured in gold."
+    "flavor_text": "A legend, captured in gold.",
+    "spicy": false
+  },
+  {
+    "id": "HGT_126",
+    "collection_id": "HGT",
+    "character_id": "HGT_C06",
+    "number": 126,
+    "name": "Falk — Secret Side",
+    "rarity": "common",
+    "image": "stickers/HGT_126.png",
+    "flavor_text": "Not everyone gets to see this.",
+    "spicy": true
+  },
+  {
+    "id": "HGT_127",
+    "collection_id": "HGT",
+    "character_id": "HGT_C06",
+    "number": 127,
+    "name": "Falk — After Hours",
+    "rarity": "uncommon",
+    "image": "stickers/HGT_127.png",
+    "flavor_text": "When the day job ends, the real story begins.",
+    "spicy": true
+  },
+  {
+    "id": "HGT_128",
+    "collection_id": "HGT",
+    "character_id": "HGT_C06",
+    "number": 128,
+    "name": "Falk — Guilty Pleasure",
+    "rarity": "rare",
+    "image": "stickers/HGT_128.png",
+    "flavor_text": "Everybody has one. Theirs is showing.",
+    "spicy": true
+  },
+  {
+    "id": "HGT_129",
+    "collection_id": "HGT",
+    "character_id": "HGT_C06",
+    "number": 129,
+    "name": "Falk — Masquerade",
+    "rarity": "epic",
+    "image": "stickers/HGT_129.png",
+    "flavor_text": "Behind the mask, another mask.",
+    "spicy": true
+  },
+  {
+    "id": "HGT_130",
+    "collection_id": "HGT",
+    "character_id": "HGT_C06",
+    "number": 130,
+    "name": "Falk — Heart of Fire",
+    "rarity": "legendary",
+    "image": "stickers/HGT_130.png",
+    "flavor_text": "Too hot for the regular album pages.",
+    "spicy": true
   },
   {
     "id": "HGT_061",
@@ -607,7 +997,8 @@
     "name": "Gala — First Steps",
     "rarity": "common",
     "image": "stickers/HGT_061.png",
-    "flavor_text": "Where every story begins."
+    "flavor_text": "Where every story begins.",
+    "spicy": false
   },
   {
     "id": "HGT_062",
@@ -617,7 +1008,8 @@
     "name": "Gala — Daily Ritual",
     "rarity": "common",
     "image": "stickers/HGT_062.png",
-    "flavor_text": "The small habit that keeps them going."
+    "flavor_text": "The small habit that keeps them going.",
+    "spicy": false
   },
   {
     "id": "HGT_063",
@@ -627,7 +1019,8 @@
     "name": "Gala — Quiet Moment",
     "rarity": "common",
     "image": "stickers/HGT_063.png",
-    "flavor_text": "Even heroes need to breathe."
+    "flavor_text": "Even heroes need to breathe.",
+    "spicy": false
   },
   {
     "id": "HGT_064",
@@ -637,7 +1030,8 @@
     "name": "Gala — Tools of the Trade",
     "rarity": "uncommon",
     "image": "stickers/HGT_064.png",
-    "flavor_text": "Never leaves home without them."
+    "flavor_text": "Never leaves home without them.",
+    "spicy": false
   },
   {
     "id": "HGT_065",
@@ -647,7 +1041,8 @@
     "name": "Gala — Among Friends",
     "rarity": "uncommon",
     "image": "stickers/HGT_065.png",
-    "flavor_text": "Stronger together, always."
+    "flavor_text": "Stronger together, always.",
+    "spicy": false
   },
   {
     "id": "HGT_066",
@@ -657,7 +1052,8 @@
     "name": "Gala — Against the Wind",
     "rarity": "uncommon",
     "image": "stickers/HGT_066.png",
-    "flavor_text": "The day everything pushed back."
+    "flavor_text": "The day everything pushed back.",
+    "spicy": false
   },
   {
     "id": "HGT_067",
@@ -667,7 +1063,8 @@
     "name": "Gala — Signature Move",
     "rarity": "rare",
     "image": "stickers/HGT_067.png",
-    "flavor_text": "You'd know it anywhere."
+    "flavor_text": "You'd know it anywhere.",
+    "spicy": false
   },
   {
     "id": "HGT_068",
@@ -677,7 +1074,8 @@
     "name": "Gala — Night Shift",
     "rarity": "rare",
     "image": "stickers/HGT_068.png",
-    "flavor_text": "The city looks different after dark."
+    "flavor_text": "The city looks different after dark.",
+    "spicy": false
   },
   {
     "id": "HGT_069",
@@ -687,7 +1085,8 @@
     "name": "Gala — Moment of Glory",
     "rarity": "epic",
     "image": "stickers/HGT_069.png",
-    "flavor_text": "The one everybody still talks about."
+    "flavor_text": "The one everybody still talks about.",
+    "spicy": false
   },
   {
     "id": "HGT_070",
@@ -697,7 +1096,63 @@
     "name": "Gala — Golden Portrait",
     "rarity": "legendary",
     "image": "stickers/HGT_070.png",
-    "flavor_text": "A legend, captured in gold."
+    "flavor_text": "A legend, captured in gold.",
+    "spicy": false
+  },
+  {
+    "id": "HGT_131",
+    "collection_id": "HGT",
+    "character_id": "HGT_C07",
+    "number": 131,
+    "name": "Gala — Secret Side",
+    "rarity": "common",
+    "image": "stickers/HGT_131.png",
+    "flavor_text": "Not everyone gets to see this.",
+    "spicy": true
+  },
+  {
+    "id": "HGT_132",
+    "collection_id": "HGT",
+    "character_id": "HGT_C07",
+    "number": 132,
+    "name": "Gala — After Hours",
+    "rarity": "uncommon",
+    "image": "stickers/HGT_132.png",
+    "flavor_text": "When the day job ends, the real story begins.",
+    "spicy": true
+  },
+  {
+    "id": "HGT_133",
+    "collection_id": "HGT",
+    "character_id": "HGT_C07",
+    "number": 133,
+    "name": "Gala — Guilty Pleasure",
+    "rarity": "rare",
+    "image": "stickers/HGT_133.png",
+    "flavor_text": "Everybody has one. Theirs is showing.",
+    "spicy": true
+  },
+  {
+    "id": "HGT_134",
+    "collection_id": "HGT",
+    "character_id": "HGT_C07",
+    "number": 134,
+    "name": "Gala — Masquerade",
+    "rarity": "epic",
+    "image": "stickers/HGT_134.png",
+    "flavor_text": "Behind the mask, another mask.",
+    "spicy": true
+  },
+  {
+    "id": "HGT_135",
+    "collection_id": "HGT",
+    "character_id": "HGT_C07",
+    "number": 135,
+    "name": "Gala — Heart of Fire",
+    "rarity": "legendary",
+    "image": "stickers/HGT_135.png",
+    "flavor_text": "Too hot for the regular album pages.",
+    "spicy": true
   },
   {
     "id": "HGT_071",
@@ -707,7 +1162,8 @@
     "name": "Hugo — First Steps",
     "rarity": "common",
     "image": "stickers/HGT_071.png",
-    "flavor_text": "Where every story begins."
+    "flavor_text": "Where every story begins.",
+    "spicy": false
   },
   {
     "id": "HGT_072",
@@ -717,7 +1173,8 @@
     "name": "Hugo — Daily Ritual",
     "rarity": "common",
     "image": "stickers/HGT_072.png",
-    "flavor_text": "The small habit that keeps them going."
+    "flavor_text": "The small habit that keeps them going.",
+    "spicy": false
   },
   {
     "id": "HGT_073",
@@ -727,7 +1184,8 @@
     "name": "Hugo — Quiet Moment",
     "rarity": "common",
     "image": "stickers/HGT_073.png",
-    "flavor_text": "Even heroes need to breathe."
+    "flavor_text": "Even heroes need to breathe.",
+    "spicy": false
   },
   {
     "id": "HGT_074",
@@ -737,7 +1195,8 @@
     "name": "Hugo — Tools of the Trade",
     "rarity": "uncommon",
     "image": "stickers/HGT_074.png",
-    "flavor_text": "Never leaves home without them."
+    "flavor_text": "Never leaves home without them.",
+    "spicy": false
   },
   {
     "id": "HGT_075",
@@ -747,7 +1206,8 @@
     "name": "Hugo — Among Friends",
     "rarity": "uncommon",
     "image": "stickers/HGT_075.png",
-    "flavor_text": "Stronger together, always."
+    "flavor_text": "Stronger together, always.",
+    "spicy": false
   },
   {
     "id": "HGT_076",
@@ -757,7 +1217,8 @@
     "name": "Hugo — Against the Wind",
     "rarity": "uncommon",
     "image": "stickers/HGT_076.png",
-    "flavor_text": "The day everything pushed back."
+    "flavor_text": "The day everything pushed back.",
+    "spicy": false
   },
   {
     "id": "HGT_077",
@@ -767,7 +1228,8 @@
     "name": "Hugo — Signature Move",
     "rarity": "rare",
     "image": "stickers/HGT_077.png",
-    "flavor_text": "You'd know it anywhere."
+    "flavor_text": "You'd know it anywhere.",
+    "spicy": false
   },
   {
     "id": "HGT_078",
@@ -777,7 +1239,8 @@
     "name": "Hugo — Night Shift",
     "rarity": "rare",
     "image": "stickers/HGT_078.png",
-    "flavor_text": "The city looks different after dark."
+    "flavor_text": "The city looks different after dark.",
+    "spicy": false
   },
   {
     "id": "HGT_079",
@@ -787,7 +1250,8 @@
     "name": "Hugo — Moment of Glory",
     "rarity": "epic",
     "image": "stickers/HGT_079.png",
-    "flavor_text": "The one everybody still talks about."
+    "flavor_text": "The one everybody still talks about.",
+    "spicy": false
   },
   {
     "id": "HGT_080",
@@ -797,7 +1261,63 @@
     "name": "Hugo — Golden Portrait",
     "rarity": "legendary",
     "image": "stickers/HGT_080.png",
-    "flavor_text": "A legend, captured in gold."
+    "flavor_text": "A legend, captured in gold.",
+    "spicy": false
+  },
+  {
+    "id": "HGT_136",
+    "collection_id": "HGT",
+    "character_id": "HGT_C08",
+    "number": 136,
+    "name": "Hugo — Secret Side",
+    "rarity": "common",
+    "image": "stickers/HGT_136.png",
+    "flavor_text": "Not everyone gets to see this.",
+    "spicy": true
+  },
+  {
+    "id": "HGT_137",
+    "collection_id": "HGT",
+    "character_id": "HGT_C08",
+    "number": 137,
+    "name": "Hugo — After Hours",
+    "rarity": "uncommon",
+    "image": "stickers/HGT_137.png",
+    "flavor_text": "When the day job ends, the real story begins.",
+    "spicy": true
+  },
+  {
+    "id": "HGT_138",
+    "collection_id": "HGT",
+    "character_id": "HGT_C08",
+    "number": 138,
+    "name": "Hugo — Guilty Pleasure",
+    "rarity": "rare",
+    "image": "stickers/HGT_138.png",
+    "flavor_text": "Everybody has one. Theirs is showing.",
+    "spicy": true
+  },
+  {
+    "id": "HGT_139",
+    "collection_id": "HGT",
+    "character_id": "HGT_C08",
+    "number": 139,
+    "name": "Hugo — Masquerade",
+    "rarity": "epic",
+    "image": "stickers/HGT_139.png",
+    "flavor_text": "Behind the mask, another mask.",
+    "spicy": true
+  },
+  {
+    "id": "HGT_140",
+    "collection_id": "HGT",
+    "character_id": "HGT_C08",
+    "number": 140,
+    "name": "Hugo — Heart of Fire",
+    "rarity": "legendary",
+    "image": "stickers/HGT_140.png",
+    "flavor_text": "Too hot for the regular album pages.",
+    "spicy": true
   },
   {
     "id": "HGT_081",
@@ -807,7 +1327,8 @@
     "name": "Iris — First Steps",
     "rarity": "common",
     "image": "stickers/HGT_081.png",
-    "flavor_text": "Where every story begins."
+    "flavor_text": "Where every story begins.",
+    "spicy": false
   },
   {
     "id": "HGT_082",
@@ -817,7 +1338,8 @@
     "name": "Iris — Daily Ritual",
     "rarity": "common",
     "image": "stickers/HGT_082.png",
-    "flavor_text": "The small habit that keeps them going."
+    "flavor_text": "The small habit that keeps them going.",
+    "spicy": false
   },
   {
     "id": "HGT_083",
@@ -827,7 +1349,8 @@
     "name": "Iris — Quiet Moment",
     "rarity": "common",
     "image": "stickers/HGT_083.png",
-    "flavor_text": "Even heroes need to breathe."
+    "flavor_text": "Even heroes need to breathe.",
+    "spicy": false
   },
   {
     "id": "HGT_084",
@@ -837,7 +1360,8 @@
     "name": "Iris — Tools of the Trade",
     "rarity": "uncommon",
     "image": "stickers/HGT_084.png",
-    "flavor_text": "Never leaves home without them."
+    "flavor_text": "Never leaves home without them.",
+    "spicy": false
   },
   {
     "id": "HGT_085",
@@ -847,7 +1371,8 @@
     "name": "Iris — Among Friends",
     "rarity": "uncommon",
     "image": "stickers/HGT_085.png",
-    "flavor_text": "Stronger together, always."
+    "flavor_text": "Stronger together, always.",
+    "spicy": false
   },
   {
     "id": "HGT_086",
@@ -857,7 +1382,8 @@
     "name": "Iris — Against the Wind",
     "rarity": "uncommon",
     "image": "stickers/HGT_086.png",
-    "flavor_text": "The day everything pushed back."
+    "flavor_text": "The day everything pushed back.",
+    "spicy": false
   },
   {
     "id": "HGT_087",
@@ -867,7 +1393,8 @@
     "name": "Iris — Signature Move",
     "rarity": "rare",
     "image": "stickers/HGT_087.png",
-    "flavor_text": "You'd know it anywhere."
+    "flavor_text": "You'd know it anywhere.",
+    "spicy": false
   },
   {
     "id": "HGT_088",
@@ -877,7 +1404,8 @@
     "name": "Iris — Night Shift",
     "rarity": "rare",
     "image": "stickers/HGT_088.png",
-    "flavor_text": "The city looks different after dark."
+    "flavor_text": "The city looks different after dark.",
+    "spicy": false
   },
   {
     "id": "HGT_089",
@@ -887,7 +1415,8 @@
     "name": "Iris — Moment of Glory",
     "rarity": "epic",
     "image": "stickers/HGT_089.png",
-    "flavor_text": "The one everybody still talks about."
+    "flavor_text": "The one everybody still talks about.",
+    "spicy": false
   },
   {
     "id": "HGT_090",
@@ -897,7 +1426,63 @@
     "name": "Iris — Golden Portrait",
     "rarity": "legendary",
     "image": "stickers/HGT_090.png",
-    "flavor_text": "A legend, captured in gold."
+    "flavor_text": "A legend, captured in gold.",
+    "spicy": false
+  },
+  {
+    "id": "HGT_141",
+    "collection_id": "HGT",
+    "character_id": "HGT_C09",
+    "number": 141,
+    "name": "Iris — Secret Side",
+    "rarity": "common",
+    "image": "stickers/HGT_141.png",
+    "flavor_text": "Not everyone gets to see this.",
+    "spicy": true
+  },
+  {
+    "id": "HGT_142",
+    "collection_id": "HGT",
+    "character_id": "HGT_C09",
+    "number": 142,
+    "name": "Iris — After Hours",
+    "rarity": "uncommon",
+    "image": "stickers/HGT_142.png",
+    "flavor_text": "When the day job ends, the real story begins.",
+    "spicy": true
+  },
+  {
+    "id": "HGT_143",
+    "collection_id": "HGT",
+    "character_id": "HGT_C09",
+    "number": 143,
+    "name": "Iris — Guilty Pleasure",
+    "rarity": "rare",
+    "image": "stickers/HGT_143.png",
+    "flavor_text": "Everybody has one. Theirs is showing.",
+    "spicy": true
+  },
+  {
+    "id": "HGT_144",
+    "collection_id": "HGT",
+    "character_id": "HGT_C09",
+    "number": 144,
+    "name": "Iris — Masquerade",
+    "rarity": "epic",
+    "image": "stickers/HGT_144.png",
+    "flavor_text": "Behind the mask, another mask.",
+    "spicy": true
+  },
+  {
+    "id": "HGT_145",
+    "collection_id": "HGT",
+    "character_id": "HGT_C09",
+    "number": 145,
+    "name": "Iris — Heart of Fire",
+    "rarity": "legendary",
+    "image": "stickers/HGT_145.png",
+    "flavor_text": "Too hot for the regular album pages.",
+    "spicy": true
   },
   {
     "id": "HGT_091",
@@ -907,7 +1492,8 @@
     "name": "Joto — First Steps",
     "rarity": "common",
     "image": "stickers/HGT_091.png",
-    "flavor_text": "Where every story begins."
+    "flavor_text": "Where every story begins.",
+    "spicy": false
   },
   {
     "id": "HGT_092",
@@ -917,7 +1503,8 @@
     "name": "Joto — Daily Ritual",
     "rarity": "common",
     "image": "stickers/HGT_092.png",
-    "flavor_text": "The small habit that keeps them going."
+    "flavor_text": "The small habit that keeps them going.",
+    "spicy": false
   },
   {
     "id": "HGT_093",
@@ -927,7 +1514,8 @@
     "name": "Joto — Quiet Moment",
     "rarity": "common",
     "image": "stickers/HGT_093.png",
-    "flavor_text": "Even heroes need to breathe."
+    "flavor_text": "Even heroes need to breathe.",
+    "spicy": false
   },
   {
     "id": "HGT_094",
@@ -937,7 +1525,8 @@
     "name": "Joto — Tools of the Trade",
     "rarity": "uncommon",
     "image": "stickers/HGT_094.png",
-    "flavor_text": "Never leaves home without them."
+    "flavor_text": "Never leaves home without them.",
+    "spicy": false
   },
   {
     "id": "HGT_095",
@@ -947,7 +1536,8 @@
     "name": "Joto — Among Friends",
     "rarity": "uncommon",
     "image": "stickers/HGT_095.png",
-    "flavor_text": "Stronger together, always."
+    "flavor_text": "Stronger together, always.",
+    "spicy": false
   },
   {
     "id": "HGT_096",
@@ -957,7 +1547,8 @@
     "name": "Joto — Against the Wind",
     "rarity": "uncommon",
     "image": "stickers/HGT_096.png",
-    "flavor_text": "The day everything pushed back."
+    "flavor_text": "The day everything pushed back.",
+    "spicy": false
   },
   {
     "id": "HGT_097",
@@ -967,7 +1558,8 @@
     "name": "Joto — Signature Move",
     "rarity": "rare",
     "image": "stickers/HGT_097.png",
-    "flavor_text": "You'd know it anywhere."
+    "flavor_text": "You'd know it anywhere.",
+    "spicy": false
   },
   {
     "id": "HGT_098",
@@ -977,7 +1569,8 @@
     "name": "Joto — Night Shift",
     "rarity": "rare",
     "image": "stickers/HGT_098.png",
-    "flavor_text": "The city looks different after dark."
+    "flavor_text": "The city looks different after dark.",
+    "spicy": false
   },
   {
     "id": "HGT_099",
@@ -987,7 +1580,8 @@
     "name": "Joto — Moment of Glory",
     "rarity": "epic",
     "image": "stickers/HGT_099.png",
-    "flavor_text": "The one everybody still talks about."
+    "flavor_text": "The one everybody still talks about.",
+    "spicy": false
   },
   {
     "id": "HGT_100",
@@ -997,7 +1591,63 @@
     "name": "Joto — Golden Portrait",
     "rarity": "legendary",
     "image": "stickers/HGT_100.png",
-    "flavor_text": "A legend, captured in gold."
+    "flavor_text": "A legend, captured in gold.",
+    "spicy": false
+  },
+  {
+    "id": "HGT_146",
+    "collection_id": "HGT",
+    "character_id": "HGT_C10",
+    "number": 146,
+    "name": "Joto — Secret Side",
+    "rarity": "common",
+    "image": "stickers/HGT_146.png",
+    "flavor_text": "Not everyone gets to see this.",
+    "spicy": true
+  },
+  {
+    "id": "HGT_147",
+    "collection_id": "HGT",
+    "character_id": "HGT_C10",
+    "number": 147,
+    "name": "Joto — After Hours",
+    "rarity": "uncommon",
+    "image": "stickers/HGT_147.png",
+    "flavor_text": "When the day job ends, the real story begins.",
+    "spicy": true
+  },
+  {
+    "id": "HGT_148",
+    "collection_id": "HGT",
+    "character_id": "HGT_C10",
+    "number": 148,
+    "name": "Joto — Guilty Pleasure",
+    "rarity": "rare",
+    "image": "stickers/HGT_148.png",
+    "flavor_text": "Everybody has one. Theirs is showing.",
+    "spicy": true
+  },
+  {
+    "id": "HGT_149",
+    "collection_id": "HGT",
+    "character_id": "HGT_C10",
+    "number": 149,
+    "name": "Joto — Masquerade",
+    "rarity": "epic",
+    "image": "stickers/HGT_149.png",
+    "flavor_text": "Behind the mask, another mask.",
+    "spicy": true
+  },
+  {
+    "id": "HGT_150",
+    "collection_id": "HGT",
+    "character_id": "HGT_C10",
+    "number": 150,
+    "name": "Joto — Heart of Fire",
+    "rarity": "legendary",
+    "image": "stickers/HGT_150.png",
+    "flavor_text": "Too hot for the regular album pages.",
+    "spicy": true
   },
   {
     "id": "TDL_001",
@@ -1007,7 +1657,8 @@
     "name": "Anga — First Steps",
     "rarity": "common",
     "image": "stickers/TDL_001.png",
-    "flavor_text": "Where every story begins."
+    "flavor_text": "Where every story begins.",
+    "spicy": false
   },
   {
     "id": "TDL_002",
@@ -1017,7 +1668,8 @@
     "name": "Anga — Daily Ritual",
     "rarity": "common",
     "image": "stickers/TDL_002.png",
-    "flavor_text": "The small habit that keeps them going."
+    "flavor_text": "The small habit that keeps them going.",
+    "spicy": false
   },
   {
     "id": "TDL_003",
@@ -1027,7 +1679,8 @@
     "name": "Anga — Quiet Moment",
     "rarity": "common",
     "image": "stickers/TDL_003.png",
-    "flavor_text": "Even heroes need to breathe."
+    "flavor_text": "Even heroes need to breathe.",
+    "spicy": false
   },
   {
     "id": "TDL_004",
@@ -1037,7 +1690,8 @@
     "name": "Anga — Tools of the Trade",
     "rarity": "uncommon",
     "image": "stickers/TDL_004.png",
-    "flavor_text": "Never leaves home without them."
+    "flavor_text": "Never leaves home without them.",
+    "spicy": false
   },
   {
     "id": "TDL_005",
@@ -1047,7 +1701,8 @@
     "name": "Anga — Among Friends",
     "rarity": "uncommon",
     "image": "stickers/TDL_005.png",
-    "flavor_text": "Stronger together, always."
+    "flavor_text": "Stronger together, always.",
+    "spicy": false
   },
   {
     "id": "TDL_006",
@@ -1057,7 +1712,8 @@
     "name": "Anga — Against the Wind",
     "rarity": "uncommon",
     "image": "stickers/TDL_006.png",
-    "flavor_text": "The day everything pushed back."
+    "flavor_text": "The day everything pushed back.",
+    "spicy": false
   },
   {
     "id": "TDL_007",
@@ -1067,7 +1723,8 @@
     "name": "Anga — Signature Move",
     "rarity": "rare",
     "image": "stickers/TDL_007.png",
-    "flavor_text": "You'd know it anywhere."
+    "flavor_text": "You'd know it anywhere.",
+    "spicy": false
   },
   {
     "id": "TDL_008",
@@ -1077,7 +1734,8 @@
     "name": "Anga — Night Shift",
     "rarity": "rare",
     "image": "stickers/TDL_008.png",
-    "flavor_text": "The city looks different after dark."
+    "flavor_text": "The city looks different after dark.",
+    "spicy": false
   },
   {
     "id": "TDL_009",
@@ -1087,7 +1745,8 @@
     "name": "Anga — Moment of Glory",
     "rarity": "epic",
     "image": "stickers/TDL_009.png",
-    "flavor_text": "The one everybody still talks about."
+    "flavor_text": "The one everybody still talks about.",
+    "spicy": false
   },
   {
     "id": "TDL_010",
@@ -1097,7 +1756,63 @@
     "name": "Anga — Golden Portrait",
     "rarity": "legendary",
     "image": "stickers/TDL_010.png",
-    "flavor_text": "A legend, captured in gold."
+    "flavor_text": "A legend, captured in gold.",
+    "spicy": false
+  },
+  {
+    "id": "TDL_101",
+    "collection_id": "TDL",
+    "character_id": "TDL_C01",
+    "number": 101,
+    "name": "Anga — Secret Side",
+    "rarity": "common",
+    "image": "stickers/TDL_101.png",
+    "flavor_text": "Not everyone gets to see this.",
+    "spicy": true
+  },
+  {
+    "id": "TDL_102",
+    "collection_id": "TDL",
+    "character_id": "TDL_C01",
+    "number": 102,
+    "name": "Anga — After Hours",
+    "rarity": "uncommon",
+    "image": "stickers/TDL_102.png",
+    "flavor_text": "When the day job ends, the real story begins.",
+    "spicy": true
+  },
+  {
+    "id": "TDL_103",
+    "collection_id": "TDL",
+    "character_id": "TDL_C01",
+    "number": 103,
+    "name": "Anga — Guilty Pleasure",
+    "rarity": "rare",
+    "image": "stickers/TDL_103.png",
+    "flavor_text": "Everybody has one. Theirs is showing.",
+    "spicy": true
+  },
+  {
+    "id": "TDL_104",
+    "collection_id": "TDL",
+    "character_id": "TDL_C01",
+    "number": 104,
+    "name": "Anga — Masquerade",
+    "rarity": "epic",
+    "image": "stickers/TDL_104.png",
+    "flavor_text": "Behind the mask, another mask.",
+    "spicy": true
+  },
+  {
+    "id": "TDL_105",
+    "collection_id": "TDL",
+    "character_id": "TDL_C01",
+    "number": 105,
+    "name": "Anga — Heart of Fire",
+    "rarity": "legendary",
+    "image": "stickers/TDL_105.png",
+    "flavor_text": "Too hot for the regular album pages.",
+    "spicy": true
   },
   {
     "id": "TDL_011",
@@ -1107,7 +1822,8 @@
     "name": "Bral — First Steps",
     "rarity": "common",
     "image": "stickers/TDL_011.png",
-    "flavor_text": "Where every story begins."
+    "flavor_text": "Where every story begins.",
+    "spicy": false
   },
   {
     "id": "TDL_012",
@@ -1117,7 +1833,8 @@
     "name": "Bral — Daily Ritual",
     "rarity": "common",
     "image": "stickers/TDL_012.png",
-    "flavor_text": "The small habit that keeps them going."
+    "flavor_text": "The small habit that keeps them going.",
+    "spicy": false
   },
   {
     "id": "TDL_013",
@@ -1127,7 +1844,8 @@
     "name": "Bral — Quiet Moment",
     "rarity": "common",
     "image": "stickers/TDL_013.png",
-    "flavor_text": "Even heroes need to breathe."
+    "flavor_text": "Even heroes need to breathe.",
+    "spicy": false
   },
   {
     "id": "TDL_014",
@@ -1137,7 +1855,8 @@
     "name": "Bral — Tools of the Trade",
     "rarity": "uncommon",
     "image": "stickers/TDL_014.png",
-    "flavor_text": "Never leaves home without them."
+    "flavor_text": "Never leaves home without them.",
+    "spicy": false
   },
   {
     "id": "TDL_015",
@@ -1147,7 +1866,8 @@
     "name": "Bral — Among Friends",
     "rarity": "uncommon",
     "image": "stickers/TDL_015.png",
-    "flavor_text": "Stronger together, always."
+    "flavor_text": "Stronger together, always.",
+    "spicy": false
   },
   {
     "id": "TDL_016",
@@ -1157,7 +1877,8 @@
     "name": "Bral — Against the Wind",
     "rarity": "uncommon",
     "image": "stickers/TDL_016.png",
-    "flavor_text": "The day everything pushed back."
+    "flavor_text": "The day everything pushed back.",
+    "spicy": false
   },
   {
     "id": "TDL_017",
@@ -1167,7 +1888,8 @@
     "name": "Bral — Signature Move",
     "rarity": "rare",
     "image": "stickers/TDL_017.png",
-    "flavor_text": "You'd know it anywhere."
+    "flavor_text": "You'd know it anywhere.",
+    "spicy": false
   },
   {
     "id": "TDL_018",
@@ -1177,7 +1899,8 @@
     "name": "Bral — Night Shift",
     "rarity": "rare",
     "image": "stickers/TDL_018.png",
-    "flavor_text": "The city looks different after dark."
+    "flavor_text": "The city looks different after dark.",
+    "spicy": false
   },
   {
     "id": "TDL_019",
@@ -1187,7 +1910,8 @@
     "name": "Bral — Moment of Glory",
     "rarity": "epic",
     "image": "stickers/TDL_019.png",
-    "flavor_text": "The one everybody still talks about."
+    "flavor_text": "The one everybody still talks about.",
+    "spicy": false
   },
   {
     "id": "TDL_020",
@@ -1197,7 +1921,63 @@
     "name": "Bral — Golden Portrait",
     "rarity": "legendary",
     "image": "stickers/TDL_020.png",
-    "flavor_text": "A legend, captured in gold."
+    "flavor_text": "A legend, captured in gold.",
+    "spicy": false
+  },
+  {
+    "id": "TDL_106",
+    "collection_id": "TDL",
+    "character_id": "TDL_C02",
+    "number": 106,
+    "name": "Bral — Secret Side",
+    "rarity": "common",
+    "image": "stickers/TDL_106.png",
+    "flavor_text": "Not everyone gets to see this.",
+    "spicy": true
+  },
+  {
+    "id": "TDL_107",
+    "collection_id": "TDL",
+    "character_id": "TDL_C02",
+    "number": 107,
+    "name": "Bral — After Hours",
+    "rarity": "uncommon",
+    "image": "stickers/TDL_107.png",
+    "flavor_text": "When the day job ends, the real story begins.",
+    "spicy": true
+  },
+  {
+    "id": "TDL_108",
+    "collection_id": "TDL",
+    "character_id": "TDL_C02",
+    "number": 108,
+    "name": "Bral — Guilty Pleasure",
+    "rarity": "rare",
+    "image": "stickers/TDL_108.png",
+    "flavor_text": "Everybody has one. Theirs is showing.",
+    "spicy": true
+  },
+  {
+    "id": "TDL_109",
+    "collection_id": "TDL",
+    "character_id": "TDL_C02",
+    "number": 109,
+    "name": "Bral — Masquerade",
+    "rarity": "epic",
+    "image": "stickers/TDL_109.png",
+    "flavor_text": "Behind the mask, another mask.",
+    "spicy": true
+  },
+  {
+    "id": "TDL_110",
+    "collection_id": "TDL",
+    "character_id": "TDL_C02",
+    "number": 110,
+    "name": "Bral — Heart of Fire",
+    "rarity": "legendary",
+    "image": "stickers/TDL_110.png",
+    "flavor_text": "Too hot for the regular album pages.",
+    "spicy": true
   },
   {
     "id": "TDL_021",
@@ -1207,7 +1987,8 @@
     "name": "Cora — First Steps",
     "rarity": "common",
     "image": "stickers/TDL_021.png",
-    "flavor_text": "Where every story begins."
+    "flavor_text": "Where every story begins.",
+    "spicy": false
   },
   {
     "id": "TDL_022",
@@ -1217,7 +1998,8 @@
     "name": "Cora — Daily Ritual",
     "rarity": "common",
     "image": "stickers/TDL_022.png",
-    "flavor_text": "The small habit that keeps them going."
+    "flavor_text": "The small habit that keeps them going.",
+    "spicy": false
   },
   {
     "id": "TDL_023",
@@ -1227,7 +2009,8 @@
     "name": "Cora — Quiet Moment",
     "rarity": "common",
     "image": "stickers/TDL_023.png",
-    "flavor_text": "Even heroes need to breathe."
+    "flavor_text": "Even heroes need to breathe.",
+    "spicy": false
   },
   {
     "id": "TDL_024",
@@ -1237,7 +2020,8 @@
     "name": "Cora — Tools of the Trade",
     "rarity": "uncommon",
     "image": "stickers/TDL_024.png",
-    "flavor_text": "Never leaves home without them."
+    "flavor_text": "Never leaves home without them.",
+    "spicy": false
   },
   {
     "id": "TDL_025",
@@ -1247,7 +2031,8 @@
     "name": "Cora — Among Friends",
     "rarity": "uncommon",
     "image": "stickers/TDL_025.png",
-    "flavor_text": "Stronger together, always."
+    "flavor_text": "Stronger together, always.",
+    "spicy": false
   },
   {
     "id": "TDL_026",
@@ -1257,7 +2042,8 @@
     "name": "Cora — Against the Wind",
     "rarity": "uncommon",
     "image": "stickers/TDL_026.png",
-    "flavor_text": "The day everything pushed back."
+    "flavor_text": "The day everything pushed back.",
+    "spicy": false
   },
   {
     "id": "TDL_027",
@@ -1267,7 +2053,8 @@
     "name": "Cora — Signature Move",
     "rarity": "rare",
     "image": "stickers/TDL_027.png",
-    "flavor_text": "You'd know it anywhere."
+    "flavor_text": "You'd know it anywhere.",
+    "spicy": false
   },
   {
     "id": "TDL_028",
@@ -1277,7 +2064,8 @@
     "name": "Cora — Night Shift",
     "rarity": "rare",
     "image": "stickers/TDL_028.png",
-    "flavor_text": "The city looks different after dark."
+    "flavor_text": "The city looks different after dark.",
+    "spicy": false
   },
   {
     "id": "TDL_029",
@@ -1287,7 +2075,8 @@
     "name": "Cora — Moment of Glory",
     "rarity": "epic",
     "image": "stickers/TDL_029.png",
-    "flavor_text": "The one everybody still talks about."
+    "flavor_text": "The one everybody still talks about.",
+    "spicy": false
   },
   {
     "id": "TDL_030",
@@ -1297,7 +2086,63 @@
     "name": "Cora — Golden Portrait",
     "rarity": "legendary",
     "image": "stickers/TDL_030.png",
-    "flavor_text": "A legend, captured in gold."
+    "flavor_text": "A legend, captured in gold.",
+    "spicy": false
+  },
+  {
+    "id": "TDL_111",
+    "collection_id": "TDL",
+    "character_id": "TDL_C03",
+    "number": 111,
+    "name": "Cora — Secret Side",
+    "rarity": "common",
+    "image": "stickers/TDL_111.png",
+    "flavor_text": "Not everyone gets to see this.",
+    "spicy": true
+  },
+  {
+    "id": "TDL_112",
+    "collection_id": "TDL",
+    "character_id": "TDL_C03",
+    "number": 112,
+    "name": "Cora — After Hours",
+    "rarity": "uncommon",
+    "image": "stickers/TDL_112.png",
+    "flavor_text": "When the day job ends, the real story begins.",
+    "spicy": true
+  },
+  {
+    "id": "TDL_113",
+    "collection_id": "TDL",
+    "character_id": "TDL_C03",
+    "number": 113,
+    "name": "Cora — Guilty Pleasure",
+    "rarity": "rare",
+    "image": "stickers/TDL_113.png",
+    "flavor_text": "Everybody has one. Theirs is showing.",
+    "spicy": true
+  },
+  {
+    "id": "TDL_114",
+    "collection_id": "TDL",
+    "character_id": "TDL_C03",
+    "number": 114,
+    "name": "Cora — Masquerade",
+    "rarity": "epic",
+    "image": "stickers/TDL_114.png",
+    "flavor_text": "Behind the mask, another mask.",
+    "spicy": true
+  },
+  {
+    "id": "TDL_115",
+    "collection_id": "TDL",
+    "character_id": "TDL_C03",
+    "number": 115,
+    "name": "Cora — Heart of Fire",
+    "rarity": "legendary",
+    "image": "stickers/TDL_115.png",
+    "flavor_text": "Too hot for the regular album pages.",
+    "spicy": true
   },
   {
     "id": "TDL_031",
@@ -1307,7 +2152,8 @@
     "name": "Drift — First Steps",
     "rarity": "common",
     "image": "stickers/TDL_031.png",
-    "flavor_text": "Where every story begins."
+    "flavor_text": "Where every story begins.",
+    "spicy": false
   },
   {
     "id": "TDL_032",
@@ -1317,7 +2163,8 @@
     "name": "Drift — Daily Ritual",
     "rarity": "common",
     "image": "stickers/TDL_032.png",
-    "flavor_text": "The small habit that keeps them going."
+    "flavor_text": "The small habit that keeps them going.",
+    "spicy": false
   },
   {
     "id": "TDL_033",
@@ -1327,7 +2174,8 @@
     "name": "Drift — Quiet Moment",
     "rarity": "common",
     "image": "stickers/TDL_033.png",
-    "flavor_text": "Even heroes need to breathe."
+    "flavor_text": "Even heroes need to breathe.",
+    "spicy": false
   },
   {
     "id": "TDL_034",
@@ -1337,7 +2185,8 @@
     "name": "Drift — Tools of the Trade",
     "rarity": "uncommon",
     "image": "stickers/TDL_034.png",
-    "flavor_text": "Never leaves home without them."
+    "flavor_text": "Never leaves home without them.",
+    "spicy": false
   },
   {
     "id": "TDL_035",
@@ -1347,7 +2196,8 @@
     "name": "Drift — Among Friends",
     "rarity": "uncommon",
     "image": "stickers/TDL_035.png",
-    "flavor_text": "Stronger together, always."
+    "flavor_text": "Stronger together, always.",
+    "spicy": false
   },
   {
     "id": "TDL_036",
@@ -1357,7 +2207,8 @@
     "name": "Drift — Against the Wind",
     "rarity": "uncommon",
     "image": "stickers/TDL_036.png",
-    "flavor_text": "The day everything pushed back."
+    "flavor_text": "The day everything pushed back.",
+    "spicy": false
   },
   {
     "id": "TDL_037",
@@ -1367,7 +2218,8 @@
     "name": "Drift — Signature Move",
     "rarity": "rare",
     "image": "stickers/TDL_037.png",
-    "flavor_text": "You'd know it anywhere."
+    "flavor_text": "You'd know it anywhere.",
+    "spicy": false
   },
   {
     "id": "TDL_038",
@@ -1377,7 +2229,8 @@
     "name": "Drift — Night Shift",
     "rarity": "rare",
     "image": "stickers/TDL_038.png",
-    "flavor_text": "The city looks different after dark."
+    "flavor_text": "The city looks different after dark.",
+    "spicy": false
   },
   {
     "id": "TDL_039",
@@ -1387,7 +2240,8 @@
     "name": "Drift — Moment of Glory",
     "rarity": "epic",
     "image": "stickers/TDL_039.png",
-    "flavor_text": "The one everybody still talks about."
+    "flavor_text": "The one everybody still talks about.",
+    "spicy": false
   },
   {
     "id": "TDL_040",
@@ -1397,7 +2251,63 @@
     "name": "Drift — Golden Portrait",
     "rarity": "legendary",
     "image": "stickers/TDL_040.png",
-    "flavor_text": "A legend, captured in gold."
+    "flavor_text": "A legend, captured in gold.",
+    "spicy": false
+  },
+  {
+    "id": "TDL_116",
+    "collection_id": "TDL",
+    "character_id": "TDL_C04",
+    "number": 116,
+    "name": "Drift — Secret Side",
+    "rarity": "common",
+    "image": "stickers/TDL_116.png",
+    "flavor_text": "Not everyone gets to see this.",
+    "spicy": true
+  },
+  {
+    "id": "TDL_117",
+    "collection_id": "TDL",
+    "character_id": "TDL_C04",
+    "number": 117,
+    "name": "Drift — After Hours",
+    "rarity": "uncommon",
+    "image": "stickers/TDL_117.png",
+    "flavor_text": "When the day job ends, the real story begins.",
+    "spicy": true
+  },
+  {
+    "id": "TDL_118",
+    "collection_id": "TDL",
+    "character_id": "TDL_C04",
+    "number": 118,
+    "name": "Drift — Guilty Pleasure",
+    "rarity": "rare",
+    "image": "stickers/TDL_118.png",
+    "flavor_text": "Everybody has one. Theirs is showing.",
+    "spicy": true
+  },
+  {
+    "id": "TDL_119",
+    "collection_id": "TDL",
+    "character_id": "TDL_C04",
+    "number": 119,
+    "name": "Drift — Masquerade",
+    "rarity": "epic",
+    "image": "stickers/TDL_119.png",
+    "flavor_text": "Behind the mask, another mask.",
+    "spicy": true
+  },
+  {
+    "id": "TDL_120",
+    "collection_id": "TDL",
+    "character_id": "TDL_C04",
+    "number": 120,
+    "name": "Drift — Heart of Fire",
+    "rarity": "legendary",
+    "image": "stickers/TDL_120.png",
+    "flavor_text": "Too hot for the regular album pages.",
+    "spicy": true
   },
   {
     "id": "TDL_041",
@@ -1407,7 +2317,8 @@
     "name": "Eelio — First Steps",
     "rarity": "common",
     "image": "stickers/TDL_041.png",
-    "flavor_text": "Where every story begins."
+    "flavor_text": "Where every story begins.",
+    "spicy": false
   },
   {
     "id": "TDL_042",
@@ -1417,7 +2328,8 @@
     "name": "Eelio — Daily Ritual",
     "rarity": "common",
     "image": "stickers/TDL_042.png",
-    "flavor_text": "The small habit that keeps them going."
+    "flavor_text": "The small habit that keeps them going.",
+    "spicy": false
   },
   {
     "id": "TDL_043",
@@ -1427,7 +2339,8 @@
     "name": "Eelio — Quiet Moment",
     "rarity": "common",
     "image": "stickers/TDL_043.png",
-    "flavor_text": "Even heroes need to breathe."
+    "flavor_text": "Even heroes need to breathe.",
+    "spicy": false
   },
   {
     "id": "TDL_044",
@@ -1437,7 +2350,8 @@
     "name": "Eelio — Tools of the Trade",
     "rarity": "uncommon",
     "image": "stickers/TDL_044.png",
-    "flavor_text": "Never leaves home without them."
+    "flavor_text": "Never leaves home without them.",
+    "spicy": false
   },
   {
     "id": "TDL_045",
@@ -1447,7 +2361,8 @@
     "name": "Eelio — Among Friends",
     "rarity": "uncommon",
     "image": "stickers/TDL_045.png",
-    "flavor_text": "Stronger together, always."
+    "flavor_text": "Stronger together, always.",
+    "spicy": false
   },
   {
     "id": "TDL_046",
@@ -1457,7 +2372,8 @@
     "name": "Eelio — Against the Wind",
     "rarity": "uncommon",
     "image": "stickers/TDL_046.png",
-    "flavor_text": "The day everything pushed back."
+    "flavor_text": "The day everything pushed back.",
+    "spicy": false
   },
   {
     "id": "TDL_047",
@@ -1467,7 +2383,8 @@
     "name": "Eelio — Signature Move",
     "rarity": "rare",
     "image": "stickers/TDL_047.png",
-    "flavor_text": "You'd know it anywhere."
+    "flavor_text": "You'd know it anywhere.",
+    "spicy": false
   },
   {
     "id": "TDL_048",
@@ -1477,7 +2394,8 @@
     "name": "Eelio — Night Shift",
     "rarity": "rare",
     "image": "stickers/TDL_048.png",
-    "flavor_text": "The city looks different after dark."
+    "flavor_text": "The city looks different after dark.",
+    "spicy": false
   },
   {
     "id": "TDL_049",
@@ -1487,7 +2405,8 @@
     "name": "Eelio — Moment of Glory",
     "rarity": "epic",
     "image": "stickers/TDL_049.png",
-    "flavor_text": "The one everybody still talks about."
+    "flavor_text": "The one everybody still talks about.",
+    "spicy": false
   },
   {
     "id": "TDL_050",
@@ -1497,7 +2416,63 @@
     "name": "Eelio — Golden Portrait",
     "rarity": "legendary",
     "image": "stickers/TDL_050.png",
-    "flavor_text": "A legend, captured in gold."
+    "flavor_text": "A legend, captured in gold.",
+    "spicy": false
+  },
+  {
+    "id": "TDL_121",
+    "collection_id": "TDL",
+    "character_id": "TDL_C05",
+    "number": 121,
+    "name": "Eelio — Secret Side",
+    "rarity": "common",
+    "image": "stickers/TDL_121.png",
+    "flavor_text": "Not everyone gets to see this.",
+    "spicy": true
+  },
+  {
+    "id": "TDL_122",
+    "collection_id": "TDL",
+    "character_id": "TDL_C05",
+    "number": 122,
+    "name": "Eelio — After Hours",
+    "rarity": "uncommon",
+    "image": "stickers/TDL_122.png",
+    "flavor_text": "When the day job ends, the real story begins.",
+    "spicy": true
+  },
+  {
+    "id": "TDL_123",
+    "collection_id": "TDL",
+    "character_id": "TDL_C05",
+    "number": 123,
+    "name": "Eelio — Guilty Pleasure",
+    "rarity": "rare",
+    "image": "stickers/TDL_123.png",
+    "flavor_text": "Everybody has one. Theirs is showing.",
+    "spicy": true
+  },
+  {
+    "id": "TDL_124",
+    "collection_id": "TDL",
+    "character_id": "TDL_C05",
+    "number": 124,
+    "name": "Eelio — Masquerade",
+    "rarity": "epic",
+    "image": "stickers/TDL_124.png",
+    "flavor_text": "Behind the mask, another mask.",
+    "spicy": true
+  },
+  {
+    "id": "TDL_125",
+    "collection_id": "TDL",
+    "character_id": "TDL_C05",
+    "number": 125,
+    "name": "Eelio — Heart of Fire",
+    "rarity": "legendary",
+    "image": "stickers/TDL_125.png",
+    "flavor_text": "Too hot for the regular album pages.",
+    "spicy": true
   },
   {
     "id": "TDL_051",
@@ -1507,7 +2482,8 @@
     "name": "Fana — First Steps",
     "rarity": "common",
     "image": "stickers/TDL_051.png",
-    "flavor_text": "Where every story begins."
+    "flavor_text": "Where every story begins.",
+    "spicy": false
   },
   {
     "id": "TDL_052",
@@ -1517,7 +2493,8 @@
     "name": "Fana — Daily Ritual",
     "rarity": "common",
     "image": "stickers/TDL_052.png",
-    "flavor_text": "The small habit that keeps them going."
+    "flavor_text": "The small habit that keeps them going.",
+    "spicy": false
   },
   {
     "id": "TDL_053",
@@ -1527,7 +2504,8 @@
     "name": "Fana — Quiet Moment",
     "rarity": "common",
     "image": "stickers/TDL_053.png",
-    "flavor_text": "Even heroes need to breathe."
+    "flavor_text": "Even heroes need to breathe.",
+    "spicy": false
   },
   {
     "id": "TDL_054",
@@ -1537,7 +2515,8 @@
     "name": "Fana — Tools of the Trade",
     "rarity": "uncommon",
     "image": "stickers/TDL_054.png",
-    "flavor_text": "Never leaves home without them."
+    "flavor_text": "Never leaves home without them.",
+    "spicy": false
   },
   {
     "id": "TDL_055",
@@ -1547,7 +2526,8 @@
     "name": "Fana — Among Friends",
     "rarity": "uncommon",
     "image": "stickers/TDL_055.png",
-    "flavor_text": "Stronger together, always."
+    "flavor_text": "Stronger together, always.",
+    "spicy": false
   },
   {
     "id": "TDL_056",
@@ -1557,7 +2537,8 @@
     "name": "Fana — Against the Wind",
     "rarity": "uncommon",
     "image": "stickers/TDL_056.png",
-    "flavor_text": "The day everything pushed back."
+    "flavor_text": "The day everything pushed back.",
+    "spicy": false
   },
   {
     "id": "TDL_057",
@@ -1567,7 +2548,8 @@
     "name": "Fana — Signature Move",
     "rarity": "rare",
     "image": "stickers/TDL_057.png",
-    "flavor_text": "You'd know it anywhere."
+    "flavor_text": "You'd know it anywhere.",
+    "spicy": false
   },
   {
     "id": "TDL_058",
@@ -1577,7 +2559,8 @@
     "name": "Fana — Night Shift",
     "rarity": "rare",
     "image": "stickers/TDL_058.png",
-    "flavor_text": "The city looks different after dark."
+    "flavor_text": "The city looks different after dark.",
+    "spicy": false
   },
   {
     "id": "TDL_059",
@@ -1587,7 +2570,8 @@
     "name": "Fana — Moment of Glory",
     "rarity": "epic",
     "image": "stickers/TDL_059.png",
-    "flavor_text": "The one everybody still talks about."
+    "flavor_text": "The one everybody still talks about.",
+    "spicy": false
   },
   {
     "id": "TDL_060",
@@ -1597,7 +2581,63 @@
     "name": "Fana — Golden Portrait",
     "rarity": "legendary",
     "image": "stickers/TDL_060.png",
-    "flavor_text": "A legend, captured in gold."
+    "flavor_text": "A legend, captured in gold.",
+    "spicy": false
+  },
+  {
+    "id": "TDL_126",
+    "collection_id": "TDL",
+    "character_id": "TDL_C06",
+    "number": 126,
+    "name": "Fana — Secret Side",
+    "rarity": "common",
+    "image": "stickers/TDL_126.png",
+    "flavor_text": "Not everyone gets to see this.",
+    "spicy": true
+  },
+  {
+    "id": "TDL_127",
+    "collection_id": "TDL",
+    "character_id": "TDL_C06",
+    "number": 127,
+    "name": "Fana — After Hours",
+    "rarity": "uncommon",
+    "image": "stickers/TDL_127.png",
+    "flavor_text": "When the day job ends, the real story begins.",
+    "spicy": true
+  },
+  {
+    "id": "TDL_128",
+    "collection_id": "TDL",
+    "character_id": "TDL_C06",
+    "number": 128,
+    "name": "Fana — Guilty Pleasure",
+    "rarity": "rare",
+    "image": "stickers/TDL_128.png",
+    "flavor_text": "Everybody has one. Theirs is showing.",
+    "spicy": true
+  },
+  {
+    "id": "TDL_129",
+    "collection_id": "TDL",
+    "character_id": "TDL_C06",
+    "number": 129,
+    "name": "Fana — Masquerade",
+    "rarity": "epic",
+    "image": "stickers/TDL_129.png",
+    "flavor_text": "Behind the mask, another mask.",
+    "spicy": true
+  },
+  {
+    "id": "TDL_130",
+    "collection_id": "TDL",
+    "character_id": "TDL_C06",
+    "number": 130,
+    "name": "Fana — Heart of Fire",
+    "rarity": "legendary",
+    "image": "stickers/TDL_130.png",
+    "flavor_text": "Too hot for the regular album pages.",
+    "spicy": true
   },
   {
     "id": "TDL_061",
@@ -1607,7 +2647,8 @@
     "name": "Gill — First Steps",
     "rarity": "common",
     "image": "stickers/TDL_061.png",
-    "flavor_text": "Where every story begins."
+    "flavor_text": "Where every story begins.",
+    "spicy": false
   },
   {
     "id": "TDL_062",
@@ -1617,7 +2658,8 @@
     "name": "Gill — Daily Ritual",
     "rarity": "common",
     "image": "stickers/TDL_062.png",
-    "flavor_text": "The small habit that keeps them going."
+    "flavor_text": "The small habit that keeps them going.",
+    "spicy": false
   },
   {
     "id": "TDL_063",
@@ -1627,7 +2669,8 @@
     "name": "Gill — Quiet Moment",
     "rarity": "common",
     "image": "stickers/TDL_063.png",
-    "flavor_text": "Even heroes need to breathe."
+    "flavor_text": "Even heroes need to breathe.",
+    "spicy": false
   },
   {
     "id": "TDL_064",
@@ -1637,7 +2680,8 @@
     "name": "Gill — Tools of the Trade",
     "rarity": "uncommon",
     "image": "stickers/TDL_064.png",
-    "flavor_text": "Never leaves home without them."
+    "flavor_text": "Never leaves home without them.",
+    "spicy": false
   },
   {
     "id": "TDL_065",
@@ -1647,7 +2691,8 @@
     "name": "Gill — Among Friends",
     "rarity": "uncommon",
     "image": "stickers/TDL_065.png",
-    "flavor_text": "Stronger together, always."
+    "flavor_text": "Stronger together, always.",
+    "spicy": false
   },
   {
     "id": "TDL_066",
@@ -1657,7 +2702,8 @@
     "name": "Gill — Against the Wind",
     "rarity": "uncommon",
     "image": "stickers/TDL_066.png",
-    "flavor_text": "The day everything pushed back."
+    "flavor_text": "The day everything pushed back.",
+    "spicy": false
   },
   {
     "id": "TDL_067",
@@ -1667,7 +2713,8 @@
     "name": "Gill — Signature Move",
     "rarity": "rare",
     "image": "stickers/TDL_067.png",
-    "flavor_text": "You'd know it anywhere."
+    "flavor_text": "You'd know it anywhere.",
+    "spicy": false
   },
   {
     "id": "TDL_068",
@@ -1677,7 +2724,8 @@
     "name": "Gill — Night Shift",
     "rarity": "rare",
     "image": "stickers/TDL_068.png",
-    "flavor_text": "The city looks different after dark."
+    "flavor_text": "The city looks different after dark.",
+    "spicy": false
   },
   {
     "id": "TDL_069",
@@ -1687,7 +2735,8 @@
     "name": "Gill — Moment of Glory",
     "rarity": "epic",
     "image": "stickers/TDL_069.png",
-    "flavor_text": "The one everybody still talks about."
+    "flavor_text": "The one everybody still talks about.",
+    "spicy": false
   },
   {
     "id": "TDL_070",
@@ -1697,7 +2746,63 @@
     "name": "Gill — Golden Portrait",
     "rarity": "legendary",
     "image": "stickers/TDL_070.png",
-    "flavor_text": "A legend, captured in gold."
+    "flavor_text": "A legend, captured in gold.",
+    "spicy": false
+  },
+  {
+    "id": "TDL_131",
+    "collection_id": "TDL",
+    "character_id": "TDL_C07",
+    "number": 131,
+    "name": "Gill — Secret Side",
+    "rarity": "common",
+    "image": "stickers/TDL_131.png",
+    "flavor_text": "Not everyone gets to see this.",
+    "spicy": true
+  },
+  {
+    "id": "TDL_132",
+    "collection_id": "TDL",
+    "character_id": "TDL_C07",
+    "number": 132,
+    "name": "Gill — After Hours",
+    "rarity": "uncommon",
+    "image": "stickers/TDL_132.png",
+    "flavor_text": "When the day job ends, the real story begins.",
+    "spicy": true
+  },
+  {
+    "id": "TDL_133",
+    "collection_id": "TDL",
+    "character_id": "TDL_C07",
+    "number": 133,
+    "name": "Gill — Guilty Pleasure",
+    "rarity": "rare",
+    "image": "stickers/TDL_133.png",
+    "flavor_text": "Everybody has one. Theirs is showing.",
+    "spicy": true
+  },
+  {
+    "id": "TDL_134",
+    "collection_id": "TDL",
+    "character_id": "TDL_C07",
+    "number": 134,
+    "name": "Gill — Masquerade",
+    "rarity": "epic",
+    "image": "stickers/TDL_134.png",
+    "flavor_text": "Behind the mask, another mask.",
+    "spicy": true
+  },
+  {
+    "id": "TDL_135",
+    "collection_id": "TDL",
+    "character_id": "TDL_C07",
+    "number": 135,
+    "name": "Gill — Heart of Fire",
+    "rarity": "legendary",
+    "image": "stickers/TDL_135.png",
+    "flavor_text": "Too hot for the regular album pages.",
+    "spicy": true
   },
   {
     "id": "TDL_071",
@@ -1707,7 +2812,8 @@
     "name": "Hydra — First Steps",
     "rarity": "common",
     "image": "stickers/TDL_071.png",
-    "flavor_text": "Where every story begins."
+    "flavor_text": "Where every story begins.",
+    "spicy": false
   },
   {
     "id": "TDL_072",
@@ -1717,7 +2823,8 @@
     "name": "Hydra — Daily Ritual",
     "rarity": "common",
     "image": "stickers/TDL_072.png",
-    "flavor_text": "The small habit that keeps them going."
+    "flavor_text": "The small habit that keeps them going.",
+    "spicy": false
   },
   {
     "id": "TDL_073",
@@ -1727,7 +2834,8 @@
     "name": "Hydra — Quiet Moment",
     "rarity": "common",
     "image": "stickers/TDL_073.png",
-    "flavor_text": "Even heroes need to breathe."
+    "flavor_text": "Even heroes need to breathe.",
+    "spicy": false
   },
   {
     "id": "TDL_074",
@@ -1737,7 +2845,8 @@
     "name": "Hydra — Tools of the Trade",
     "rarity": "uncommon",
     "image": "stickers/TDL_074.png",
-    "flavor_text": "Never leaves home without them."
+    "flavor_text": "Never leaves home without them.",
+    "spicy": false
   },
   {
     "id": "TDL_075",
@@ -1747,7 +2856,8 @@
     "name": "Hydra — Among Friends",
     "rarity": "uncommon",
     "image": "stickers/TDL_075.png",
-    "flavor_text": "Stronger together, always."
+    "flavor_text": "Stronger together, always.",
+    "spicy": false
   },
   {
     "id": "TDL_076",
@@ -1757,7 +2867,8 @@
     "name": "Hydra — Against the Wind",
     "rarity": "uncommon",
     "image": "stickers/TDL_076.png",
-    "flavor_text": "The day everything pushed back."
+    "flavor_text": "The day everything pushed back.",
+    "spicy": false
   },
   {
     "id": "TDL_077",
@@ -1767,7 +2878,8 @@
     "name": "Hydra — Signature Move",
     "rarity": "rare",
     "image": "stickers/TDL_077.png",
-    "flavor_text": "You'd know it anywhere."
+    "flavor_text": "You'd know it anywhere.",
+    "spicy": false
   },
   {
     "id": "TDL_078",
@@ -1777,7 +2889,8 @@
     "name": "Hydra — Night Shift",
     "rarity": "rare",
     "image": "stickers/TDL_078.png",
-    "flavor_text": "The city looks different after dark."
+    "flavor_text": "The city looks different after dark.",
+    "spicy": false
   },
   {
     "id": "TDL_079",
@@ -1787,7 +2900,8 @@
     "name": "Hydra — Moment of Glory",
     "rarity": "epic",
     "image": "stickers/TDL_079.png",
-    "flavor_text": "The one everybody still talks about."
+    "flavor_text": "The one everybody still talks about.",
+    "spicy": false
   },
   {
     "id": "TDL_080",
@@ -1797,7 +2911,63 @@
     "name": "Hydra — Golden Portrait",
     "rarity": "legendary",
     "image": "stickers/TDL_080.png",
-    "flavor_text": "A legend, captured in gold."
+    "flavor_text": "A legend, captured in gold.",
+    "spicy": false
+  },
+  {
+    "id": "TDL_136",
+    "collection_id": "TDL",
+    "character_id": "TDL_C08",
+    "number": 136,
+    "name": "Hydra — Secret Side",
+    "rarity": "common",
+    "image": "stickers/TDL_136.png",
+    "flavor_text": "Not everyone gets to see this.",
+    "spicy": true
+  },
+  {
+    "id": "TDL_137",
+    "collection_id": "TDL",
+    "character_id": "TDL_C08",
+    "number": 137,
+    "name": "Hydra — After Hours",
+    "rarity": "uncommon",
+    "image": "stickers/TDL_137.png",
+    "flavor_text": "When the day job ends, the real story begins.",
+    "spicy": true
+  },
+  {
+    "id": "TDL_138",
+    "collection_id": "TDL",
+    "character_id": "TDL_C08",
+    "number": 138,
+    "name": "Hydra — Guilty Pleasure",
+    "rarity": "rare",
+    "image": "stickers/TDL_138.png",
+    "flavor_text": "Everybody has one. Theirs is showing.",
+    "spicy": true
+  },
+  {
+    "id": "TDL_139",
+    "collection_id": "TDL",
+    "character_id": "TDL_C08",
+    "number": 139,
+    "name": "Hydra — Masquerade",
+    "rarity": "epic",
+    "image": "stickers/TDL_139.png",
+    "flavor_text": "Behind the mask, another mask.",
+    "spicy": true
+  },
+  {
+    "id": "TDL_140",
+    "collection_id": "TDL",
+    "character_id": "TDL_C08",
+    "number": 140,
+    "name": "Hydra — Heart of Fire",
+    "rarity": "legendary",
+    "image": "stickers/TDL_140.png",
+    "flavor_text": "Too hot for the regular album pages.",
+    "spicy": true
   },
   {
     "id": "TDL_081",
@@ -1807,7 +2977,8 @@
     "name": "Inko — First Steps",
     "rarity": "common",
     "image": "stickers/TDL_081.png",
-    "flavor_text": "Where every story begins."
+    "flavor_text": "Where every story begins.",
+    "spicy": false
   },
   {
     "id": "TDL_082",
@@ -1817,7 +2988,8 @@
     "name": "Inko — Daily Ritual",
     "rarity": "common",
     "image": "stickers/TDL_082.png",
-    "flavor_text": "The small habit that keeps them going."
+    "flavor_text": "The small habit that keeps them going.",
+    "spicy": false
   },
   {
     "id": "TDL_083",
@@ -1827,7 +2999,8 @@
     "name": "Inko — Quiet Moment",
     "rarity": "common",
     "image": "stickers/TDL_083.png",
-    "flavor_text": "Even heroes need to breathe."
+    "flavor_text": "Even heroes need to breathe.",
+    "spicy": false
   },
   {
     "id": "TDL_084",
@@ -1837,7 +3010,8 @@
     "name": "Inko — Tools of the Trade",
     "rarity": "uncommon",
     "image": "stickers/TDL_084.png",
-    "flavor_text": "Never leaves home without them."
+    "flavor_text": "Never leaves home without them.",
+    "spicy": false
   },
   {
     "id": "TDL_085",
@@ -1847,7 +3021,8 @@
     "name": "Inko — Among Friends",
     "rarity": "uncommon",
     "image": "stickers/TDL_085.png",
-    "flavor_text": "Stronger together, always."
+    "flavor_text": "Stronger together, always.",
+    "spicy": false
   },
   {
     "id": "TDL_086",
@@ -1857,7 +3032,8 @@
     "name": "Inko — Against the Wind",
     "rarity": "uncommon",
     "image": "stickers/TDL_086.png",
-    "flavor_text": "The day everything pushed back."
+    "flavor_text": "The day everything pushed back.",
+    "spicy": false
   },
   {
     "id": "TDL_087",
@@ -1867,7 +3043,8 @@
     "name": "Inko — Signature Move",
     "rarity": "rare",
     "image": "stickers/TDL_087.png",
-    "flavor_text": "You'd know it anywhere."
+    "flavor_text": "You'd know it anywhere.",
+    "spicy": false
   },
   {
     "id": "TDL_088",
@@ -1877,7 +3054,8 @@
     "name": "Inko — Night Shift",
     "rarity": "rare",
     "image": "stickers/TDL_088.png",
-    "flavor_text": "The city looks different after dark."
+    "flavor_text": "The city looks different after dark.",
+    "spicy": false
   },
   {
     "id": "TDL_089",
@@ -1887,7 +3065,8 @@
     "name": "Inko — Moment of Glory",
     "rarity": "epic",
     "image": "stickers/TDL_089.png",
-    "flavor_text": "The one everybody still talks about."
+    "flavor_text": "The one everybody still talks about.",
+    "spicy": false
   },
   {
     "id": "TDL_090",
@@ -1897,7 +3076,63 @@
     "name": "Inko — Golden Portrait",
     "rarity": "legendary",
     "image": "stickers/TDL_090.png",
-    "flavor_text": "A legend, captured in gold."
+    "flavor_text": "A legend, captured in gold.",
+    "spicy": false
+  },
+  {
+    "id": "TDL_141",
+    "collection_id": "TDL",
+    "character_id": "TDL_C09",
+    "number": 141,
+    "name": "Inko — Secret Side",
+    "rarity": "common",
+    "image": "stickers/TDL_141.png",
+    "flavor_text": "Not everyone gets to see this.",
+    "spicy": true
+  },
+  {
+    "id": "TDL_142",
+    "collection_id": "TDL",
+    "character_id": "TDL_C09",
+    "number": 142,
+    "name": "Inko — After Hours",
+    "rarity": "uncommon",
+    "image": "stickers/TDL_142.png",
+    "flavor_text": "When the day job ends, the real story begins.",
+    "spicy": true
+  },
+  {
+    "id": "TDL_143",
+    "collection_id": "TDL",
+    "character_id": "TDL_C09",
+    "number": 143,
+    "name": "Inko — Guilty Pleasure",
+    "rarity": "rare",
+    "image": "stickers/TDL_143.png",
+    "flavor_text": "Everybody has one. Theirs is showing.",
+    "spicy": true
+  },
+  {
+    "id": "TDL_144",
+    "collection_id": "TDL",
+    "character_id": "TDL_C09",
+    "number": 144,
+    "name": "Inko — Masquerade",
+    "rarity": "epic",
+    "image": "stickers/TDL_144.png",
+    "flavor_text": "Behind the mask, another mask.",
+    "spicy": true
+  },
+  {
+    "id": "TDL_145",
+    "collection_id": "TDL",
+    "character_id": "TDL_C09",
+    "number": 145,
+    "name": "Inko — Heart of Fire",
+    "rarity": "legendary",
+    "image": "stickers/TDL_145.png",
+    "flavor_text": "Too hot for the regular album pages.",
+    "spicy": true
   },
   {
     "id": "TDL_091",
@@ -1907,7 +3142,8 @@
     "name": "Juna — First Steps",
     "rarity": "common",
     "image": "stickers/TDL_091.png",
-    "flavor_text": "Where every story begins."
+    "flavor_text": "Where every story begins.",
+    "spicy": false
   },
   {
     "id": "TDL_092",
@@ -1917,7 +3153,8 @@
     "name": "Juna — Daily Ritual",
     "rarity": "common",
     "image": "stickers/TDL_092.png",
-    "flavor_text": "The small habit that keeps them going."
+    "flavor_text": "The small habit that keeps them going.",
+    "spicy": false
   },
   {
     "id": "TDL_093",
@@ -1927,7 +3164,8 @@
     "name": "Juna — Quiet Moment",
     "rarity": "common",
     "image": "stickers/TDL_093.png",
-    "flavor_text": "Even heroes need to breathe."
+    "flavor_text": "Even heroes need to breathe.",
+    "spicy": false
   },
   {
     "id": "TDL_094",
@@ -1937,7 +3175,8 @@
     "name": "Juna — Tools of the Trade",
     "rarity": "uncommon",
     "image": "stickers/TDL_094.png",
-    "flavor_text": "Never leaves home without them."
+    "flavor_text": "Never leaves home without them.",
+    "spicy": false
   },
   {
     "id": "TDL_095",
@@ -1947,7 +3186,8 @@
     "name": "Juna — Among Friends",
     "rarity": "uncommon",
     "image": "stickers/TDL_095.png",
-    "flavor_text": "Stronger together, always."
+    "flavor_text": "Stronger together, always.",
+    "spicy": false
   },
   {
     "id": "TDL_096",
@@ -1957,7 +3197,8 @@
     "name": "Juna — Against the Wind",
     "rarity": "uncommon",
     "image": "stickers/TDL_096.png",
-    "flavor_text": "The day everything pushed back."
+    "flavor_text": "The day everything pushed back.",
+    "spicy": false
   },
   {
     "id": "TDL_097",
@@ -1967,7 +3208,8 @@
     "name": "Juna — Signature Move",
     "rarity": "rare",
     "image": "stickers/TDL_097.png",
-    "flavor_text": "You'd know it anywhere."
+    "flavor_text": "You'd know it anywhere.",
+    "spicy": false
   },
   {
     "id": "TDL_098",
@@ -1977,7 +3219,8 @@
     "name": "Juna — Night Shift",
     "rarity": "rare",
     "image": "stickers/TDL_098.png",
-    "flavor_text": "The city looks different after dark."
+    "flavor_text": "The city looks different after dark.",
+    "spicy": false
   },
   {
     "id": "TDL_099",
@@ -1987,7 +3230,8 @@
     "name": "Juna — Moment of Glory",
     "rarity": "epic",
     "image": "stickers/TDL_099.png",
-    "flavor_text": "The one everybody still talks about."
+    "flavor_text": "The one everybody still talks about.",
+    "spicy": false
   },
   {
     "id": "TDL_100",
@@ -1997,6 +3241,62 @@
     "name": "Juna — Golden Portrait",
     "rarity": "legendary",
     "image": "stickers/TDL_100.png",
-    "flavor_text": "A legend, captured in gold."
+    "flavor_text": "A legend, captured in gold.",
+    "spicy": false
+  },
+  {
+    "id": "TDL_146",
+    "collection_id": "TDL",
+    "character_id": "TDL_C10",
+    "number": 146,
+    "name": "Juna — Secret Side",
+    "rarity": "common",
+    "image": "stickers/TDL_146.png",
+    "flavor_text": "Not everyone gets to see this.",
+    "spicy": true
+  },
+  {
+    "id": "TDL_147",
+    "collection_id": "TDL",
+    "character_id": "TDL_C10",
+    "number": 147,
+    "name": "Juna — After Hours",
+    "rarity": "uncommon",
+    "image": "stickers/TDL_147.png",
+    "flavor_text": "When the day job ends, the real story begins.",
+    "spicy": true
+  },
+  {
+    "id": "TDL_148",
+    "collection_id": "TDL",
+    "character_id": "TDL_C10",
+    "number": 148,
+    "name": "Juna — Guilty Pleasure",
+    "rarity": "rare",
+    "image": "stickers/TDL_148.png",
+    "flavor_text": "Everybody has one. Theirs is showing.",
+    "spicy": true
+  },
+  {
+    "id": "TDL_149",
+    "collection_id": "TDL",
+    "character_id": "TDL_C10",
+    "number": 149,
+    "name": "Juna — Masquerade",
+    "rarity": "epic",
+    "image": "stickers/TDL_149.png",
+    "flavor_text": "Behind the mask, another mask.",
+    "spicy": true
+  },
+  {
+    "id": "TDL_150",
+    "collection_id": "TDL",
+    "character_id": "TDL_C10",
+    "number": 150,
+    "name": "Juna — Heart of Fire",
+    "rarity": "legendary",
+    "image": "stickers/TDL_150.png",
+    "flavor_text": "Too hot for the regular album pages.",
+    "spicy": true
   }
 ]

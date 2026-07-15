@@ -35,6 +35,8 @@ def build_sticker_slot(
     rarity_color = RARITY_COLORS.get(sticker.rarity, "#9e9e9e")
 
     badges: list[ft.Control] = []
+    if sticker.spicy:
+        badges.append(_badge("🌶️", "#ff7043"))
     if state == APPLIED:
         style = album.applied_style(sticker.id)
         body: ft.Control = ft.Column(
