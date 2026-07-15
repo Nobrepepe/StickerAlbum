@@ -1,0 +1,530 @@
+"""Creator screen: build new collections in-app.
+
+Drafts (stored in data/drafts.json) are only visible here. A draft becomes a
+published collection — visible in Collections/Home/Shop pools — only when it
+is complete: a name, 10 named characters, 10 named stickers each. Rarities
+and sticker numbers follow the fixed 3/3/2/1/1 slot pattern automatically.
+"""
+
+import flet as ft
+
+from components.empty_state import empty_state
+from components.placeholders import character_portrait, cover_band, sticker_art
+from components.rarity_chip import rarity_chip
+from models.catalog import Character, Sticker
+from models.draft import DraftCollection
+from models.rarity import RARITY_PATTERN
+from repositories.errors import AppError
+from services.creator_service import character_id, sticker_id, sticker_number
+from views.errors_ui import show_error, show_info
+
+_THEME_COLORS = {
+    "Purple": "#7c4dff",
+    "Cyan": "#00bcd4",
+    "Green": "#4caf50",
+    "Amber": "#ffb300",
+    "Red": "#f44336",
+    "Pink": "#ec407a",
+    "Indigo": "#5c6bc0",
+    "Teal": "#26a69a",
+}
+
+_CARD_BG = "#191922"
+_BORDER = ft.border.all(1, "#2a2a36")
+
+
+def _draft_character(draft: DraftCollection, index: int) -> Character:
+    """Adapter so draft characters reuse the catalog placeholder controls."""
+    c = draft.characters[index - 1]
+    return Character(
+        id=character_id(draft.id, index),
+        collection_id=draft.id,
+        name=c.name or f"Character #{index}",
+        description=c.description,
+        portrait_image=c.portrait_image,
+    )
+
+
+def _draft_sticker(draft: DraftCollection, char_index: int, position: int) -> Sticker:
+    s = draft.characters[char_index - 1].stickers[position - 1]
+    return Sticker(
+        id=sticker_id(draft.id, char_index, position),
+        collection_id=draft.id,
+        character_id=character_id(draft.id, char_index),
+        number=sticker_number(char_index, position),
+        name=s.name or f"Sticker #{position}",
+        rarity=RARITY_PATTERN[position - 1],
+        image=s.image,
+        flavor_text=s.flavor_text,
+    )
+
+
+def build_creator(page: ft.Page, ctx, nav) -> ft.Control:
+    creator = ctx.creator
+    root = ft.Container(expand=True)
+    state: dict = {"draft": None, "char": 1}
+    pending: dict = {}
+
+    # One picker for every upload; replace any picker left by a previous
+    # build so page.overlay doesn't accumulate them.
+    def on_pick_result(e: ft.FilePickerResultEvent):
+        if not e.files:
+            return  # user cancelled the native dialog
+        path = e.files[0].path
+        if not path:
+            show_error(page, "Image import is only available in the desktop app.")
+            return
+        try:
+            rel = creator.attach_image(
+                state["draft"], pending["kind"], path,
+                pending.get("char_index"), pending.get("position"),
+            )
+        except AppError as exc:
+            show_error(page, str(exc))
+            return
+        after = pending.get("after")
+        if after:
+            after(rel)
+        else:
+            render()
+        show_info(page, "Image imported.")
+
+    picker = ft.FilePicker(on_result=on_pick_result)
+    page.overlay[:] = [c for c in page.overlay if not isinstance(c, ft.FilePicker)]
+    page.overlay.append(picker)
+
+    def pick_image(kind: str, char_index: int | None = None,
+                   position: int | None = None, after=None):
+        pending.clear()
+        pending.update(kind=kind, char_index=char_index, position=position, after=after)
+        picker.pick_files(
+            dialog_title="Choose an image",
+            allow_multiple=False,
+            allowed_extensions=["png", "jpg", "jpeg", "webp"],
+        )
+
+    # ---- publishing -------------------------------------------------------
+
+    def publish(draft: DraftCollection):
+        dialog = ft.AlertDialog(
+            modal=True,
+            title=ft.Text(f"Publish {draft.name}?"),
+            content=ft.Text(
+                f"'{draft.name}' ({draft.id}) will appear in Collections and its "
+                "100 stickers become collectible. Add packs for it in "
+                "data/packs.json to make them obtainable. Publishing can't be "
+                "undone from the app.",
+                size=14,
+            ),
+        )
+
+        def do_publish(e):
+            page.close(dialog)
+            try:
+                creator.publish(draft.id)
+            except AppError as exc:
+                show_error(page, str(exc))
+                return
+            state["draft"] = None
+            nav.reload_catalog()
+            show_info(page, f"{draft.name} published! It's now in Collections.")
+            nav.go_collections()
+
+        dialog.actions = [
+            ft.TextButton("Cancel", on_click=lambda e: page.close(dialog)),
+            ft.FilledButton("Publish", icon=ft.Icons.ROCKET_LAUNCH, on_click=do_publish),
+        ]
+        page.open(dialog)
+
+    # ---- new collection / edit info dialog ---------------------------------
+
+    def collection_dialog(draft: DraftCollection | None):
+        is_new = draft is None
+        code_field = ft.TextField(
+            label="Three-letter code",
+            value="" if is_new else draft.id,
+            max_length=3,
+            width=180,
+            capitalization=ft.TextCapitalization.CHARACTERS,
+            input_filter=ft.InputFilter(regex_string=r"[A-Za-z]"),
+            disabled=not is_new,
+            helper_text="Unique, e.g. HGT" if is_new else "Fixed after creation",
+        )
+        name_field = ft.TextField(label="Collection name",
+                                  value="" if is_new else draft.name)
+        desc_field = ft.TextField(label="Description", multiline=True, min_lines=2,
+                                  max_lines=3, value="" if is_new else draft.description)
+        color_field = ft.Dropdown(
+            label="Theme color",
+            options=[ft.dropdown.Option(key=hexv, text=name)
+                     for name, hexv in _THEME_COLORS.items()],
+            value=(None if is_new else draft.theme_color) or _THEME_COLORS["Purple"],
+            width=220,
+        )
+        error_text = ft.Text("", color="#e57373", size=12, visible=False)
+        dialog = ft.AlertDialog(
+            modal=True,
+            title=ft.Text("New collection" if is_new else "Edit collection"),
+            content=ft.Column(
+                [code_field, name_field, desc_field, color_field, error_text],
+                tight=True, spacing=14, width=380,
+            ),
+        )
+
+        def fail(msg: str):
+            error_text.value = msg
+            error_text.visible = True
+            page.update()
+
+        def save(e):
+            name = name_field.value.strip()
+            if not name:
+                fail("The collection needs a name.")
+                return
+            if is_new:
+                try:
+                    new_draft = creator.create_collection(
+                        code_field.value, name, desc_field.value, color_field.value
+                    )
+                except AppError as exc:
+                    fail(str(exc))
+                    return
+                page.close(dialog)
+                open_editor(new_draft)
+            else:
+                draft.name = name
+                draft.description = desc_field.value.strip()
+                draft.theme_color = color_field.value
+                creator.save(draft)
+                page.close(dialog)
+                render()
+
+        dialog.actions = [
+            ft.TextButton("Cancel", on_click=lambda e: page.close(dialog)),
+            ft.FilledButton("Create draft" if is_new else "Save", on_click=save),
+        ]
+        page.open(dialog)
+
+    # ---- draft list ---------------------------------------------------------
+
+    def delete_draft(draft: DraftCollection):
+        dialog = ft.AlertDialog(
+            modal=True,
+            title=ft.Text(f"Delete draft {draft.name or draft.id}?"),
+            content=ft.Text(
+                "The draft and its progress are removed. Imported images stay "
+                "in the assets folder.", size=14,
+            ),
+        )
+
+        def do_delete(e):
+            creator.delete_draft(draft.id)
+            page.close(dialog)
+            render()
+
+        dialog.actions = [
+            ft.TextButton("Cancel", on_click=lambda e: page.close(dialog)),
+            ft.FilledButton("Delete draft", icon=ft.Icons.DELETE_OUTLINE,
+                            on_click=do_delete),
+        ]
+        page.open(dialog)
+
+    def draft_card(draft: DraftCollection) -> ft.Control:
+        chars_done, chars_total = creator.collection_progress(draft)
+        stickers_done = sum(creator.character_progress(c)[0] for c in draft.characters)
+        complete = creator.collection_complete(draft)
+        return ft.Container(
+            width=330, bgcolor=_CARD_BG, border_radius=14, border=_BORDER,
+            clip_behavior=ft.ClipBehavior.ANTI_ALIAS,
+            content=ft.Column([
+                cover_band(draft.cover_image, draft.theme_color, height=70),
+                ft.Container(padding=16, content=ft.Column([
+                    ft.Row([
+                        ft.Text(draft.name or "(unnamed)", size=17,
+                                weight=ft.FontWeight.BOLD, expand=True,
+                                max_lines=1, overflow=ft.TextOverflow.ELLIPSIS),
+                        ft.Container(
+                            content=ft.Text(draft.id, size=11, weight=ft.FontWeight.BOLD),
+                            border=ft.border.all(1, "#4a4a5a"), border_radius=8,
+                            padding=ft.padding.symmetric(horizontal=8, vertical=2),
+                        ),
+                    ]),
+                    ft.Text(
+                        f"{chars_done} / {chars_total} characters · "
+                        f"{stickers_done} / 100 stickers named",
+                        size=12, color=ft.Colors.GREY_400,
+                    ),
+                    ft.ProgressBar(
+                        value=stickers_done / 100,
+                        color=draft.theme_color or "#7c4dff",
+                        bgcolor=ft.Colors.with_opacity(0.1, ft.Colors.WHITE),
+                    ),
+                    ft.Row([
+                        ft.FilledTonalButton("Continue", icon=ft.Icons.EDIT,
+                                             on_click=lambda e, d=draft: open_editor(d)),
+                        ft.FilledButton(
+                            "Publish", icon=ft.Icons.ROCKET_LAUNCH, disabled=not complete,
+                            tooltip=None if complete else
+                            "Every character needs a name and 10 named stickers",
+                            on_click=lambda e, d=draft: publish(d),
+                        ),
+                        ft.IconButton(ft.Icons.DELETE_OUTLINE, tooltip="Delete draft",
+                                      on_click=lambda e, d=draft: delete_draft(d)),
+                    ], spacing=8),
+                ], spacing=10)),
+            ], spacing=0),
+        )
+
+    def render_list():
+        drafts = ctx.drafts.list_all()
+        body: ft.Control = (
+            ft.Row([draft_card(d) for d in drafts], wrap=True, spacing=16, run_spacing=16)
+            if drafts else
+            empty_state(ft.Icons.DESIGN_SERVICES,
+                        "No drafts yet",
+                        "Create a collection and fill in its 10 characters at your pace.")
+        )
+        root.content = ft.Column([
+            ft.Row([
+                ft.Text("Creator", size=26, weight=ft.FontWeight.BOLD),
+                ft.Container(expand=True),
+                ft.FilledButton("New collection", icon=ft.Icons.ADD,
+                                on_click=lambda e: collection_dialog(None)),
+            ]),
+            ft.Text(
+                "Drafts live only here until they're complete: 10 characters, "
+                "each with 10 named stickers (3 common, 3 uncommon, 2 rare, "
+                "1 epic, 1 legendary — assigned by slot).",
+                size=13, color=ft.Colors.GREY_400,
+            ),
+            body,
+        ], spacing=18, scroll=ft.ScrollMode.AUTO, expand=True)
+        page.update()
+
+    # ---- sticker dialog ------------------------------------------------------
+
+    def sticker_dialog(draft: DraftCollection, char_index: int, position: int):
+        s = draft.characters[char_index - 1].stickers[position - 1]
+        rarity = RARITY_PATTERN[position - 1]
+        name_field = ft.TextField(label="Sticker name", value=s.name)
+        flavor_field = ft.TextField(label="Flavor text", value=s.flavor_text,
+                                    multiline=True, min_lines=2, max_lines=3)
+        preview = ft.Container(
+            content=sticker_art(_draft_sticker(draft, char_index, position), 200, 200),
+            alignment=ft.alignment.center,
+        )
+        dialog = ft.AlertDialog(
+            modal=True,
+            title=ft.Text(f"Sticker #{sticker_number(char_index, position):02d}"),
+            content=ft.Column([
+                preview,
+                ft.Row([rarity_chip(rarity),
+                        ft.Text(sticker_id(draft.id, char_index, position),
+                                size=12, color=ft.Colors.GREY_500)],
+                       alignment=ft.MainAxisAlignment.CENTER, spacing=10),
+                name_field,
+                flavor_field,
+                ft.OutlinedButton(
+                    "Import image…", icon=ft.Icons.IMAGE,
+                    on_click=lambda e: pick_image(
+                        "sticker", char_index, position, after=refresh_preview),
+                ),
+            ], tight=True, spacing=12, width=340),
+        )
+
+        def refresh_preview(rel: str):
+            preview.content = sticker_art(
+                _draft_sticker(draft, char_index, position), 200, 200)
+            page.update()
+
+        def save(e):
+            s.name = name_field.value.strip()
+            s.flavor_text = flavor_field.value.strip()
+            creator.save(draft)
+            page.close(dialog)
+            render()
+
+        dialog.actions = [
+            ft.TextButton("Cancel", on_click=lambda e: page.close(dialog)),
+            ft.FilledButton("Save", on_click=save),
+        ]
+        page.open(dialog)
+
+    # ---- editor --------------------------------------------------------------
+
+    def open_editor(draft: DraftCollection, char_index: int = 1):
+        state["draft"] = draft
+        state["char"] = char_index
+        render()
+
+    def render_editor():
+        draft: DraftCollection = state["draft"]
+        theme = draft.theme_color or "#7c4dff"
+        ci = state["char"]
+        character = draft.characters[ci - 1]
+
+        sidebar = ft.Column(spacing=4, scroll=ft.ScrollMode.AUTO, expand=True)
+        publish_button = ft.FilledButton("Publish", icon=ft.Icons.ROCKET_LAUNCH,
+                                         on_click=lambda e: publish(draft))
+        progress_text = ft.Text(size=13, color=ft.Colors.GREY_300)
+
+        def sidebar_tile(i: int) -> ft.Control:
+            c = draft.characters[i - 1]
+            done, total = creator.character_progress(c)
+            complete = creator.character_complete(c)
+            selected = i == state["char"]
+            return ft.Container(
+                bgcolor=ft.Colors.with_opacity(0.18, theme) if selected else None,
+                border_radius=10,
+                padding=ft.padding.symmetric(horizontal=10, vertical=6),
+                on_click=lambda e, i=i: switch_character(i),
+                ink=True,
+                content=ft.Row([
+                    character_portrait(_draft_character(draft, i), 36, theme),
+                    ft.Column([
+                        ft.Text(c.name or f"Character #{i}", size=13,
+                                weight=ft.FontWeight.BOLD if selected else None,
+                                color=None if c.name else ft.Colors.GREY_500,
+                                max_lines=1, overflow=ft.TextOverflow.ELLIPSIS),
+                        ft.Text(f"{done} / {total} stickers", size=11,
+                                color=ft.Colors.GREY_400),
+                    ], spacing=1, tight=True, expand=True),
+                    ft.Icon(ft.Icons.CHECK_CIRCLE, size=16, color="#81c784")
+                    if complete else ft.Container(width=16),
+                ], spacing=10, vertical_alignment=ft.CrossAxisAlignment.CENTER),
+            )
+
+        def refresh_sidebar():
+            sidebar.controls = [sidebar_tile(i) for i in range(1, 11)]
+            done, total = creator.collection_progress(draft)
+            progress_text.value = f"{done} / {total} characters complete"
+            complete = creator.collection_complete(draft)
+            publish_button.disabled = not complete
+            publish_button.tooltip = (
+                None if complete
+                else "Every character needs a name and 10 named stickers"
+            )
+            page.update()
+
+        def switch_character(i: int):
+            creator.save(draft)  # commit any pending text edits
+            state["char"] = i
+            render()
+
+        def back_to_list(e):
+            creator.save(draft)
+            state["draft"] = None
+            render()
+
+        # Text fields write to the draft as you type and persist on blur, so
+        # typing doesn't rebuild the view (and steal focus) on every key.
+        def bind(setter):
+            def on_change(e):
+                setter(e.control.value)
+            return on_change
+
+        def persist(e):
+            creator.save(draft)
+            refresh_sidebar()
+
+        name_field = ft.TextField(
+            label="Character name", value=character.name, width=320,
+            on_change=bind(lambda v: setattr(character, "name", v)), on_blur=persist,
+        )
+        desc_field = ft.TextField(
+            label="Character description", value=character.description, expand=True,
+            on_change=bind(lambda v: setattr(character, "description", v)),
+            on_blur=persist,
+        )
+
+        def sticker_tile(position: int) -> ft.Control:
+            s = character.stickers[position - 1]
+            rarity = RARITY_PATTERN[position - 1]
+            named = creator.sticker_complete(s)
+            return ft.Container(
+                width=148, height=150, bgcolor=_CARD_BG, border_radius=12,
+                border=ft.border.all(1, "#3a3a48" if named else "#26262f"),
+                padding=10, ink=True,
+                on_click=lambda e, p=position: sticker_dialog(draft, ci, p),
+                content=ft.Column([
+                    ft.Row([
+                        ft.Text(f"#{sticker_number(ci, position):02d}", size=12,
+                                weight=ft.FontWeight.BOLD, color=ft.Colors.GREY_400),
+                        ft.Container(expand=True),
+                        ft.Icon(ft.Icons.IMAGE, size=14,
+                                color="#81c784" if s.image else ft.Colors.GREY_700,
+                                tooltip="Has image" if s.image else "No image yet"),
+                    ]),
+                    ft.Text(s.name or "Unnamed", size=13,
+                            color=None if named else ft.Colors.GREY_600,
+                            max_lines=2, overflow=ft.TextOverflow.ELLIPSIS,
+                            weight=ft.FontWeight.BOLD if named else None,
+                            expand=True),
+                    rarity_chip(rarity, size=8),
+                ], spacing=6),
+                tooltip="Edit sticker",
+            )
+
+        header = ft.Row([
+            ft.IconButton(ft.Icons.ARROW_BACK, tooltip="Back to drafts",
+                          on_click=back_to_list),
+            ft.Column([
+                ft.Row([
+                    ft.Text(draft.name, size=22, weight=ft.FontWeight.BOLD),
+                    ft.Container(
+                        content=ft.Text(draft.id, size=11, weight=ft.FontWeight.BOLD),
+                        border=ft.border.all(1, "#4a4a5a"), border_radius=8,
+                        padding=ft.padding.symmetric(horizontal=8, vertical=2),
+                    ),
+                    ft.IconButton(ft.Icons.EDIT_OUTLINED, icon_size=18,
+                                  tooltip="Edit name, description, color",
+                                  on_click=lambda e: collection_dialog(draft)),
+                    ft.OutlinedButton("Cover image…", icon=ft.Icons.IMAGE,
+                                      on_click=lambda e: pick_image("cover")),
+                ], spacing=8, vertical_alignment=ft.CrossAxisAlignment.CENTER),
+                ft.Text("DRAFT — visible only in the Creator until published",
+                        size=11, color="#ffb300"),
+            ], spacing=2, tight=True, expand=True),
+            ft.Column([progress_text, publish_button], spacing=6,
+                      horizontal_alignment=ft.CrossAxisAlignment.END, tight=True),
+        ], vertical_alignment=ft.CrossAxisAlignment.CENTER)
+
+        character_panel = ft.Column([
+            ft.Row([
+                character_portrait(_draft_character(draft, ci), 72, theme),
+                ft.Column([
+                    ft.Row([name_field, ft.OutlinedButton(
+                        "Portrait…", icon=ft.Icons.PORTRAIT,
+                        on_click=lambda e: pick_image("portrait", ci))],
+                        spacing=10),
+                    desc_field,
+                ], spacing=10, tight=True, expand=True),
+            ], spacing=16, vertical_alignment=ft.CrossAxisAlignment.START),
+            ft.Text("Sticker slots — tap to name them and add art",
+                    size=13, color=ft.Colors.GREY_400),
+            ft.Column([
+                ft.Row([sticker_tile(p) for p in range(1, 11)],
+                       wrap=True, spacing=12, run_spacing=12),
+            ], scroll=ft.ScrollMode.AUTO, expand=True),
+        ], spacing=14, expand=True)
+
+        root.content = ft.Column([
+            header,
+            ft.Row([
+                ft.Container(width=230, bgcolor="#15151d", border_radius=12,
+                             padding=8, content=sidebar),
+                character_panel,
+            ], spacing=16, expand=True, vertical_alignment=ft.CrossAxisAlignment.START),
+        ], spacing=14, expand=True)
+        refresh_sidebar()
+
+    # ---- entry ---------------------------------------------------------------
+
+    def render():
+        if state["draft"] is None:
+            render_list()
+        else:
+            render_editor()
+
+    render()
+    return root

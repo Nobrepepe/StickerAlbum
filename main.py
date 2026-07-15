@@ -11,6 +11,7 @@ from context import AppContext
 from repositories.errors import AppError
 from views.album_view import build_album
 from views.collections_view import build_collections
+from views.creator_view import build_creator
 from views.errors_ui import show_info
 from views.home_view import build_home
 from views.pack_result_view import build_pack_result
@@ -49,6 +50,11 @@ class AppShell:
                     selected_icon=ft.Icons.STOREFRONT,
                     label="Shop",
                 ),
+                ft.NavigationRailDestination(
+                    icon=ft.Icons.DESIGN_SERVICES_OUTLINED,
+                    selected_icon=ft.Icons.DESIGN_SERVICES,
+                    label="Creator",
+                ),
             ],
             on_change=self._on_rail_change,
         )
@@ -59,7 +65,9 @@ class AppShell:
         )
 
     def _on_rail_change(self, e):
-        [self.go_home, self.go_collections, self.go_shop][e.control.selected_index]()
+        [self.go_home, self.go_collections, self.go_shop, self.go_creator][
+            e.control.selected_index
+        ]()
 
     def _set(self, index: int, control: ft.Control):
         self.rail.selected_index = index
@@ -81,6 +89,14 @@ class AppShell:
 
     def go_pack_result(self, result):
         self._set(2, build_pack_result(self.page, self.ctx, self, result))
+
+    def go_creator(self):
+        self._set(3, build_creator(self.page, self.ctx, self))
+
+    def reload_catalog(self):
+        """Rebuild repositories/services after publishing a collection so the
+        rest of the app sees it without a restart."""
+        self.ctx = AppContext.build()
 
 
 def main(page: ft.Page):

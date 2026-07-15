@@ -1,12 +1,12 @@
 import json
 import logging
 import os
-import tempfile
 import time
 from pathlib import Path
 
 from models.rarity import STYLES
 from models.user_state import SCHEMA_VERSION, UserState
+from repositories._files import atomic_write_json
 from repositories.errors import StateSaveError
 
 log = logging.getLogger(__name__)
@@ -116,22 +116,7 @@ class UserStateRepository:
             ],
         }
         try:
-            self._path.parent.mkdir(parents=True, exist_ok=True)
-            fd, tmp_name = tempfile.mkstemp(
-                dir=self._path.parent, prefix=".user_state-", suffix=".tmp"
-            )
-            try:
-                with os.fdopen(fd, "w", encoding="utf-8") as fh:
-                    json.dump(payload, fh, indent=2)
-                    fh.flush()
-                    os.fsync(fh.fileno())
-                os.replace(tmp_name, self._path)
-            except BaseException:
-                try:
-                    os.unlink(tmp_name)
-                except OSError:
-                    pass
-                raise
+            atomic_write_json(self._path, payload)
         except OSError as exc:
             raise StateSaveError(f"Could not save your progress: {exc}") from exc
 

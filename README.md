@@ -29,7 +29,7 @@ packageable for other platforms later).
 
 | Path | Purpose |
 |---|---|
-| `data/` | Static catalog: `collections.json`, `characters.json`, `stickers.json`, `packs.json` |
+| `data/` | Static catalog: `collections.json`, `characters.json`, `stickers.json`, `packs.json`; plus `drafts.json` for Creator drafts |
 | `app_data/user_state.json` | Mutable progress: inventory, placements, favorite, total savings (created on first run, saved atomically) |
 | `assets/` | Optional artwork (see `assets/README.txt`); anything missing renders as a styled placeholder |
 | `models/` | Frozen dataclasses + centralized rarity/selector/money rules |
@@ -40,11 +40,18 @@ packageable for other platforms later).
 
 ## Adding a collection
 
-Each collection needs exactly 10 characters and 10 stickers per character with
-the rarity pattern 3× common, 3× uncommon, 2× rare, 1× epic, 1× legendary
-(slots 1–10 in that order). Add entries to the four files in `data/` following
-the existing shape (sticker `id`s like `HGT_042` are stable and referenced by
-saved user state — never rename them), then add at least one pack in
-`packs.json` whose `distribution[].pool` is the collection (or a character)
-ID. Prices are integer cents (`2500` → `R$ 25,00`). Artwork goes under
-`assets/` using the paths referenced by the catalog; it is optional.
+Use the **Creator** screen in the app: pick a unique three-letter code, name
+the collection, then fill in its 10 characters and their 10 stickers each
+(rarities follow the fixed slot pattern: 3× common, 3× uncommon, 2× rare,
+1× epic, 1× legendary). Cover, portrait, and sticker images can be imported
+from disk at any point. Incomplete collections stay as drafts, visible only
+in the Creator; once every character has a name and 10 named stickers, the
+Publish button moves it into the catalog.
+
+Packs are still added by hand: after publishing, add an entry to
+`data/packs.json` whose `distribution[].pool` is the collection (or a
+character) ID. Prices are integer cents (`2500` → `R$ 25,00`).
+
+Hand-editing the catalog files also still works — follow the existing shape,
+and never rename published sticker `id`s like `HGT_042` (saved user state
+references them).

@@ -1,0 +1,218 @@
+import json
+from collections import Counter
+
+import pytest
+
+from models.catalog import Collection
+from models.rarity import RARITY_PATTERN
+from repositories.collection_repository import CollectionRepository
+from repositories.draft_repository import DraftRepository
+from services.creator_service import CreatorError, CreatorService
+
+
+@pytest.fixture
+def env(tmp_path):
+    data_dir = tmp_path / "data"
+    assets_dir = tmp_path / "assets"
+    data_dir.mkdir()
+    (data_dir / "collections.json").write_text(json.dumps(
+        [{"id": "HGT", "name": "Heights", "description": ""}]
+    ))
+    (data_dir / "characters.json").write_text("[]")
+    (data_dir / "stickers.json").write_text("[]")
+    drafts = DraftRepository(data_dir / "drafts.json")
+    collections = CollectionRepository([Collection(id="HGT", name="Heights", description="")])
+    service = CreatorService(drafts, collections, data_dir, assets_dir)
+    return service, drafts, data_dir, assets_dir
+
+
+def _complete(draft):
+    for c in draft.characters:
+        c.name = f"Char {c.index}"
+        for s in c.stickers:
+            s.name = f"Sticker {c.index}-{s.position}"
+    return draft
+
+
+# ---- codes ---------------------------------------------------------------
+
+def test_code_is_normalized_to_uppercase(env):
+    service, *_ = env
+    draft = service.create_collection("abc", "Test")
+    assert draft.id == "ABC"
+
+
+@pytest.mark.parametrize("bad", ["", "AB", "ABCD", "A1C", "A C", "ÁBC"])
+def test_invalid_codes_rejected(env, bad):
+    service, *_ = env
+    with pytest.raises(CreatorError):
+        service.create_collection(bad, "Test")
+
+
+def test_code_duplicate_with_published_rejected(env):
+    service, *_ = env
+    with pytest.raises(CreatorError, match="already in use"):
+        service.create_collection("HGT", "Clash")
+    with pytest.raises(CreatorError, match="already in use"):
+        service.create_collection("hgt", "Clash lowercase")
+
+
+def test_code_duplicate_with_other_draft_rejected(env):
+    service, *_ = env
+    service.create_collection("NEW", "First")
+    with pytest.raises(CreatorError, match="already in use"):
+        service.create_collection("NEW", "Second")
+
+
+def test_name_required(env):
+    service, *_ = env
+    with pytest.raises(CreatorError, match="name"):
+        service.create_collection("NEW", "   ")
+
+
+# ---- skeleton & completeness ----------------------------------------------
+
+def test_new_draft_has_full_skeleton(env):
+    service, *_ = env
+    draft = service.create_collection("NEW", "Test")
+    assert len(draft.characters) == 10
+    assert all(len(c.stickers) == 10 for c in draft.characters)
+    assert not service.collection_complete(draft)
+    assert service.collection_progress(draft) == (0, 10)
+
+
+def test_character_completeness_requires_name_and_all_stickers(env):
+    service, *_ = env
+    draft = service.create_collection("NEW", "Test")
+    char = draft.characters[0]
+    for s in char.stickers:
+        s.name = "x"
+    assert not service.character_complete(char)  # no character name yet
+    char.name = "Someone"
+    assert service.character_complete(char)
+    char.stickers[9].name = "  "
+    assert not service.character_complete(char)
+    assert service.character_progress(char) == (9, 10)
+
+
+def test_collection_complete_only_with_all_ten(env):
+    service, *_ = env
+    draft = _complete(service.create_collection("NEW", "Test"))
+    assert service.collection_complete(draft)
+    draft.characters[9].name = ""
+    assert not service.collection_complete(draft)
+    assert service.collection_progress(draft) == (9, 10)
+
+
+# ---- persistence -----------------------------------------------------------
+
+def test_draft_round_trip(env):
+    service, drafts, data_dir, _ = env
+    draft = service.create_collection("NEW", "Test", "desc", "#123456")
+    draft.characters[2].name = "Charlie"
+    draft.characters[2].stickers[4].name = "Fifth"
+    draft.characters[2].stickers[4].flavor_text = "flavor"
+    service.save(draft)
+
+    reloaded = DraftRepository(data_dir / "drafts.json").get("NEW")
+    assert reloaded.name == "Test"
+    assert reloaded.theme_color == "#123456"
+    assert reloaded.characters[2].name == "Charlie"
+    assert reloaded.characters[2].stickers[4].name == "Fifth"
+    assert len(reloaded.characters) == 10
+
+
+def test_corrupted_drafts_backed_up(tmp_path):
+    path = tmp_path / "drafts.json"
+    path.write_text("{broken")
+    repo = DraftRepository(path)
+    assert repo.list_all() == []
+    assert repo.load_warnings
+    assert list(tmp_path.glob("drafts.corrupt-*.json"))
+
+
+# ---- images ------------------------------------------------------------------
+
+def test_attach_image_copies_and_names_canonically(env, tmp_path):
+    service, _, _, assets_dir = env
+    draft = service.create_collection("NEW", "Test")
+    src = tmp_path / "photo.png"
+    src.write_bytes(b"fake-png")
+
+    assert service.attach_image(draft, "cover", str(src)) == "covers/NEW.png"
+    assert service.attach_image(draft, "portrait", str(src), 3) == "portraits/NEW_C03.png"
+    assert service.attach_image(draft, "sticker", str(src), 3, 7) == "stickers/NEW_027.png"
+    assert (assets_dir / "stickers/NEW_027.png").read_bytes() == b"fake-png"
+    assert draft.characters[2].stickers[6].image == "stickers/NEW_027.png"
+
+
+def test_attach_image_rejects_bad_extension(env, tmp_path):
+    service, *_ = env
+    draft = service.create_collection("NEW", "Test")
+    src = tmp_path / "doc.pdf"
+    src.write_bytes(b"x")
+    with pytest.raises(CreatorError, match="Unsupported image type"):
+        service.attach_image(draft, "cover", str(src))
+
+
+def test_attach_image_replaces_old_extension_file(env, tmp_path):
+    service, _, _, assets_dir = env
+    draft = service.create_collection("NEW", "Test")
+    png = tmp_path / "a.png"
+    png.write_bytes(b"png")
+    jpg = tmp_path / "b.jpg"
+    jpg.write_bytes(b"jpg")
+    service.attach_image(draft, "cover", str(png))
+    service.attach_image(draft, "cover", str(jpg))
+    assert draft.cover_image == "covers/NEW.jpg"
+    assert not (assets_dir / "covers/NEW.png").exists()
+
+
+# ---- publishing -----------------------------------------------------------------
+
+def test_publish_rejects_incomplete(env):
+    service, *_ = env
+    service.create_collection("NEW", "Test")
+    with pytest.raises(CreatorError, match="not complete"):
+        service.publish("NEW")
+
+
+def test_publish_writes_catalog_and_removes_draft(env):
+    service, drafts, data_dir, _ = env
+    draft = _complete(service.create_collection("NEW", "Test", "a world", "#123456"))
+    service.save(draft)
+    service.publish("NEW")
+
+    collections = json.loads((data_dir / "collections.json").read_text())
+    characters = json.loads((data_dir / "characters.json").read_text())
+    stickers = json.loads((data_dir / "stickers.json").read_text())
+
+    assert [c["id"] for c in collections] == ["HGT", "NEW"]
+    new_chars = [c for c in characters if c["collection_id"] == "NEW"]
+    new_stickers = [s for s in stickers if s["collection_id"] == "NEW"]
+    assert len(new_chars) == 10
+    assert len(new_stickers) == 100
+    assert new_chars[0]["id"] == "NEW_C01"
+    assert new_stickers[0]["id"] == "NEW_001"
+    assert new_stickers[99]["id"] == "NEW_100"
+    assert [s["number"] for s in new_stickers] == list(range(1, 101))
+    # 3/3/2/1/1 per character, in slot order
+    per_char = [s["rarity"] for s in new_stickers if s["character_id"] == "NEW_C04"]
+    assert per_char == list(RARITY_PATTERN)
+    assert Counter(s["rarity"] for s in new_stickers) == {
+        "common": 30, "uncommon": 30, "rare": 20, "epic": 10, "legendary": 10,
+    }
+    assert drafts.get("NEW") is None
+
+
+def test_published_collection_loads_in_catalog_repos(env):
+    service, _, data_dir, _ = env
+    draft = _complete(service.create_collection("NEW", "Test"))
+    service.save(draft)
+    service.publish("NEW")
+
+    from repositories.sticker_repository import StickerRepository
+    stickers = StickerRepository.from_file(data_dir / "stickers.json")
+    assert len(stickers.list_by_collection("NEW")) == 100
+    assert len(stickers.list_by_character("NEW_C05")) == 10
+    assert stickers.resolve_pool("NEW")  # usable as a pack pool immediately

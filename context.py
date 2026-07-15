@@ -3,14 +3,16 @@ hands them to the views. No mutable globals — everything hangs off this."""
 
 from dataclasses import dataclass
 
-from paths import DATA_DIR, USER_STATE_FILE
+from paths import ASSETS_DIR, DATA_DIR, USER_STATE_FILE
 from repositories.character_repository import CharacterRepository
 from repositories.collection_repository import CollectionRepository
+from repositories.draft_repository import DraftRepository
 from repositories.pack_repository import PackRepository
 from repositories.sticker_repository import StickerRepository
 from repositories.user_state_repository import UserStateRepository
 from seed import ensure_seed_catalog
 from services.album_service import AlbumService
+from services.creator_service import CreatorService
 from services.pack_service import PackOpeningService
 from services.summary_service import SummaryService
 
@@ -22,9 +24,11 @@ class AppContext:
     stickers: StickerRepository
     packs: PackRepository
     state: UserStateRepository
+    drafts: DraftRepository
     album: AlbumService
     pack_service: PackOpeningService
     summary: SummaryService
+    creator: CreatorService
 
     @classmethod
     def build(cls) -> "AppContext":
@@ -37,16 +41,20 @@ class AppContext:
         stickers = StickerRepository.from_file(DATA_DIR / "stickers.json")
         packs = PackRepository.from_file(DATA_DIR / "packs.json")
         state = UserStateRepository(USER_STATE_FILE, known_sticker_ids=stickers.all_ids())
+        drafts = DraftRepository(DATA_DIR / "drafts.json")
         album = AlbumService(stickers, characters, state)
         pack_service = PackOpeningService(stickers, packs, state)
         summary = SummaryService(collections, characters, stickers, state, album)
+        creator = CreatorService(drafts, collections, DATA_DIR, ASSETS_DIR)
         return cls(
             collections=collections,
             characters=characters,
             stickers=stickers,
             packs=packs,
             state=state,
+            drafts=drafts,
             album=album,
             pack_service=pack_service,
             summary=summary,
+            creator=creator,
         )
