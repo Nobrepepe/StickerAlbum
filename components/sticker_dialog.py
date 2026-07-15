@@ -1,0 +1,105 @@
+"""Dialog for inspecting a sticker slot and applying owned copies."""
+
+from typing import Callable
+
+import flet as ft
+
+from components.placeholders import sticker_art
+from components.rarity_chip import rarity_chip
+from models.catalog import Character, Sticker
+from services.album_service import APPLIED, OWNED, AlbumService
+from services.errors import ApplyError
+
+_STYLE_LABELS = {"normal": "Normal", "foil": "Foil ✨"}
+
+
+def open_sticker_dialog(
+    page: ft.Page,
+    album: AlbumService,
+    sticker: Sticker,
+    character: Character,
+    on_change: Callable[[], None],
+) -> None:
+    """One dialog for all three slot states. `on_change` runs after a
+    successful apply/restyle so the view can refresh."""
+    state = album.slot_state(sticker.id)
+    owned = album.owned_styles(sticker.id)
+    applied_style = album.applied_style(sticker.id)
+
+    dialog = ft.AlertDialog(modal=True)
+
+    def close(e=None):
+        page.close(dialog)
+
+    def apply_style(style: str):
+        def handler(e):
+            try:
+                album.apply(sticker, style)
+            except ApplyError as exc:
+                page.open(ft.SnackBar(ft.Text(str(exc)), bgcolor="#b71c1c"))
+                return
+            page.close(dialog)
+            on_change()
+        return handler
+
+    info: list[ft.Control] = [
+        ft.Row(
+            [rarity_chip(sticker.rarity), ft.Text(sticker.id, color=ft.Colors.GREY_500, size=12)],
+            alignment=ft.MainAxisAlignment.CENTER,
+            spacing=10,
+        ),
+        ft.Text(f"Character: {character.name}", size=13, color=ft.Colors.GREY_400),
+    ]
+
+    if state == APPLIED:
+        body_art: ft.Control = sticker_art(sticker, 260, 300)
+        info.append(ft.Text(
+            f"Applied · {_STYLE_LABELS.get(applied_style, applied_style)}",
+            size=13, color="#81c784", weight=ft.FontWeight.BOLD,
+        ))
+        if sticker.flavor_text:
+            info.append(ft.Text(
+                f"“{sticker.flavor_text}”", size=13, italic=True,
+                color=ft.Colors.GREY_400, text_align=ft.TextAlign.CENTER,
+            ))
+        dups = album.duplicate_count(sticker.id)
+        if dups:
+            info.append(ft.Text(f"Spare copies: {dups}", size=12, color=ft.Colors.GREY_500))
+    elif state == OWNED:
+        body_art = sticker_art(sticker, 260, 300)
+        counts = " · ".join(
+            f"{_STYLE_LABELS[s]} ×{q}" for s, q in owned.items()
+        )
+        info.append(ft.Text(f"Owned, not applied yet — {counts}", size=13, color="#ffb300"))
+    else:
+        body_art = ft.Container(
+            width=260, height=300, border_radius=8,
+            border=ft.border.all(1, ft.Colors.GREY_800),
+            alignment=ft.alignment.center,
+            content=ft.Text("Not collected yet", color=ft.Colors.GREY_600),
+        )
+        info.append(ft.Text("Open packs in the Shop to find this sticker.",
+                            size=13, color=ft.Colors.GREY_500))
+
+    actions: list[ft.Control] = [ft.TextButton("Close", on_click=close)]
+    for style, qty in owned.items():
+        if style == applied_style:
+            continue  # already in the slot with this style
+        label = (
+            f"Apply {_STYLE_LABELS[style]}"
+            if applied_style is None
+            else f"Switch to {_STYLE_LABELS[style]}"
+        )
+        actions.append(ft.FilledButton(f"{label} (×{qty})", on_click=apply_style(style)))
+
+    dialog.title = ft.Text(sticker.name, text_align=ft.TextAlign.CENTER)
+    dialog.content = ft.Column(
+        [body_art, *info],
+        horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+        tight=True,
+        spacing=10,
+        width=320,
+    )
+    dialog.actions = actions
+    dialog.actions_alignment = ft.MainAxisAlignment.END
+    page.open(dialog)

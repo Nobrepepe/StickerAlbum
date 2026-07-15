@@ -1,0 +1,66 @@
+from typing import Callable
+
+import flet as ft
+
+from components.placeholders import cover_band
+from models.catalog import Collection
+
+
+def collection_card(
+    collection: Collection,
+    applied: int,
+    total: int,
+    chars_done: int,
+    chars_total: int,
+    on_open: Callable[[], None],
+) -> ft.Control:
+    pct = (applied / total * 100) if total else 0.0
+    return ft.Container(
+        width=330,
+        bgcolor="#191922",
+        border_radius=14,
+        border=ft.border.all(1, ft.Colors.with_opacity(0.15, ft.Colors.WHITE)),
+        clip_behavior=ft.ClipBehavior.ANTI_ALIAS,
+        content=ft.Column(
+            [
+                cover_band(collection.cover_image, collection.theme_color),
+                ft.Container(
+                    padding=16,
+                    content=ft.Column(
+                        [
+                            ft.Text(collection.name, size=18, weight=ft.FontWeight.BOLD),
+                            ft.Text(
+                                collection.description, size=12,
+                                color=ft.Colors.GREY_400, max_lines=2,
+                                overflow=ft.TextOverflow.ELLIPSIS,
+                            ),
+                            ft.Row(
+                                [
+                                    ft.Text(f"{applied} / {total}", size=14,
+                                            weight=ft.FontWeight.BOLD),
+                                    ft.Text(f"{pct:.0f}%", size=13, color=ft.Colors.GREY_400),
+                                    ft.Container(expand=True),
+                                    ft.Text(
+                                        f"Characters {chars_done} / {chars_total}",
+                                        size=12, color=ft.Colors.GREY_400,
+                                    ),
+                                ],
+                            ),
+                            ft.ProgressBar(
+                                value=(applied / total) if total else 0,
+                                color=collection.theme_color or "#7c4dff",
+                                bgcolor=ft.Colors.with_opacity(0.1, ft.Colors.WHITE),
+                            ),
+                            ft.FilledButton(
+                                "Open album",
+                                icon=ft.Icons.MENU_BOOK,
+                                on_click=lambda e: on_open(),
+                            ),
+                        ],
+                        spacing=10,
+                    ),
+                ),
+            ],
+            spacing=0,
+        ),
+    )

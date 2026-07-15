@@ -1,0 +1,142 @@
+[
+  {
+    "id": "HGT_C01",
+    "collection_id": "HGT",
+    "name": "Aria Vane",
+    "description": "Skyline courier who never touches the ground.",
+    "portrait_image": "portraits/HGT_C01.png"
+  },
+  {
+    "id": "HGT_C02",
+    "collection_id": "HGT",
+    "name": "Bruno Calder",
+    "description": "Bridge engineer with a fear of stairs.",
+    "portrait_image": "portraits/HGT_C02.png"
+  },
+  {
+    "id": "HGT_C03",
+    "collection_id": "HGT",
+    "name": "Cielo Marsh",
+    "description": "Gardener of the floating cloud terraces.",
+    "portrait_image": "portraits/HGT_C03.png"
+  },
+  {
+    "id": "HGT_C04",
+    "collection_id": "HGT",
+    "name": "Dario Quill",
+    "description": "Cartographer of rooftops nobody else can reach.",
+    "portrait_image": "portraits/HGT_C04.png"
+  },
+  {
+    "id": "HGT_C05",
+    "collection_id": "HGT",
+    "name": "Elba Torres",
+    "description": "Dancer who performs on moving elevators.",
+    "portrait_image": "portraits/HGT_C05.png"
+  },
+  {
+    "id": "HGT_C06",
+    "collection_id": "HGT",
+    "name": "Falk Reyes",
+    "description": "Listens to the antennas and hears the city's mood.",
+    "portrait_image": "portraits/HGT_C06.png"
+  },
+  {
+    "id": "HGT_C07",
+    "collection_id": "HGT",
+    "name": "Gala Prisma",
+    "description": "Paints the glass towers a new color every dawn.",
+    "portrait_image": "portraits/HGT_C07.png"
+  },
+  {
+    "id": "HGT_C08",
+    "collection_id": "HGT",
+    "name": "Hugo Ferro",
+    "description": "Crane operator who builds higher than the clouds.",
+    "portrait_image": "portraits/HGT_C08.png"
+  },
+  {
+    "id": "HGT_C09",
+    "collection_id": "HGT",
+    "name": "Iris Vela",
+    "description": "Kite racer, three-time champion of the Updraft Cup.",
+    "portrait_image": "portraits/HGT_C09.png"
+  },
+  {
+    "id": "HGT_C10",
+    "collection_id": "HGT",
+    "name": "Joto Brass",
+    "description": "Balloon postman who delivers to the highest windows.",
+    "portrait_image": "portraits/HGT_C10.png"
+  },
+  {
+    "id": "TDL_C01",
+    "collection_id": "TDL",
+    "name": "Anga Coral",
+    "description": "Shepherd of the wandering reef flocks.",
+    "portrait_image": "portraits/TDL_C01.png"
+  },
+  {
+    "id": "TDL_C02",
+    "collection_id": "TDL",
+    "name": "Bral Marrow",
+    "description": "Pearl diver who maps the dark trenches.",
+    "portrait_image": "portraits/TDL_C02.png"
+  },
+  {
+    "id": "TDL_C03",
+    "collection_id": "TDL",
+    "name": "Cora Lume",
+    "description": "Keeper of the thousand lantern-fish lamps.",
+    "portrait_image": "portraits/TDL_C03.png"
+  },
+  {
+    "id": "TDL_C04",
+    "collection_id": "TDL",
+    "name": "Drift Okane",
+    "description": "Pilot who reads the currents like roads.",
+    "portrait_image": "portraits/TDL_C04.png"
+  },
+  {
+    "id": "TDL_C05",
+    "collection_id": "TDL",
+    "name": "Eelio Sund",
+    "description": "Fisher who catches songs instead of fish.",
+    "portrait_image": "portraits/TDL_C05.png"
+  },
+  {
+    "id": "TDL_C06",
+    "collection_id": "TDL",
+    "name": "Fana Brine",
+    "description": "Chef whose salt gardens feed the whole reef.",
+    "portrait_image": "portraits/TDL_C06.png"
+  },
+  {
+    "id": "TDL_C07",
+    "collection_id": "TDL",
+    "name": "Gill Harrow",
+    "description": "Archivist of every shipwreck's last story.",
+    "portrait_image": "portraits/TDL_C07.png"
+  },
+  {
+    "id": "TDL_C08",
+    "collection_id": "TDL",
+    "name": "Hydra Mint",
+    "description": "Weaver of kelp banners for the tide festivals.",
+    "portrait_image": "portraits/TDL_C08.png"
+  },
+  {
+    "id": "TDL_C09",
+    "collection_id": "TDL",
+    "name": "Inko Shell",
+    "description": "Teller of tides, never wrong twice in a row.",
+    "portrait_image": "portraits/TDL_C09.png"
+  },
+  {
+    "id": "TDL_C10",
+    "collection_id": "TDL",
+    "name": "Juna Abyss",
+    "description": "Cartographer of the places light forgets.",
+    "portrait_image": "portraits/TDL_C10.png"
+  }
+]

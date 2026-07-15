@@ -1,0 +1,2002 @@
+[
+  {
+    "id": "HGT_001",
+    "collection_id": "HGT",
+    "character_id": "HGT_C01",
+    "number": 1,
+    "name": "Aria — First Steps",
+    "rarity": "common",
+    "image": "stickers/HGT_001.png",
+    "flavor_text": "Where every story begins."
+  },
+  {
+    "id": "HGT_002",
+    "collection_id": "HGT",
+    "character_id": "HGT_C01",
+    "number": 2,
+    "name": "Aria — Daily Ritual",
+    "rarity": "common",
+    "image": "stickers/HGT_002.png",
+    "flavor_text": "The small habit that keeps them going."
+  },
+  {
+    "id": "HGT_003",
+    "collection_id": "HGT",
+    "character_id": "HGT_C01",
+    "number": 3,
+    "name": "Aria — Quiet Moment",
+    "rarity": "common",
+    "image": "stickers/HGT_003.png",
+    "flavor_text": "Even heroes need to breathe."
+  },
+  {
+    "id": "HGT_004",
+    "collection_id": "HGT",
+    "character_id": "HGT_C01",
+    "number": 4,
+    "name": "Aria — Tools of the Trade",
+    "rarity": "uncommon",
+    "image": "stickers/HGT_004.png",
+    "flavor_text": "Never leaves home without them."
+  },
+  {
+    "id": "HGT_005",
+    "collection_id": "HGT",
+    "character_id": "HGT_C01",
+    "number": 5,
+    "name": "Aria — Among Friends",
+    "rarity": "uncommon",
+    "image": "stickers/HGT_005.png",
+    "flavor_text": "Stronger together, always."
+  },
+  {
+    "id": "HGT_006",
+    "collection_id": "HGT",
+    "character_id": "HGT_C01",
+    "number": 6,
+    "name": "Aria — Against the Wind",
+    "rarity": "uncommon",
+    "image": "stickers/HGT_006.png",
+    "flavor_text": "The day everything pushed back."
+  },
+  {
+    "id": "HGT_007",
+    "collection_id": "HGT",
+    "character_id": "HGT_C01",
+    "number": 7,
+    "name": "Aria — Signature Move",
+    "rarity": "rare",
+    "image": "stickers/HGT_007.png",
+    "flavor_text": "You'd know it anywhere."
+  },
+  {
+    "id": "HGT_008",
+    "collection_id": "HGT",
+    "character_id": "HGT_C01",
+    "number": 8,
+    "name": "Aria — Night Shift",
+    "rarity": "rare",
+    "image": "stickers/HGT_008.png",
+    "flavor_text": "The city looks different after dark."
+  },
+  {
+    "id": "HGT_009",
+    "collection_id": "HGT",
+    "character_id": "HGT_C01",
+    "number": 9,
+    "name": "Aria — Moment of Glory",
+    "rarity": "epic",
+    "image": "stickers/HGT_009.png",
+    "flavor_text": "The one everybody still talks about."
+  },
+  {
+    "id": "HGT_010",
+    "collection_id": "HGT",
+    "character_id": "HGT_C01",
+    "number": 10,
+    "name": "Aria — Golden Portrait",
+    "rarity": "legendary",
+    "image": "stickers/HGT_010.png",
+    "flavor_text": "A legend, captured in gold."
+  },
+  {
+    "id": "HGT_011",
+    "collection_id": "HGT",
+    "character_id": "HGT_C02",
+    "number": 11,
+    "name": "Bruno — First Steps",
+    "rarity": "common",
+    "image": "stickers/HGT_011.png",
+    "flavor_text": "Where every story begins."
+  },
+  {
+    "id": "HGT_012",
+    "collection_id": "HGT",
+    "character_id": "HGT_C02",
+    "number": 12,
+    "name": "Bruno — Daily Ritual",
+    "rarity": "common",
+    "image": "stickers/HGT_012.png",
+    "flavor_text": "The small habit that keeps them going."
+  },
+  {
+    "id": "HGT_013",
+    "collection_id": "HGT",
+    "character_id": "HGT_C02",
+    "number": 13,
+    "name": "Bruno — Quiet Moment",
+    "rarity": "common",
+    "image": "stickers/HGT_013.png",
+    "flavor_text": "Even heroes need to breathe."
+  },
+  {
+    "id": "HGT_014",
+    "collection_id": "HGT",
+    "character_id": "HGT_C02",
+    "number": 14,
+    "name": "Bruno — Tools of the Trade",
+    "rarity": "uncommon",
+    "image": "stickers/HGT_014.png",
+    "flavor_text": "Never leaves home without them."
+  },
+  {
+    "id": "HGT_015",
+    "collection_id": "HGT",
+    "character_id": "HGT_C02",
+    "number": 15,
+    "name": "Bruno — Among Friends",
+    "rarity": "uncommon",
+    "image": "stickers/HGT_015.png",
+    "flavor_text": "Stronger together, always."
+  },
+  {
+    "id": "HGT_016",
+    "collection_id": "HGT",
+    "character_id": "HGT_C02",
+    "number": 16,
+    "name": "Bruno — Against the Wind",
+    "rarity": "uncommon",
+    "image": "stickers/HGT_016.png",
+    "flavor_text": "The day everything pushed back."
+  },
+  {
+    "id": "HGT_017",
+    "collection_id": "HGT",
+    "character_id": "HGT_C02",
+    "number": 17,
+    "name": "Bruno — Signature Move",
+    "rarity": "rare",
+    "image": "stickers/HGT_017.png",
+    "flavor_text": "You'd know it anywhere."
+  },
+  {
+    "id": "HGT_018",
+    "collection_id": "HGT",
+    "character_id": "HGT_C02",
+    "number": 18,
+    "name": "Bruno — Night Shift",
+    "rarity": "rare",
+    "image": "stickers/HGT_018.png",
+    "flavor_text": "The city looks different after dark."
+  },
+  {
+    "id": "HGT_019",
+    "collection_id": "HGT",
+    "character_id": "HGT_C02",
+    "number": 19,
+    "name": "Bruno — Moment of Glory",
+    "rarity": "epic",
+    "image": "stickers/HGT_019.png",
+    "flavor_text": "The one everybody still talks about."
+  },
+  {
+    "id": "HGT_020",
+    "collection_id": "HGT",
+    "character_id": "HGT_C02",
+    "number": 20,
+    "name": "Bruno — Golden Portrait",
+    "rarity": "legendary",
+    "image": "stickers/HGT_020.png",
+    "flavor_text": "A legend, captured in gold."
+  },
+  {
+    "id": "HGT_021",
+    "collection_id": "HGT",
+    "character_id": "HGT_C03",
+    "number": 21,
+    "name": "Cielo — First Steps",
+    "rarity": "common",
+    "image": "stickers/HGT_021.png",
+    "flavor_text": "Where every story begins."
+  },
+  {
+    "id": "HGT_022",
+    "collection_id": "HGT",
+    "character_id": "HGT_C03",
+    "number": 22,
+    "name": "Cielo — Daily Ritual",
+    "rarity": "common",
+    "image": "stickers/HGT_022.png",
+    "flavor_text": "The small habit that keeps them going."
+  },
+  {
+    "id": "HGT_023",
+    "collection_id": "HGT",
+    "character_id": "HGT_C03",
+    "number": 23,
+    "name": "Cielo — Quiet Moment",
+    "rarity": "common",
+    "image": "stickers/HGT_023.png",
+    "flavor_text": "Even heroes need to breathe."
+  },
+  {
+    "id": "HGT_024",
+    "collection_id": "HGT",
+    "character_id": "HGT_C03",
+    "number": 24,
+    "name": "Cielo — Tools of the Trade",
+    "rarity": "uncommon",
+    "image": "stickers/HGT_024.png",
+    "flavor_text": "Never leaves home without them."
+  },
+  {
+    "id": "HGT_025",
+    "collection_id": "HGT",
+    "character_id": "HGT_C03",
+    "number": 25,
+    "name": "Cielo — Among Friends",
+    "rarity": "uncommon",
+    "image": "stickers/HGT_025.png",
+    "flavor_text": "Stronger together, always."
+  },
+  {
+    "id": "HGT_026",
+    "collection_id": "HGT",
+    "character_id": "HGT_C03",
+    "number": 26,
+    "name": "Cielo — Against the Wind",
+    "rarity": "uncommon",
+    "image": "stickers/HGT_026.png",
+    "flavor_text": "The day everything pushed back."
+  },
+  {
+    "id": "HGT_027",
+    "collection_id": "HGT",
+    "character_id": "HGT_C03",
+    "number": 27,
+    "name": "Cielo — Signature Move",
+    "rarity": "rare",
+    "image": "stickers/HGT_027.png",
+    "flavor_text": "You'd know it anywhere."
+  },
+  {
+    "id": "HGT_028",
+    "collection_id": "HGT",
+    "character_id": "HGT_C03",
+    "number": 28,
+    "name": "Cielo — Night Shift",
+    "rarity": "rare",
+    "image": "stickers/HGT_028.png",
+    "flavor_text": "The city looks different after dark."
+  },
+  {
+    "id": "HGT_029",
+    "collection_id": "HGT",
+    "character_id": "HGT_C03",
+    "number": 29,
+    "name": "Cielo — Moment of Glory",
+    "rarity": "epic",
+    "image": "stickers/HGT_029.png",
+    "flavor_text": "The one everybody still talks about."
+  },
+  {
+    "id": "HGT_030",
+    "collection_id": "HGT",
+    "character_id": "HGT_C03",
+    "number": 30,
+    "name": "Cielo — Golden Portrait",
+    "rarity": "legendary",
+    "image": "stickers/HGT_030.png",
+    "flavor_text": "A legend, captured in gold."
+  },
+  {
+    "id": "HGT_031",
+    "collection_id": "HGT",
+    "character_id": "HGT_C04",
+    "number": 31,
+    "name": "Dario — First Steps",
+    "rarity": "common",
+    "image": "stickers/HGT_031.png",
+    "flavor_text": "Where every story begins."
+  },
+  {
+    "id": "HGT_032",
+    "collection_id": "HGT",
+    "character_id": "HGT_C04",
+    "number": 32,
+    "name": "Dario — Daily Ritual",
+    "rarity": "common",
+    "image": "stickers/HGT_032.png",
+    "flavor_text": "The small habit that keeps them going."
+  },
+  {
+    "id": "HGT_033",
+    "collection_id": "HGT",
+    "character_id": "HGT_C04",
+    "number": 33,
+    "name": "Dario — Quiet Moment",
+    "rarity": "common",
+    "image": "stickers/HGT_033.png",
+    "flavor_text": "Even heroes need to breathe."
+  },
+  {
+    "id": "HGT_034",
+    "collection_id": "HGT",
+    "character_id": "HGT_C04",
+    "number": 34,
+    "name": "Dario — Tools of the Trade",
+    "rarity": "uncommon",
+    "image": "stickers/HGT_034.png",
+    "flavor_text": "Never leaves home without them."
+  },
+  {
+    "id": "HGT_035",
+    "collection_id": "HGT",
+    "character_id": "HGT_C04",
+    "number": 35,
+    "name": "Dario — Among Friends",
+    "rarity": "uncommon",
+    "image": "stickers/HGT_035.png",
+    "flavor_text": "Stronger together, always."
+  },
+  {
+    "id": "HGT_036",
+    "collection_id": "HGT",
+    "character_id": "HGT_C04",
+    "number": 36,
+    "name": "Dario — Against the Wind",
+    "rarity": "uncommon",
+    "image": "stickers/HGT_036.png",
+    "flavor_text": "The day everything pushed back."
+  },
+  {
+    "id": "HGT_037",
+    "collection_id": "HGT",
+    "character_id": "HGT_C04",
+    "number": 37,
+    "name": "Dario — Signature Move",
+    "rarity": "rare",
+    "image": "stickers/HGT_037.png",
+    "flavor_text": "You'd know it anywhere."
+  },
+  {
+    "id": "HGT_038",
+    "collection_id": "HGT",
+    "character_id": "HGT_C04",
+    "number": 38,
+    "name": "Dario — Night Shift",
+    "rarity": "rare",
+    "image": "stickers/HGT_038.png",
+    "flavor_text": "The city looks different after dark."
+  },
+  {
+    "id": "HGT_039",
+    "collection_id": "HGT",
+    "character_id": "HGT_C04",
+    "number": 39,
+    "name": "Dario — Moment of Glory",
+    "rarity": "epic",
+    "image": "stickers/HGT_039.png",
+    "flavor_text": "The one everybody still talks about."
+  },
+  {
+    "id": "HGT_040",
+    "collection_id": "HGT",
+    "character_id": "HGT_C04",
+    "number": 40,
+    "name": "Dario — Golden Portrait",
+    "rarity": "legendary",
+    "image": "stickers/HGT_040.png",
+    "flavor_text": "A legend, captured in gold."
+  },
+  {
+    "id": "HGT_041",
+    "collection_id": "HGT",
+    "character_id": "HGT_C05",
+    "number": 41,
+    "name": "Elba — First Steps",
+    "rarity": "common",
+    "image": "stickers/HGT_041.png",
+    "flavor_text": "Where every story begins."
+  },
+  {
+    "id": "HGT_042",
+    "collection_id": "HGT",
+    "character_id": "HGT_C05",
+    "number": 42,
+    "name": "Elba — Daily Ritual",
+    "rarity": "common",
+    "image": "stickers/HGT_042.png",
+    "flavor_text": "The small habit that keeps them going."
+  },
+  {
+    "id": "HGT_043",
+    "collection_id": "HGT",
+    "character_id": "HGT_C05",
+    "number": 43,
+    "name": "Elba — Quiet Moment",
+    "rarity": "common",
+    "image": "stickers/HGT_043.png",
+    "flavor_text": "Even heroes need to breathe."
+  },
+  {
+    "id": "HGT_044",
+    "collection_id": "HGT",
+    "character_id": "HGT_C05",
+    "number": 44,
+    "name": "Elba — Tools of the Trade",
+    "rarity": "uncommon",
+    "image": "stickers/HGT_044.png",
+    "flavor_text": "Never leaves home without them."
+  },
+  {
+    "id": "HGT_045",
+    "collection_id": "HGT",
+    "character_id": "HGT_C05",
+    "number": 45,
+    "name": "Elba — Among Friends",
+    "rarity": "uncommon",
+    "image": "stickers/HGT_045.png",
+    "flavor_text": "Stronger together, always."
+  },
+  {
+    "id": "HGT_046",
+    "collection_id": "HGT",
+    "character_id": "HGT_C05",
+    "number": 46,
+    "name": "Elba — Against the Wind",
+    "rarity": "uncommon",
+    "image": "stickers/HGT_046.png",
+    "flavor_text": "The day everything pushed back."
+  },
+  {
+    "id": "HGT_047",
+    "collection_id": "HGT",
+    "character_id": "HGT_C05",
+    "number": 47,
+    "name": "Elba — Signature Move",
+    "rarity": "rare",
+    "image": "stickers/HGT_047.png",
+    "flavor_text": "You'd know it anywhere."
+  },
+  {
+    "id": "HGT_048",
+    "collection_id": "HGT",
+    "character_id": "HGT_C05",
+    "number": 48,
+    "name": "Elba — Night Shift",
+    "rarity": "rare",
+    "image": "stickers/HGT_048.png",
+    "flavor_text": "The city looks different after dark."
+  },
+  {
+    "id": "HGT_049",
+    "collection_id": "HGT",
+    "character_id": "HGT_C05",
+    "number": 49,
+    "name": "Elba — Moment of Glory",
+    "rarity": "epic",
+    "image": "stickers/HGT_049.png",
+    "flavor_text": "The one everybody still talks about."
+  },
+  {
+    "id": "HGT_050",
+    "collection_id": "HGT",
+    "character_id": "HGT_C05",
+    "number": 50,
+    "name": "Elba — Golden Portrait",
+    "rarity": "legendary",
+    "image": "stickers/HGT_050.png",
+    "flavor_text": "A legend, captured in gold."
+  },
+  {
+    "id": "HGT_051",
+    "collection_id": "HGT",
+    "character_id": "HGT_C06",
+    "number": 51,
+    "name": "Falk — First Steps",
+    "rarity": "common",
+    "image": "stickers/HGT_051.png",
+    "flavor_text": "Where every story begins."
+  },
+  {
+    "id": "HGT_052",
+    "collection_id": "HGT",
+    "character_id": "HGT_C06",
+    "number": 52,
+    "name": "Falk — Daily Ritual",
+    "rarity": "common",
+    "image": "stickers/HGT_052.png",
+    "flavor_text": "The small habit that keeps them going."
+  },
+  {
+    "id": "HGT_053",
+    "collection_id": "HGT",
+    "character_id": "HGT_C06",
+    "number": 53,
+    "name": "Falk — Quiet Moment",
+    "rarity": "common",
+    "image": "stickers/HGT_053.png",
+    "flavor_text": "Even heroes need to breathe."
+  },
+  {
+    "id": "HGT_054",
+    "collection_id": "HGT",
+    "character_id": "HGT_C06",
+    "number": 54,
+    "name": "Falk — Tools of the Trade",
+    "rarity": "uncommon",
+    "image": "stickers/HGT_054.png",
+    "flavor_text": "Never leaves home without them."
+  },
+  {
+    "id": "HGT_055",
+    "collection_id": "HGT",
+    "character_id": "HGT_C06",
+    "number": 55,
+    "name": "Falk — Among Friends",
+    "rarity": "uncommon",
+    "image": "stickers/HGT_055.png",
+    "flavor_text": "Stronger together, always."
+  },
+  {
+    "id": "HGT_056",
+    "collection_id": "HGT",
+    "character_id": "HGT_C06",
+    "number": 56,
+    "name": "Falk — Against the Wind",
+    "rarity": "uncommon",
+    "image": "stickers/HGT_056.png",
+    "flavor_text": "The day everything pushed back."
+  },
+  {
+    "id": "HGT_057",
+    "collection_id": "HGT",
+    "character_id": "HGT_C06",
+    "number": 57,
+    "name": "Falk — Signature Move",
+    "rarity": "rare",
+    "image": "stickers/HGT_057.png",
+    "flavor_text": "You'd know it anywhere."
+  },
+  {
+    "id": "HGT_058",
+    "collection_id": "HGT",
+    "character_id": "HGT_C06",
+    "number": 58,
+    "name": "Falk — Night Shift",
+    "rarity": "rare",
+    "image": "stickers/HGT_058.png",
+    "flavor_text": "The city looks different after dark."
+  },
+  {
+    "id": "HGT_059",
+    "collection_id": "HGT",
+    "character_id": "HGT_C06",
+    "number": 59,
+    "name": "Falk — Moment of Glory",
+    "rarity": "epic",
+    "image": "stickers/HGT_059.png",
+    "flavor_text": "The one everybody still talks about."
+  },
+  {
+    "id": "HGT_060",
+    "collection_id": "HGT",
+    "character_id": "HGT_C06",
+    "number": 60,
+    "name": "Falk — Golden Portrait",
+    "rarity": "legendary",
+    "image": "stickers/HGT_060.png",
+    "flavor_text": "A legend, captured in gold."
+  },
+  {
+    "id": "HGT_061",
+    "collection_id": "HGT",
+    "character_id": "HGT_C07",
+    "number": 61,
+    "name": "Gala — First Steps",
+    "rarity": "common",
+    "image": "stickers/HGT_061.png",
+    "flavor_text": "Where every story begins."
+  },
+  {
+    "id": "HGT_062",
+    "collection_id": "HGT",
+    "character_id": "HGT_C07",
+    "number": 62,
+    "name": "Gala — Daily Ritual",
+    "rarity": "common",
+    "image": "stickers/HGT_062.png",
+    "flavor_text": "The small habit that keeps them going."
+  },
+  {
+    "id": "HGT_063",
+    "collection_id": "HGT",
+    "character_id": "HGT_C07",
+    "number": 63,
+    "name": "Gala — Quiet Moment",
+    "rarity": "common",
+    "image": "stickers/HGT_063.png",
+    "flavor_text": "Even heroes need to breathe."
+  },
+  {
+    "id": "HGT_064",
+    "collection_id": "HGT",
+    "character_id": "HGT_C07",
+    "number": 64,
+    "name": "Gala — Tools of the Trade",
+    "rarity": "uncommon",
+    "image": "stickers/HGT_064.png",
+    "flavor_text": "Never leaves home without them."
+  },
+  {
+    "id": "HGT_065",
+    "collection_id": "HGT",
+    "character_id": "HGT_C07",
+    "number": 65,
+    "name": "Gala — Among Friends",
+    "rarity": "uncommon",
+    "image": "stickers/HGT_065.png",
+    "flavor_text": "Stronger together, always."
+  },
+  {
+    "id": "HGT_066",
+    "collection_id": "HGT",
+    "character_id": "HGT_C07",
+    "number": 66,
+    "name": "Gala — Against the Wind",
+    "rarity": "uncommon",
+    "image": "stickers/HGT_066.png",
+    "flavor_text": "The day everything pushed back."
+  },
+  {
+    "id": "HGT_067",
+    "collection_id": "HGT",
+    "character_id": "HGT_C07",
+    "number": 67,
+    "name": "Gala — Signature Move",
+    "rarity": "rare",
+    "image": "stickers/HGT_067.png",
+    "flavor_text": "You'd know it anywhere."
+  },
+  {
+    "id": "HGT_068",
+    "collection_id": "HGT",
+    "character_id": "HGT_C07",
+    "number": 68,
+    "name": "Gala — Night Shift",
+    "rarity": "rare",
+    "image": "stickers/HGT_068.png",
+    "flavor_text": "The city looks different after dark."
+  },
+  {
+    "id": "HGT_069",
+    "collection_id": "HGT",
+    "character_id": "HGT_C07",
+    "number": 69,
+    "name": "Gala — Moment of Glory",
+    "rarity": "epic",
+    "image": "stickers/HGT_069.png",
+    "flavor_text": "The one everybody still talks about."
+  },
+  {
+    "id": "HGT_070",
+    "collection_id": "HGT",
+    "character_id": "HGT_C07",
+    "number": 70,
+    "name": "Gala — Golden Portrait",
+    "rarity": "legendary",
+    "image": "stickers/HGT_070.png",
+    "flavor_text": "A legend, captured in gold."
+  },
+  {
+    "id": "HGT_071",
+    "collection_id": "HGT",
+    "character_id": "HGT_C08",
+    "number": 71,
+    "name": "Hugo — First Steps",
+    "rarity": "common",
+    "image": "stickers/HGT_071.png",
+    "flavor_text": "Where every story begins."
+  },
+  {
+    "id": "HGT_072",
+    "collection_id": "HGT",
+    "character_id": "HGT_C08",
+    "number": 72,
+    "name": "Hugo — Daily Ritual",
+    "rarity": "common",
+    "image": "stickers/HGT_072.png",
+    "flavor_text": "The small habit that keeps them going."
+  },
+  {
+    "id": "HGT_073",
+    "collection_id": "HGT",
+    "character_id": "HGT_C08",
+    "number": 73,
+    "name": "Hugo — Quiet Moment",
+    "rarity": "common",
+    "image": "stickers/HGT_073.png",
+    "flavor_text": "Even heroes need to breathe."
+  },
+  {
+    "id": "HGT_074",
+    "collection_id": "HGT",
+    "character_id": "HGT_C08",
+    "number": 74,
+    "name": "Hugo — Tools of the Trade",
+    "rarity": "uncommon",
+    "image": "stickers/HGT_074.png",
+    "flavor_text": "Never leaves home without them."
+  },
+  {
+    "id": "HGT_075",
+    "collection_id": "HGT",
+    "character_id": "HGT_C08",
+    "number": 75,
+    "name": "Hugo — Among Friends",
+    "rarity": "uncommon",
+    "image": "stickers/HGT_075.png",
+    "flavor_text": "Stronger together, always."
+  },
+  {
+    "id": "HGT_076",
+    "collection_id": "HGT",
+    "character_id": "HGT_C08",
+    "number": 76,
+    "name": "Hugo — Against the Wind",
+    "rarity": "uncommon",
+    "image": "stickers/HGT_076.png",
+    "flavor_text": "The day everything pushed back."
+  },
+  {
+    "id": "HGT_077",
+    "collection_id": "HGT",
+    "character_id": "HGT_C08",
+    "number": 77,
+    "name": "Hugo — Signature Move",
+    "rarity": "rare",
+    "image": "stickers/HGT_077.png",
+    "flavor_text": "You'd know it anywhere."
+  },
+  {
+    "id": "HGT_078",
+    "collection_id": "HGT",
+    "character_id": "HGT_C08",
+    "number": 78,
+    "name": "Hugo — Night Shift",
+    "rarity": "rare",
+    "image": "stickers/HGT_078.png",
+    "flavor_text": "The city looks different after dark."
+  },
+  {
+    "id": "HGT_079",
+    "collection_id": "HGT",
+    "character_id": "HGT_C08",
+    "number": 79,
+    "name": "Hugo — Moment of Glory",
+    "rarity": "epic",
+    "image": "stickers/HGT_079.png",
+    "flavor_text": "The one everybody still talks about."
+  },
+  {
+    "id": "HGT_080",
+    "collection_id": "HGT",
+    "character_id": "HGT_C08",
+    "number": 80,
+    "name": "Hugo — Golden Portrait",
+    "rarity": "legendary",
+    "image": "stickers/HGT_080.png",
+    "flavor_text": "A legend, captured in gold."
+  },
+  {
+    "id": "HGT_081",
+    "collection_id": "HGT",
+    "character_id": "HGT_C09",
+    "number": 81,
+    "name": "Iris — First Steps",
+    "rarity": "common",
+    "image": "stickers/HGT_081.png",
+    "flavor_text": "Where every story begins."
+  },
+  {
+    "id": "HGT_082",
+    "collection_id": "HGT",
+    "character_id": "HGT_C09",
+    "number": 82,
+    "name": "Iris — Daily Ritual",
+    "rarity": "common",
+    "image": "stickers/HGT_082.png",
+    "flavor_text": "The small habit that keeps them going."
+  },
+  {
+    "id": "HGT_083",
+    "collection_id": "HGT",
+    "character_id": "HGT_C09",
+    "number": 83,
+    "name": "Iris — Quiet Moment",
+    "rarity": "common",
+    "image": "stickers/HGT_083.png",
+    "flavor_text": "Even heroes need to breathe."
+  },
+  {
+    "id": "HGT_084",
+    "collection_id": "HGT",
+    "character_id": "HGT_C09",
+    "number": 84,
+    "name": "Iris — Tools of the Trade",
+    "rarity": "uncommon",
+    "image": "stickers/HGT_084.png",
+    "flavor_text": "Never leaves home without them."
+  },
+  {
+    "id": "HGT_085",
+    "collection_id": "HGT",
+    "character_id": "HGT_C09",
+    "number": 85,
+    "name": "Iris — Among Friends",
+    "rarity": "uncommon",
+    "image": "stickers/HGT_085.png",
+    "flavor_text": "Stronger together, always."
+  },
+  {
+    "id": "HGT_086",
+    "collection_id": "HGT",
+    "character_id": "HGT_C09",
+    "number": 86,
+    "name": "Iris — Against the Wind",
+    "rarity": "uncommon",
+    "image": "stickers/HGT_086.png",
+    "flavor_text": "The day everything pushed back."
+  },
+  {
+    "id": "HGT_087",
+    "collection_id": "HGT",
+    "character_id": "HGT_C09",
+    "number": 87,
+    "name": "Iris — Signature Move",
+    "rarity": "rare",
+    "image": "stickers/HGT_087.png",
+    "flavor_text": "You'd know it anywhere."
+  },
+  {
+    "id": "HGT_088",
+    "collection_id": "HGT",
+    "character_id": "HGT_C09",
+    "number": 88,
+    "name": "Iris — Night Shift",
+    "rarity": "rare",
+    "image": "stickers/HGT_088.png",
+    "flavor_text": "The city looks different after dark."
+  },
+  {
+    "id": "HGT_089",
+    "collection_id": "HGT",
+    "character_id": "HGT_C09",
+    "number": 89,
+    "name": "Iris — Moment of Glory",
+    "rarity": "epic",
+    "image": "stickers/HGT_089.png",
+    "flavor_text": "The one everybody still talks about."
+  },
+  {
+    "id": "HGT_090",
+    "collection_id": "HGT",
+    "character_id": "HGT_C09",
+    "number": 90,
+    "name": "Iris — Golden Portrait",
+    "rarity": "legendary",
+    "image": "stickers/HGT_090.png",
+    "flavor_text": "A legend, captured in gold."
+  },
+  {
+    "id": "HGT_091",
+    "collection_id": "HGT",
+    "character_id": "HGT_C10",
+    "number": 91,
+    "name": "Joto — First Steps",
+    "rarity": "common",
+    "image": "stickers/HGT_091.png",
+    "flavor_text": "Where every story begins."
+  },
+  {
+    "id": "HGT_092",
+    "collection_id": "HGT",
+    "character_id": "HGT_C10",
+    "number": 92,
+    "name": "Joto — Daily Ritual",
+    "rarity": "common",
+    "image": "stickers/HGT_092.png",
+    "flavor_text": "The small habit that keeps them going."
+  },
+  {
+    "id": "HGT_093",
+    "collection_id": "HGT",
+    "character_id": "HGT_C10",
+    "number": 93,
+    "name": "Joto — Quiet Moment",
+    "rarity": "common",
+    "image": "stickers/HGT_093.png",
+    "flavor_text": "Even heroes need to breathe."
+  },
+  {
+    "id": "HGT_094",
+    "collection_id": "HGT",
+    "character_id": "HGT_C10",
+    "number": 94,
+    "name": "Joto — Tools of the Trade",
+    "rarity": "uncommon",
+    "image": "stickers/HGT_094.png",
+    "flavor_text": "Never leaves home without them."
+  },
+  {
+    "id": "HGT_095",
+    "collection_id": "HGT",
+    "character_id": "HGT_C10",
+    "number": 95,
+    "name": "Joto — Among Friends",
+    "rarity": "uncommon",
+    "image": "stickers/HGT_095.png",
+    "flavor_text": "Stronger together, always."
+  },
+  {
+    "id": "HGT_096",
+    "collection_id": "HGT",
+    "character_id": "HGT_C10",
+    "number": 96,
+    "name": "Joto — Against the Wind",
+    "rarity": "uncommon",
+    "image": "stickers/HGT_096.png",
+    "flavor_text": "The day everything pushed back."
+  },
+  {
+    "id": "HGT_097",
+    "collection_id": "HGT",
+    "character_id": "HGT_C10",
+    "number": 97,
+    "name": "Joto — Signature Move",
+    "rarity": "rare",
+    "image": "stickers/HGT_097.png",
+    "flavor_text": "You'd know it anywhere."
+  },
+  {
+    "id": "HGT_098",
+    "collection_id": "HGT",
+    "character_id": "HGT_C10",
+    "number": 98,
+    "name": "Joto — Night Shift",
+    "rarity": "rare",
+    "image": "stickers/HGT_098.png",
+    "flavor_text": "The city looks different after dark."
+  },
+  {
+    "id": "HGT_099",
+    "collection_id": "HGT",
+    "character_id": "HGT_C10",
+    "number": 99,
+    "name": "Joto — Moment of Glory",
+    "rarity": "epic",
+    "image": "stickers/HGT_099.png",
+    "flavor_text": "The one everybody still talks about."
+  },
+  {
+    "id": "HGT_100",
+    "collection_id": "HGT",
+    "character_id": "HGT_C10",
+    "number": 100,
+    "name": "Joto — Golden Portrait",
+    "rarity": "legendary",
+    "image": "stickers/HGT_100.png",
+    "flavor_text": "A legend, captured in gold."
+  },
+  {
+    "id": "TDL_001",
+    "collection_id": "TDL",
+    "character_id": "TDL_C01",
+    "number": 1,
+    "name": "Anga — First Steps",
+    "rarity": "common",
+    "image": "stickers/TDL_001.png",
+    "flavor_text": "Where every story begins."
+  },
+  {
+    "id": "TDL_002",
+    "collection_id": "TDL",
+    "character_id": "TDL_C01",
+    "number": 2,
+    "name": "Anga — Daily Ritual",
+    "rarity": "common",
+    "image": "stickers/TDL_002.png",
+    "flavor_text": "The small habit that keeps them going."
+  },
+  {
+    "id": "TDL_003",
+    "collection_id": "TDL",
+    "character_id": "TDL_C01",
+    "number": 3,
+    "name": "Anga — Quiet Moment",
+    "rarity": "common",
+    "image": "stickers/TDL_003.png",
+    "flavor_text": "Even heroes need to breathe."
+  },
+  {
+    "id": "TDL_004",
+    "collection_id": "TDL",
+    "character_id": "TDL_C01",
+    "number": 4,
+    "name": "Anga — Tools of the Trade",
+    "rarity": "uncommon",
+    "image": "stickers/TDL_004.png",
+    "flavor_text": "Never leaves home without them."
+  },
+  {
+    "id": "TDL_005",
+    "collection_id": "TDL",
+    "character_id": "TDL_C01",
+    "number": 5,
+    "name": "Anga — Among Friends",
+    "rarity": "uncommon",
+    "image": "stickers/TDL_005.png",
+    "flavor_text": "Stronger together, always."
+  },
+  {
+    "id": "TDL_006",
+    "collection_id": "TDL",
+    "character_id": "TDL_C01",
+    "number": 6,
+    "name": "Anga — Against the Wind",
+    "rarity": "uncommon",
+    "image": "stickers/TDL_006.png",
+    "flavor_text": "The day everything pushed back."
+  },
+  {
+    "id": "TDL_007",
+    "collection_id": "TDL",
+    "character_id": "TDL_C01",
+    "number": 7,
+    "name": "Anga — Signature Move",
+    "rarity": "rare",
+    "image": "stickers/TDL_007.png",
+    "flavor_text": "You'd know it anywhere."
+  },
+  {
+    "id": "TDL_008",
+    "collection_id": "TDL",
+    "character_id": "TDL_C01",
+    "number": 8,
+    "name": "Anga — Night Shift",
+    "rarity": "rare",
+    "image": "stickers/TDL_008.png",
+    "flavor_text": "The city looks different after dark."
+  },
+  {
+    "id": "TDL_009",
+    "collection_id": "TDL",
+    "character_id": "TDL_C01",
+    "number": 9,
+    "name": "Anga — Moment of Glory",
+    "rarity": "epic",
+    "image": "stickers/TDL_009.png",
+    "flavor_text": "The one everybody still talks about."
+  },
+  {
+    "id": "TDL_010",
+    "collection_id": "TDL",
+    "character_id": "TDL_C01",
+    "number": 10,
+    "name": "Anga — Golden Portrait",
+    "rarity": "legendary",
+    "image": "stickers/TDL_010.png",
+    "flavor_text": "A legend, captured in gold."
+  },
+  {
+    "id": "TDL_011",
+    "collection_id": "TDL",
+    "character_id": "TDL_C02",
+    "number": 11,
+    "name": "Bral — First Steps",
+    "rarity": "common",
+    "image": "stickers/TDL_011.png",
+    "flavor_text": "Where every story begins."
+  },
+  {
+    "id": "TDL_012",
+    "collection_id": "TDL",
+    "character_id": "TDL_C02",
+    "number": 12,
+    "name": "Bral — Daily Ritual",
+    "rarity": "common",
+    "image": "stickers/TDL_012.png",
+    "flavor_text": "The small habit that keeps them going."
+  },
+  {
+    "id": "TDL_013",
+    "collection_id": "TDL",
+    "character_id": "TDL_C02",
+    "number": 13,
+    "name": "Bral — Quiet Moment",
+    "rarity": "common",
+    "image": "stickers/TDL_013.png",
+    "flavor_text": "Even heroes need to breathe."
+  },
+  {
+    "id": "TDL_014",
+    "collection_id": "TDL",
+    "character_id": "TDL_C02",
+    "number": 14,
+    "name": "Bral — Tools of the Trade",
+    "rarity": "uncommon",
+    "image": "stickers/TDL_014.png",
+    "flavor_text": "Never leaves home without them."
+  },
+  {
+    "id": "TDL_015",
+    "collection_id": "TDL",
+    "character_id": "TDL_C02",
+    "number": 15,
+    "name": "Bral — Among Friends",
+    "rarity": "uncommon",
+    "image": "stickers/TDL_015.png",
+    "flavor_text": "Stronger together, always."
+  },
+  {
+    "id": "TDL_016",
+    "collection_id": "TDL",
+    "character_id": "TDL_C02",
+    "number": 16,
+    "name": "Bral — Against the Wind",
+    "rarity": "uncommon",
+    "image": "stickers/TDL_016.png",
+    "flavor_text": "The day everything pushed back."
+  },
+  {
+    "id": "TDL_017",
+    "collection_id": "TDL",
+    "character_id": "TDL_C02",
+    "number": 17,
+    "name": "Bral — Signature Move",
+    "rarity": "rare",
+    "image": "stickers/TDL_017.png",
+    "flavor_text": "You'd know it anywhere."
+  },
+  {
+    "id": "TDL_018",
+    "collection_id": "TDL",
+    "character_id": "TDL_C02",
+    "number": 18,
+    "name": "Bral — Night Shift",
+    "rarity": "rare",
+    "image": "stickers/TDL_018.png",
+    "flavor_text": "The city looks different after dark."
+  },
+  {
+    "id": "TDL_019",
+    "collection_id": "TDL",
+    "character_id": "TDL_C02",
+    "number": 19,
+    "name": "Bral — Moment of Glory",
+    "rarity": "epic",
+    "image": "stickers/TDL_019.png",
+    "flavor_text": "The one everybody still talks about."
+  },
+  {
+    "id": "TDL_020",
+    "collection_id": "TDL",
+    "character_id": "TDL_C02",
+    "number": 20,
+    "name": "Bral — Golden Portrait",
+    "rarity": "legendary",
+    "image": "stickers/TDL_020.png",
+    "flavor_text": "A legend, captured in gold."
+  },
+  {
+    "id": "TDL_021",
+    "collection_id": "TDL",
+    "character_id": "TDL_C03",
+    "number": 21,
+    "name": "Cora — First Steps",
+    "rarity": "common",
+    "image": "stickers/TDL_021.png",
+    "flavor_text": "Where every story begins."
+  },
+  {
+    "id": "TDL_022",
+    "collection_id": "TDL",
+    "character_id": "TDL_C03",
+    "number": 22,
+    "name": "Cora — Daily Ritual",
+    "rarity": "common",
+    "image": "stickers/TDL_022.png",
+    "flavor_text": "The small habit that keeps them going."
+  },
+  {
+    "id": "TDL_023",
+    "collection_id": "TDL",
+    "character_id": "TDL_C03",
+    "number": 23,
+    "name": "Cora — Quiet Moment",
+    "rarity": "common",
+    "image": "stickers/TDL_023.png",
+    "flavor_text": "Even heroes need to breathe."
+  },
+  {
+    "id": "TDL_024",
+    "collection_id": "TDL",
+    "character_id": "TDL_C03",
+    "number": 24,
+    "name": "Cora — Tools of the Trade",
+    "rarity": "uncommon",
+    "image": "stickers/TDL_024.png",
+    "flavor_text": "Never leaves home without them."
+  },
+  {
+    "id": "TDL_025",
+    "collection_id": "TDL",
+    "character_id": "TDL_C03",
+    "number": 25,
+    "name": "Cora — Among Friends",
+    "rarity": "uncommon",
+    "image": "stickers/TDL_025.png",
+    "flavor_text": "Stronger together, always."
+  },
+  {
+    "id": "TDL_026",
+    "collection_id": "TDL",
+    "character_id": "TDL_C03",
+    "number": 26,
+    "name": "Cora — Against the Wind",
+    "rarity": "uncommon",
+    "image": "stickers/TDL_026.png",
+    "flavor_text": "The day everything pushed back."
+  },
+  {
+    "id": "TDL_027",
+    "collection_id": "TDL",
+    "character_id": "TDL_C03",
+    "number": 27,
+    "name": "Cora — Signature Move",
+    "rarity": "rare",
+    "image": "stickers/TDL_027.png",
+    "flavor_text": "You'd know it anywhere."
+  },
+  {
+    "id": "TDL_028",
+    "collection_id": "TDL",
+    "character_id": "TDL_C03",
+    "number": 28,
+    "name": "Cora — Night Shift",
+    "rarity": "rare",
+    "image": "stickers/TDL_028.png",
+    "flavor_text": "The city looks different after dark."
+  },
+  {
+    "id": "TDL_029",
+    "collection_id": "TDL",
+    "character_id": "TDL_C03",
+    "number": 29,
+    "name": "Cora — Moment of Glory",
+    "rarity": "epic",
+    "image": "stickers/TDL_029.png",
+    "flavor_text": "The one everybody still talks about."
+  },
+  {
+    "id": "TDL_030",
+    "collection_id": "TDL",
+    "character_id": "TDL_C03",
+    "number": 30,
+    "name": "Cora — Golden Portrait",
+    "rarity": "legendary",
+    "image": "stickers/TDL_030.png",
+    "flavor_text": "A legend, captured in gold."
+  },
+  {
+    "id": "TDL_031",
+    "collection_id": "TDL",
+    "character_id": "TDL_C04",
+    "number": 31,
+    "name": "Drift — First Steps",
+    "rarity": "common",
+    "image": "stickers/TDL_031.png",
+    "flavor_text": "Where every story begins."
+  },
+  {
+    "id": "TDL_032",
+    "collection_id": "TDL",
+    "character_id": "TDL_C04",
+    "number": 32,
+    "name": "Drift — Daily Ritual",
+    "rarity": "common",
+    "image": "stickers/TDL_032.png",
+    "flavor_text": "The small habit that keeps them going."
+  },
+  {
+    "id": "TDL_033",
+    "collection_id": "TDL",
+    "character_id": "TDL_C04",
+    "number": 33,
+    "name": "Drift — Quiet Moment",
+    "rarity": "common",
+    "image": "stickers/TDL_033.png",
+    "flavor_text": "Even heroes need to breathe."
+  },
+  {
+    "id": "TDL_034",
+    "collection_id": "TDL",
+    "character_id": "TDL_C04",
+    "number": 34,
+    "name": "Drift — Tools of the Trade",
+    "rarity": "uncommon",
+    "image": "stickers/TDL_034.png",
+    "flavor_text": "Never leaves home without them."
+  },
+  {
+    "id": "TDL_035",
+    "collection_id": "TDL",
+    "character_id": "TDL_C04",
+    "number": 35,
+    "name": "Drift — Among Friends",
+    "rarity": "uncommon",
+    "image": "stickers/TDL_035.png",
+    "flavor_text": "Stronger together, always."
+  },
+  {
+    "id": "TDL_036",
+    "collection_id": "TDL",
+    "character_id": "TDL_C04",
+    "number": 36,
+    "name": "Drift — Against the Wind",
+    "rarity": "uncommon",
+    "image": "stickers/TDL_036.png",
+    "flavor_text": "The day everything pushed back."
+  },
+  {
+    "id": "TDL_037",
+    "collection_id": "TDL",
+    "character_id": "TDL_C04",
+    "number": 37,
+    "name": "Drift — Signature Move",
+    "rarity": "rare",
+    "image": "stickers/TDL_037.png",
+    "flavor_text": "You'd know it anywhere."
+  },
+  {
+    "id": "TDL_038",
+    "collection_id": "TDL",
+    "character_id": "TDL_C04",
+    "number": 38,
+    "name": "Drift — Night Shift",
+    "rarity": "rare",
+    "image": "stickers/TDL_038.png",
+    "flavor_text": "The city looks different after dark."
+  },
+  {
+    "id": "TDL_039",
+    "collection_id": "TDL",
+    "character_id": "TDL_C04",
+    "number": 39,
+    "name": "Drift — Moment of Glory",
+    "rarity": "epic",
+    "image": "stickers/TDL_039.png",
+    "flavor_text": "The one everybody still talks about."
+  },
+  {
+    "id": "TDL_040",
+    "collection_id": "TDL",
+    "character_id": "TDL_C04",
+    "number": 40,
+    "name": "Drift — Golden Portrait",
+    "rarity": "legendary",
+    "image": "stickers/TDL_040.png",
+    "flavor_text": "A legend, captured in gold."
+  },
+  {
+    "id": "TDL_041",
+    "collection_id": "TDL",
+    "character_id": "TDL_C05",
+    "number": 41,
+    "name": "Eelio — First Steps",
+    "rarity": "common",
+    "image": "stickers/TDL_041.png",
+    "flavor_text": "Where every story begins."
+  },
+  {
+    "id": "TDL_042",
+    "collection_id": "TDL",
+    "character_id": "TDL_C05",
+    "number": 42,
+    "name": "Eelio — Daily Ritual",
+    "rarity": "common",
+    "image": "stickers/TDL_042.png",
+    "flavor_text": "The small habit that keeps them going."
+  },
+  {
+    "id": "TDL_043",
+    "collection_id": "TDL",
+    "character_id": "TDL_C05",
+    "number": 43,
+    "name": "Eelio — Quiet Moment",
+    "rarity": "common",
+    "image": "stickers/TDL_043.png",
+    "flavor_text": "Even heroes need to breathe."
+  },
+  {
+    "id": "TDL_044",
+    "collection_id": "TDL",
+    "character_id": "TDL_C05",
+    "number": 44,
+    "name": "Eelio — Tools of the Trade",
+    "rarity": "uncommon",
+    "image": "stickers/TDL_044.png",
+    "flavor_text": "Never leaves home without them."
+  },
+  {
+    "id": "TDL_045",
+    "collection_id": "TDL",
+    "character_id": "TDL_C05",
+    "number": 45,
+    "name": "Eelio — Among Friends",
+    "rarity": "uncommon",
+    "image": "stickers/TDL_045.png",
+    "flavor_text": "Stronger together, always."
+  },
+  {
+    "id": "TDL_046",
+    "collection_id": "TDL",
+    "character_id": "TDL_C05",
+    "number": 46,
+    "name": "Eelio — Against the Wind",
+    "rarity": "uncommon",
+    "image": "stickers/TDL_046.png",
+    "flavor_text": "The day everything pushed back."
+  },
+  {
+    "id": "TDL_047",
+    "collection_id": "TDL",
+    "character_id": "TDL_C05",
+    "number": 47,
+    "name": "Eelio — Signature Move",
+    "rarity": "rare",
+    "image": "stickers/TDL_047.png",
+    "flavor_text": "You'd know it anywhere."
+  },
+  {
+    "id": "TDL_048",
+    "collection_id": "TDL",
+    "character_id": "TDL_C05",
+    "number": 48,
+    "name": "Eelio — Night Shift",
+    "rarity": "rare",
+    "image": "stickers/TDL_048.png",
+    "flavor_text": "The city looks different after dark."
+  },
+  {
+    "id": "TDL_049",
+    "collection_id": "TDL",
+    "character_id": "TDL_C05",
+    "number": 49,
+    "name": "Eelio — Moment of Glory",
+    "rarity": "epic",
+    "image": "stickers/TDL_049.png",
+    "flavor_text": "The one everybody still talks about."
+  },
+  {
+    "id": "TDL_050",
+    "collection_id": "TDL",
+    "character_id": "TDL_C05",
+    "number": 50,
+    "name": "Eelio — Golden Portrait",
+    "rarity": "legendary",
+    "image": "stickers/TDL_050.png",
+    "flavor_text": "A legend, captured in gold."
+  },
+  {
+    "id": "TDL_051",
+    "collection_id": "TDL",
+    "character_id": "TDL_C06",
+    "number": 51,
+    "name": "Fana — First Steps",
+    "rarity": "common",
+    "image": "stickers/TDL_051.png",
+    "flavor_text": "Where every story begins."
+  },
+  {
+    "id": "TDL_052",
+    "collection_id": "TDL",
+    "character_id": "TDL_C06",
+    "number": 52,
+    "name": "Fana — Daily Ritual",
+    "rarity": "common",
+    "image": "stickers/TDL_052.png",
+    "flavor_text": "The small habit that keeps them going."
+  },
+  {
+    "id": "TDL_053",
+    "collection_id": "TDL",
+    "character_id": "TDL_C06",
+    "number": 53,
+    "name": "Fana — Quiet Moment",
+    "rarity": "common",
+    "image": "stickers/TDL_053.png",
+    "flavor_text": "Even heroes need to breathe."
+  },
+  {
+    "id": "TDL_054",
+    "collection_id": "TDL",
+    "character_id": "TDL_C06",
+    "number": 54,
+    "name": "Fana — Tools of the Trade",
+    "rarity": "uncommon",
+    "image": "stickers/TDL_054.png",
+    "flavor_text": "Never leaves home without them."
+  },
+  {
+    "id": "TDL_055",
+    "collection_id": "TDL",
+    "character_id": "TDL_C06",
+    "number": 55,
+    "name": "Fana — Among Friends",
+    "rarity": "uncommon",
+    "image": "stickers/TDL_055.png",
+    "flavor_text": "Stronger together, always."
+  },
+  {
+    "id": "TDL_056",
+    "collection_id": "TDL",
+    "character_id": "TDL_C06",
+    "number": 56,
+    "name": "Fana — Against the Wind",
+    "rarity": "uncommon",
+    "image": "stickers/TDL_056.png",
+    "flavor_text": "The day everything pushed back."
+  },
+  {
+    "id": "TDL_057",
+    "collection_id": "TDL",
+    "character_id": "TDL_C06",
+    "number": 57,
+    "name": "Fana — Signature Move",
+    "rarity": "rare",
+    "image": "stickers/TDL_057.png",
+    "flavor_text": "You'd know it anywhere."
+  },
+  {
+    "id": "TDL_058",
+    "collection_id": "TDL",
+    "character_id": "TDL_C06",
+    "number": 58,
+    "name": "Fana — Night Shift",
+    "rarity": "rare",
+    "image": "stickers/TDL_058.png",
+    "flavor_text": "The city looks different after dark."
+  },
+  {
+    "id": "TDL_059",
+    "collection_id": "TDL",
+    "character_id": "TDL_C06",
+    "number": 59,
+    "name": "Fana — Moment of Glory",
+    "rarity": "epic",
+    "image": "stickers/TDL_059.png",
+    "flavor_text": "The one everybody still talks about."
+  },
+  {
+    "id": "TDL_060",
+    "collection_id": "TDL",
+    "character_id": "TDL_C06",
+    "number": 60,
+    "name": "Fana — Golden Portrait",
+    "rarity": "legendary",
+    "image": "stickers/TDL_060.png",
+    "flavor_text": "A legend, captured in gold."
+  },
+  {
+    "id": "TDL_061",
+    "collection_id": "TDL",
+    "character_id": "TDL_C07",
+    "number": 61,
+    "name": "Gill — First Steps",
+    "rarity": "common",
+    "image": "stickers/TDL_061.png",
+    "flavor_text": "Where every story begins."
+  },
+  {
+    "id": "TDL_062",
+    "collection_id": "TDL",
+    "character_id": "TDL_C07",
+    "number": 62,
+    "name": "Gill — Daily Ritual",
+    "rarity": "common",
+    "image": "stickers/TDL_062.png",
+    "flavor_text": "The small habit that keeps them going."
+  },
+  {
+    "id": "TDL_063",
+    "collection_id": "TDL",
+    "character_id": "TDL_C07",
+    "number": 63,
+    "name": "Gill — Quiet Moment",
+    "rarity": "common",
+    "image": "stickers/TDL_063.png",
+    "flavor_text": "Even heroes need to breathe."
+  },
+  {
+    "id": "TDL_064",
+    "collection_id": "TDL",
+    "character_id": "TDL_C07",
+    "number": 64,
+    "name": "Gill — Tools of the Trade",
+    "rarity": "uncommon",
+    "image": "stickers/TDL_064.png",
+    "flavor_text": "Never leaves home without them."
+  },
+  {
+    "id": "TDL_065",
+    "collection_id": "TDL",
+    "character_id": "TDL_C07",
+    "number": 65,
+    "name": "Gill — Among Friends",
+    "rarity": "uncommon",
+    "image": "stickers/TDL_065.png",
+    "flavor_text": "Stronger together, always."
+  },
+  {
+    "id": "TDL_066",
+    "collection_id": "TDL",
+    "character_id": "TDL_C07",
+    "number": 66,
+    "name": "Gill — Against the Wind",
+    "rarity": "uncommon",
+    "image": "stickers/TDL_066.png",
+    "flavor_text": "The day everything pushed back."
+  },
+  {
+    "id": "TDL_067",
+    "collection_id": "TDL",
+    "character_id": "TDL_C07",
+    "number": 67,
+    "name": "Gill — Signature Move",
+    "rarity": "rare",
+    "image": "stickers/TDL_067.png",
+    "flavor_text": "You'd know it anywhere."
+  },
+  {
+    "id": "TDL_068",
+    "collection_id": "TDL",
+    "character_id": "TDL_C07",
+    "number": 68,
+    "name": "Gill — Night Shift",
+    "rarity": "rare",
+    "image": "stickers/TDL_068.png",
+    "flavor_text": "The city looks different after dark."
+  },
+  {
+    "id": "TDL_069",
+    "collection_id": "TDL",
+    "character_id": "TDL_C07",
+    "number": 69,
+    "name": "Gill — Moment of Glory",
+    "rarity": "epic",
+    "image": "stickers/TDL_069.png",
+    "flavor_text": "The one everybody still talks about."
+  },
+  {
+    "id": "TDL_070",
+    "collection_id": "TDL",
+    "character_id": "TDL_C07",
+    "number": 70,
+    "name": "Gill — Golden Portrait",
+    "rarity": "legendary",
+    "image": "stickers/TDL_070.png",
+    "flavor_text": "A legend, captured in gold."
+  },
+  {
+    "id": "TDL_071",
+    "collection_id": "TDL",
+    "character_id": "TDL_C08",
+    "number": 71,
+    "name": "Hydra — First Steps",
+    "rarity": "common",
+    "image": "stickers/TDL_071.png",
+    "flavor_text": "Where every story begins."
+  },
+  {
+    "id": "TDL_072",
+    "collection_id": "TDL",
+    "character_id": "TDL_C08",
+    "number": 72,
+    "name": "Hydra — Daily Ritual",
+    "rarity": "common",
+    "image": "stickers/TDL_072.png",
+    "flavor_text": "The small habit that keeps them going."
+  },
+  {
+    "id": "TDL_073",
+    "collection_id": "TDL",
+    "character_id": "TDL_C08",
+    "number": 73,
+    "name": "Hydra — Quiet Moment",
+    "rarity": "common",
+    "image": "stickers/TDL_073.png",
+    "flavor_text": "Even heroes need to breathe."
+  },
+  {
+    "id": "TDL_074",
+    "collection_id": "TDL",
+    "character_id": "TDL_C08",
+    "number": 74,
+    "name": "Hydra — Tools of the Trade",
+    "rarity": "uncommon",
+    "image": "stickers/TDL_074.png",
+    "flavor_text": "Never leaves home without them."
+  },
+  {
+    "id": "TDL_075",
+    "collection_id": "TDL",
+    "character_id": "TDL_C08",
+    "number": 75,
+    "name": "Hydra — Among Friends",
+    "rarity": "uncommon",
+    "image": "stickers/TDL_075.png",
+    "flavor_text": "Stronger together, always."
+  },
+  {
+    "id": "TDL_076",
+    "collection_id": "TDL",
+    "character_id": "TDL_C08",
+    "number": 76,
+    "name": "Hydra — Against the Wind",
+    "rarity": "uncommon",
+    "image": "stickers/TDL_076.png",
+    "flavor_text": "The day everything pushed back."
+  },
+  {
+    "id": "TDL_077",
+    "collection_id": "TDL",
+    "character_id": "TDL_C08",
+    "number": 77,
+    "name": "Hydra — Signature Move",
+    "rarity": "rare",
+    "image": "stickers/TDL_077.png",
+    "flavor_text": "You'd know it anywhere."
+  },
+  {
+    "id": "TDL_078",
+    "collection_id": "TDL",
+    "character_id": "TDL_C08",
+    "number": 78,
+    "name": "Hydra — Night Shift",
+    "rarity": "rare",
+    "image": "stickers/TDL_078.png",
+    "flavor_text": "The city looks different after dark."
+  },
+  {
+    "id": "TDL_079",
+    "collection_id": "TDL",
+    "character_id": "TDL_C08",
+    "number": 79,
+    "name": "Hydra — Moment of Glory",
+    "rarity": "epic",
+    "image": "stickers/TDL_079.png",
+    "flavor_text": "The one everybody still talks about."
+  },
+  {
+    "id": "TDL_080",
+    "collection_id": "TDL",
+    "character_id": "TDL_C08",
+    "number": 80,
+    "name": "Hydra — Golden Portrait",
+    "rarity": "legendary",
+    "image": "stickers/TDL_080.png",
+    "flavor_text": "A legend, captured in gold."
+  },
+  {
+    "id": "TDL_081",
+    "collection_id": "TDL",
+    "character_id": "TDL_C09",
+    "number": 81,
+    "name": "Inko — First Steps",
+    "rarity": "common",
+    "image": "stickers/TDL_081.png",
+    "flavor_text": "Where every story begins."
+  },
+  {
+    "id": "TDL_082",
+    "collection_id": "TDL",
+    "character_id": "TDL_C09",
+    "number": 82,
+    "name": "Inko — Daily Ritual",
+    "rarity": "common",
+    "image": "stickers/TDL_082.png",
+    "flavor_text": "The small habit that keeps them going."
+  },
+  {
+    "id": "TDL_083",
+    "collection_id": "TDL",
+    "character_id": "TDL_C09",
+    "number": 83,
+    "name": "Inko — Quiet Moment",
+    "rarity": "common",
+    "image": "stickers/TDL_083.png",
+    "flavor_text": "Even heroes need to breathe."
+  },
+  {
+    "id": "TDL_084",
+    "collection_id": "TDL",
+    "character_id": "TDL_C09",
+    "number": 84,
+    "name": "Inko — Tools of the Trade",
+    "rarity": "uncommon",
+    "image": "stickers/TDL_084.png",
+    "flavor_text": "Never leaves home without them."
+  },
+  {
+    "id": "TDL_085",
+    "collection_id": "TDL",
+    "character_id": "TDL_C09",
+    "number": 85,
+    "name": "Inko — Among Friends",
+    "rarity": "uncommon",
+    "image": "stickers/TDL_085.png",
+    "flavor_text": "Stronger together, always."
+  },
+  {
+    "id": "TDL_086",
+    "collection_id": "TDL",
+    "character_id": "TDL_C09",
+    "number": 86,
+    "name": "Inko — Against the Wind",
+    "rarity": "uncommon",
+    "image": "stickers/TDL_086.png",
+    "flavor_text": "The day everything pushed back."
+  },
+  {
+    "id": "TDL_087",
+    "collection_id": "TDL",
+    "character_id": "TDL_C09",
+    "number": 87,
+    "name": "Inko — Signature Move",
+    "rarity": "rare",
+    "image": "stickers/TDL_087.png",
+    "flavor_text": "You'd know it anywhere."
+  },
+  {
+    "id": "TDL_088",
+    "collection_id": "TDL",
+    "character_id": "TDL_C09",
+    "number": 88,
+    "name": "Inko — Night Shift",
+    "rarity": "rare",
+    "image": "stickers/TDL_088.png",
+    "flavor_text": "The city looks different after dark."
+  },
+  {
+    "id": "TDL_089",
+    "collection_id": "TDL",
+    "character_id": "TDL_C09",
+    "number": 89,
+    "name": "Inko — Moment of Glory",
+    "rarity": "epic",
+    "image": "stickers/TDL_089.png",
+    "flavor_text": "The one everybody still talks about."
+  },
+  {
+    "id": "TDL_090",
+    "collection_id": "TDL",
+    "character_id": "TDL_C09",
+    "number": 90,
+    "name": "Inko — Golden Portrait",
+    "rarity": "legendary",
+    "image": "stickers/TDL_090.png",
+    "flavor_text": "A legend, captured in gold."
+  },
+  {
+    "id": "TDL_091",
+    "collection_id": "TDL",
+    "character_id": "TDL_C10",
+    "number": 91,
+    "name": "Juna — First Steps",
+    "rarity": "common",
+    "image": "stickers/TDL_091.png",
+    "flavor_text": "Where every story begins."
+  },
+  {
+    "id": "TDL_092",
+    "collection_id": "TDL",
+    "character_id": "TDL_C10",
+    "number": 92,
+    "name": "Juna — Daily Ritual",
+    "rarity": "common",
+    "image": "stickers/TDL_092.png",
+    "flavor_text": "The small habit that keeps them going."
+  },
+  {
+    "id": "TDL_093",
+    "collection_id": "TDL",
+    "character_id": "TDL_C10",
+    "number": 93,
+    "name": "Juna — Quiet Moment",
+    "rarity": "common",
+    "image": "stickers/TDL_093.png",
+    "flavor_text": "Even heroes need to breathe."
+  },
+  {
+    "id": "TDL_094",
+    "collection_id": "TDL",
+    "character_id": "TDL_C10",
+    "number": 94,
+    "name": "Juna — Tools of the Trade",
+    "rarity": "uncommon",
+    "image": "stickers/TDL_094.png",
+    "flavor_text": "Never leaves home without them."
+  },
+  {
+    "id": "TDL_095",
+    "collection_id": "TDL",
+    "character_id": "TDL_C10",
+    "number": 95,
+    "name": "Juna — Among Friends",
+    "rarity": "uncommon",
+    "image": "stickers/TDL_095.png",
+    "flavor_text": "Stronger together, always."
+  },
+  {
+    "id": "TDL_096",
+    "collection_id": "TDL",
+    "character_id": "TDL_C10",
+    "number": 96,
+    "name": "Juna — Against the Wind",
+    "rarity": "uncommon",
+    "image": "stickers/TDL_096.png",
+    "flavor_text": "The day everything pushed back."
+  },
+  {
+    "id": "TDL_097",
+    "collection_id": "TDL",
+    "character_id": "TDL_C10",
+    "number": 97,
+    "name": "Juna — Signature Move",
+    "rarity": "rare",
+    "image": "stickers/TDL_097.png",
+    "flavor_text": "You'd know it anywhere."
+  },
+  {
+    "id": "TDL_098",
+    "collection_id": "TDL",
+    "character_id": "TDL_C10",
+    "number": 98,
+    "name": "Juna — Night Shift",
+    "rarity": "rare",
+    "image": "stickers/TDL_098.png",
+    "flavor_text": "The city looks different after dark."
+  },
+  {
+    "id": "TDL_099",
+    "collection_id": "TDL",
+    "character_id": "TDL_C10",
+    "number": 99,
+    "name": "Juna — Moment of Glory",
+    "rarity": "epic",
+    "image": "stickers/TDL_099.png",
+    "flavor_text": "The one everybody still talks about."
+  },
+  {
+    "id": "TDL_100",
+    "collection_id": "TDL",
+    "character_id": "TDL_C10",
+    "number": 100,
+    "name": "Juna — Golden Portrait",
+    "rarity": "legendary",
+    "image": "stickers/TDL_100.png",
+    "flavor_text": "A legend, captured in gold."
+  }
+]
