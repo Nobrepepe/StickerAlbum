@@ -15,15 +15,18 @@ def collection_card(
     on_open: Callable[[], None],
 ) -> ft.Control:
     pct = (applied / total * 100) if total else 0.0
+    width = 330.0
     return ft.Container(
-        width=330,
+        width=width,
         bgcolor="#191922",
         border_radius=14,
         border=ft.border.all(1, ft.Colors.with_opacity(0.15, ft.Colors.WHITE)),
         clip_behavior=ft.ClipBehavior.ANTI_ALIAS,
         content=ft.Column(
             [
-                cover_band(collection.cover_image, collection.theme_color),
+                # Widescreen 16:9 cover so the collection art is the hero.
+                cover_band(collection.cover_image, collection.theme_color,
+                           height=width * 9 / 16),
                 ft.Container(
                     padding=16,
                     content=ft.Column(

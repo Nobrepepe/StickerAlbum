@@ -19,15 +19,17 @@ def pack_card(
         details.append(f"{pack.foil_rate:.0%} foil chance")
     if spicy_enabled and pack.spicy_rate > 0:
         details.append(f"🌶️ {pack.spicy_rate:.0%}")
+    width = 300.0
     return ft.Container(
-        width=300,
+        width=width,
         bgcolor="#191922",
         border_radius=14,
         border=ft.border.all(1, ft.Colors.with_opacity(0.15, ft.Colors.WHITE)),
         clip_behavior=ft.ClipBehavior.ANTI_ALIAS,
         content=ft.Column(
             [
-                cover_band(pack.image, theme_color, height=80),
+                # Widescreen 16:9 pack art, matching the collection covers.
+                cover_band(pack.image, theme_color, height=width * 9 / 16),
                 ft.Container(
                     padding=16,
                     content=ft.Column(

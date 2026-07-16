@@ -84,10 +84,14 @@ def character_portrait(
 
 
 def cover_band(image: str | None, color: str | None, height: float = 90) -> ft.Control:
-    """Collection/pack cover image or a theme-colored gradient band."""
+    """Collection/pack cover image (filling the band, cropped rather than
+    squished) or a theme-colored gradient fallback."""
     src = resolve_image(image)
     if src:
-        return ft.Image(src=src, height=height, fit=ft.ImageFit.COVER, expand=True)
+        return ft.Container(
+            height=height,
+            image=ft.DecorationImage(src=src, fit=ft.ImageFit.COVER),
+        )
     tint = color or "#455a64"
     return ft.Container(
         height=height,

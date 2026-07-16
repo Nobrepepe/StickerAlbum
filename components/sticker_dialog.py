@@ -18,10 +18,11 @@ def open_sticker_dialog(
     album: AlbumService,
     sticker: Sticker,
     character: Character,
-    on_change: Callable[[], None],
+    on_change: Callable[[Sticker], None],
 ) -> None:
     """One dialog for all three slot states. `on_change` runs after a
-    successful apply/restyle so the view can refresh."""
+    successful apply/restyle, receiving the sticker that changed so the
+    view can refresh (and animate the slot)."""
     state = album.slot_state(sticker.id)
     owned = album.owned_styles(sticker.id)
     applied_style = album.applied_style(sticker.id)
@@ -39,7 +40,7 @@ def open_sticker_dialog(
                 page.open(ft.SnackBar(ft.Text(str(exc)), bgcolor="#b71c1c"))
                 return
             page.close(dialog)
-            on_change()
+            on_change(sticker)
         return handler
 
     info: list[ft.Control] = [
@@ -52,7 +53,7 @@ def open_sticker_dialog(
     ]
 
     if state == APPLIED:
-        body_art: ft.Control = sticker_art(sticker, 260, 300)
+        body_art: ft.Control = sticker_art(sticker, 300, 360)
         info.append(ft.Text(
             f"Applied · {_STYLE_LABELS.get(applied_style, applied_style)}",
             size=13, color="#81c784", weight=ft.FontWeight.BOLD,
@@ -66,14 +67,14 @@ def open_sticker_dialog(
         if dups:
             info.append(ft.Text(f"Spare copies: {dups}", size=12, color=ft.Colors.GREY_500))
     elif state == OWNED:
-        body_art = sticker_art(sticker, 260, 300)
+        body_art = sticker_art(sticker, 300, 360)
         counts = " · ".join(
             f"{_STYLE_LABELS[s]} ×{q}" for s, q in owned.items()
         )
         info.append(ft.Text(f"Owned, not applied yet — {counts}", size=13, color="#ffb300"))
     else:
         body_art = ft.Container(
-            width=260, height=300, border_radius=8,
+            width=300, height=360, border_radius=8,
             border=ft.border.all(1, ft.Colors.GREY_800),
             alignment=ft.alignment.center,
             content=ft.Text("Not collected yet", color=ft.Colors.GREY_600),
@@ -98,7 +99,7 @@ def open_sticker_dialog(
         horizontal_alignment=ft.CrossAxisAlignment.CENTER,
         tight=True,
         spacing=10,
-        width=320,
+        width=360,
     )
     dialog.actions = actions
     dialog.actions_alignment = ft.MainAxisAlignment.END

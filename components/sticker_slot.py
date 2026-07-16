@@ -30,9 +30,17 @@ def build_sticker_slot(
     album: AlbumService,
     sticker: Sticker,
     on_tap: Callable[[Sticker], None],
-) -> ft.Control:
+    width: float = SLOT_W,
+    height: float = SLOT_H,
+) -> ft.Container:
     state = album.slot_state(sticker.id)
     rarity_color = RARITY_COLORS.get(sticker.rarity, "#9e9e9e")
+    # Scale the typography gently with the slot size so bigger slots read
+    # bigger, with the artwork staying the dominant element.
+    k = max(1.0, width / SLOT_W)
+    art_w, art_h = width - 24, height - 74 * k**0.5
+    label_size = round(11 * k**0.5)
+    chip_size = round(8 * k**0.5)
 
     badges: list[ft.Control] = []
     if sticker.spicy:
@@ -41,13 +49,13 @@ def build_sticker_slot(
         style = album.applied_style(sticker.id)
         body: ft.Control = ft.Column(
             [
-                sticker_art(sticker, SLOT_W - 24, SLOT_H - 74),
+                sticker_art(sticker, art_w, art_h),
                 ft.Text(
-                    sticker.name, size=11, text_align=ft.TextAlign.CENTER,
+                    sticker.name, size=label_size, text_align=ft.TextAlign.CENTER,
                     max_lines=1, overflow=ft.TextOverflow.ELLIPSIS,
                     color=ft.Colors.with_opacity(0.9, ft.Colors.WHITE),
                 ),
-                rarity_chip(sticker.rarity, size=8),
+                rarity_chip(sticker.rarity, size=chip_size),
             ],
             horizontal_alignment=ft.CrossAxisAlignment.CENTER,
             spacing=4,
@@ -65,8 +73,8 @@ def build_sticker_slot(
         body = ft.Column(
             [
                 ft.Container(
-                    width=SLOT_W - 24,
-                    height=SLOT_H - 74,
+                    width=art_w,
+                    height=art_h,
                     border_radius=8,
                     gradient=ft.LinearGradient(
                         begin=ft.alignment.top_center,
@@ -76,12 +84,12 @@ def build_sticker_slot(
                     alignment=ft.alignment.center,
                     content=ft.Icon(
                         ft.Icons.STICKY_NOTE_2_OUTLINED,
-                        size=40,
+                        size=40 * k,
                         color=ft.Colors.with_opacity(0.8, rarity_color),
                     ),
                 ),
-                ft.Text(sticker.id, size=11, color=ft.Colors.GREY_400),
-                rarity_chip(sticker.rarity, size=8),
+                ft.Text(sticker.id, size=label_size, color=ft.Colors.GREY_400),
+                rarity_chip(sticker.rarity, size=chip_size),
             ],
             horizontal_alignment=ft.CrossAxisAlignment.CENTER,
             spacing=4,
@@ -93,20 +101,20 @@ def build_sticker_slot(
         body = ft.Column(
             [
                 ft.Container(
-                    width=SLOT_W - 24,
-                    height=SLOT_H - 74,
+                    width=art_w,
+                    height=art_h,
                     border_radius=8,
                     border=ft.border.all(1, ft.Colors.with_opacity(0.25, rarity_color)),
                     alignment=ft.alignment.center,
                     content=ft.Text(
                         f"#{sticker.number:02d}",
-                        size=26,
+                        size=26 * k,
                         weight=ft.FontWeight.BOLD,
                         color=ft.Colors.with_opacity(0.25, ft.Colors.WHITE),
                     ),
                 ),
-                ft.Text(sticker.id, size=11, color=ft.Colors.GREY_600),
-                rarity_chip(sticker.rarity, size=8),
+                ft.Text(sticker.id, size=label_size, color=ft.Colors.GREY_600),
+                rarity_chip(sticker.rarity, size=chip_size),
             ],
             horizontal_alignment=ft.CrossAxisAlignment.CENTER,
             spacing=4,
@@ -115,8 +123,8 @@ def build_sticker_slot(
         border_color = ft.Colors.with_opacity(0.35, rarity_color)
 
     return ft.Container(
-        width=SLOT_W,
-        height=SLOT_H,
+        width=width,
+        height=height,
         bgcolor=_SLOT_BG,
         border=ft.border.all(2, border_color),
         border_radius=12,

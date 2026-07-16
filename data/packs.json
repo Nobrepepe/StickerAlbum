@@ -108,5 +108,26 @@
         "quantity": 8
       }
     ]
+  },
+  "CST_standard": {
+    "collection_id": "CST",
+    "name": "Heights Starter Pack",
+    "description": "5 random Alturas Heights stickers: 4 standard, 1 guaranteed rare or better.",
+    "price": 2500,
+    "foil_rate": 0.1,
+    "spicy_rate": 0.2,
+    "image": "packs/HGT_standard.png",
+    "distribution": [
+      {
+        "pool": "CST",
+        "value": "standard",
+        "quantity": 4
+      },
+      {
+        "pool": "CST",
+        "value": "rare+",
+        "quantity": 1
+      }
+    ]
   }
 }

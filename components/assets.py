@@ -23,3 +23,26 @@ def resolve_image(relative: str | None) -> str | None:
         _missing_logged.add(relative)
         log.info("Asset missing, using placeholder: %s", relative)
     return None
+
+
+_IMAGE_EXTS = ("png", "jpg", "jpeg", "webp")
+
+
+def _resolve_any_ext(base: str) -> str | None:
+    for ext in _IMAGE_EXTS:
+        rel = f"{base}.{ext}"
+        if (ASSETS_DIR / rel).is_file():
+            return f"/{rel}"
+    return None
+
+
+def character_tile_image(character_id: str) -> str | None:
+    """16:9 landscape banner for the album sidebar (e.g. the character's
+    eyes). Convention: assets/portraits/<CHARACTER_ID>_tile.png"""
+    return _resolve_any_ext(f"portraits/{character_id}_tile")
+
+
+def character_card_image(character_id: str) -> str | None:
+    """9:16 portrait full-body card shown when the character is selected.
+    Convention: assets/portraits/<CHARACTER_ID>_card.png"""
+    return _resolve_any_ext(f"portraits/{character_id}_card")

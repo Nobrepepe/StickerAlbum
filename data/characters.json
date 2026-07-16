@@ -138,5 +138,75 @@
     "name": "Juna Abyss",
     "description": "Cartographer of the places light forgets.",
     "portrait_image": "portraits/TDL_C10.png"
+  },
+  {
+    "id": "CST_C01",
+    "collection_id": "CST",
+    "name": "a",
+    "description": "",
+    "portrait_image": "portraits/CST_C01.png"
+  },
+  {
+    "id": "CST_C02",
+    "collection_id": "CST",
+    "name": "a",
+    "description": "",
+    "portrait_image": "portraits/CST_C02.png"
+  },
+  {
+    "id": "CST_C03",
+    "collection_id": "CST",
+    "name": "a",
+    "description": "",
+    "portrait_image": null
+  },
+  {
+    "id": "CST_C04",
+    "collection_id": "CST",
+    "name": "a",
+    "description": "",
+    "portrait_image": null
+  },
+  {
+    "id": "CST_C05",
+    "collection_id": "CST",
+    "name": "a",
+    "description": "",
+    "portrait_image": null
+  },
+  {
+    "id": "CST_C06",
+    "collection_id": "CST",
+    "name": "a",
+    "description": "",
+    "portrait_image": null
+  },
+  {
+    "id": "CST_C07",
+    "collection_id": "CST",
+    "name": "a",
+    "description": "",
+    "portrait_image": null
+  },
+  {
+    "id": "CST_C08",
+    "collection_id": "CST",
+    "name": "a",
+    "description": "",
+    "portrait_image": null
+  },
+  {
+    "id": "CST_C09",
+    "collection_id": "CST",
+    "name": "a",
+    "description": "",
+    "portrait_image": null
+  },
+  {
+    "id": "CST_C10",
+    "collection_id": "CST",
+    "name": "a",
+    "description": "",
+    "portrait_image": null
   }
 ]

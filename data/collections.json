@@ -12,5 +12,12 @@
     "description": "A drowned kingdom lit by lantern fish, where every street is a current.",
     "cover_image": "covers/TDL.png",
     "theme_color": "#00bcd4"
+  },
+  {
+    "id": "CST",
+    "name": "Eden Castle",
+    "description": "",
+    "cover_image": "covers/CST.png",
+    "theme_color": "#7c4dff"
   }
 ]
