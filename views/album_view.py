@@ -22,12 +22,29 @@ SIDEBAR_W = 252
 TILE_H = SIDEBAR_W * 9 / 16       # 16:9 landscape tile
 CARD_H = SIDEBAR_W * 16 / 9       # 9:16 portrait card
 
-# Focused character view: stickers are the point of the app, so make them big.
-CHAR_SLOT_W, CHAR_SLOT_H = 216.0, 300.0
-# Overview: the whole collection at a glance.
-OVER_SLOT_W, OVER_SLOT_H = 148.0, 208.0
+# Slots share the artwork's 3:4 ratio. Focused character view goes big;
+# the overview shows the whole collection at a glance.
+CHAR_SLOT_W, CHAR_SLOT_H = 225.0, 300.0
+OVER_SLOT_W, OVER_SLOT_H = 150.0, 200.0
 
 _SPICY_COLOR = "#ff7043"
+_BOARD_BG = "#ffffff"  # the big white board the stickers blend into
+_SIGN_SHADOW = ft.BoxShadow(
+    blur_radius=4, color=ft.Colors.with_opacity(0.35, "#000000"),
+    offset=ft.Offset(0, 1),
+)
+
+
+def _tile_sign(lines: list[ft.Control]) -> ft.Control:
+    """Floating dark chip over tile/card art (keeps white edges visible)."""
+    return ft.Container(
+        content=ft.Column(lines, spacing=1, tight=True,
+                          horizontal_alignment=ft.CrossAxisAlignment.START),
+        bgcolor=ft.Colors.with_opacity(0.82, "#14141c"),
+        border_radius=8,
+        padding=ft.padding.symmetric(horizontal=8, vertical=4),
+        shadow=_SIGN_SHADOW,
+    )
 
 
 def build_album(page: ft.Page, ctx, nav, collection_id: str) -> ft.Control:
@@ -53,64 +70,55 @@ def build_album(page: ft.Page, ctx, nav, collection_id: str) -> ft.Control:
         offset=ft.Offset(0, 0),
     )
 
-    def scrim_overlay(lines: list[ft.Control]) -> ft.Control:
-        """Bottom gradient + text overlay laid over a tile/card image."""
-        return ft.Container(
-            alignment=ft.alignment.bottom_left,
-            padding=10,
-            gradient=ft.LinearGradient(
-                begin=ft.alignment.top_center,
-                end=ft.alignment.bottom_center,
-                colors=[
-                    ft.Colors.with_opacity(0.0, "#000000"),
-                    ft.Colors.with_opacity(0.75, "#000000"),
-                ],
-                stops=[0.45, 1.0],
-            ),
-            content=ft.Column(lines, spacing=2, tight=True),
-        )
-
     # ---- sidebar: character tile list --------------------------------------
+    # Tiles sit edge-to-edge on a white strip so their vignette edges blend
+    # into one another, like the stickers on the board.
 
     def char_tile(i: int, char) -> ft.Control:
         applied, total = ctx.album.character_progress(char.id)
         complete = total > 0 and applied == total
         src = character_tile_image(char.id)
-        count = ft.Row(
+        name_line = ft.Row(
             [
-                ft.Text(f"{applied} / {total}", size=11, color=ft.Colors.GREY_300),
-                ft.Icon(ft.Icons.CHECK_CIRCLE, size=13, color="#81c784",
+                ft.Text(char.name, size=12, weight=ft.FontWeight.BOLD,
+                        color=ft.Colors.WHITE,
+                        max_lines=1, overflow=ft.TextOverflow.ELLIPSIS),
+                ft.Text(f"{applied}/{total}", size=11, color=ft.Colors.GREY_400),
+                ft.Icon(ft.Icons.CHECK_CIRCLE, size=12, color="#81c784",
                         visible=complete),
             ],
-            spacing=4,
+            spacing=6,
+            tight=True,
         )
         return ft.Container(
             height=TILE_H,
-            border_radius=12,
-            clip_behavior=ft.ClipBehavior.ANTI_ALIAS,
+            bgcolor=_BOARD_BG,
             on_click=lambda e, i=i: select_character(i),
-            ink=True,
             image=ft.DecorationImage(src=src, fit=ft.ImageFit.COVER) if src else None,
             gradient=None if src else ft.LinearGradient(
                 begin=ft.alignment.top_left,
                 end=ft.alignment.bottom_right,
                 colors=[ft.Colors.with_opacity(0.6, theme), "#14141c"],
             ),
-            content=scrim_overlay([
-                ft.Text(char.name, size=14, weight=ft.FontWeight.BOLD,
-                        max_lines=1, overflow=ft.TextOverflow.ELLIPSIS),
-                count,
-            ]),
+            content=ft.Stack(
+                [ft.Container(content=_tile_sign([name_line]), bottom=6, left=6)],
+                expand=True,
+            ),
             tooltip=char.name,
         )
 
     def build_char_list() -> ft.Control:
-        return ft.Column(
-            [char_tile(i, c) for i, c in enumerate(characters)],
-            spacing=10,
-            scroll=ft.ScrollMode.AUTO,
-            expand=True,
+        strip = ft.Container(
+            bgcolor=_BOARD_BG,
+            border_radius=14,
+            clip_behavior=ft.ClipBehavior.ANTI_ALIAS,
+            content=ft.Column(
+                [char_tile(i, c) for i, c in enumerate(characters)],
+                spacing=0,  # edges touch: the whole strip reads as one piece
+                tight=True,
+            ),
         )
+        return ft.Column([strip], scroll=ft.ScrollMode.AUTO, expand=True)
 
     # ---- sidebar: selected character card -----------------------------------
 
@@ -118,20 +126,27 @@ def build_album(page: ft.Page, ctx, nav, collection_id: str) -> ft.Control:
         applied, total = ctx.album.character_progress(char.id)
         src = character_card_image(char.id)
         lines: list[ft.Control] = [
-            ft.Text(char.name, size=17, weight=ft.FontWeight.BOLD,
-                    max_lines=1, overflow=ft.TextOverflow.ELLIPSIS),
-            ft.Text(f"{applied} / {total} applied", size=12, color=ft.Colors.GREY_300),
+            ft.Row(
+                [
+                    ft.Text(char.name, size=15, weight=ft.FontWeight.BOLD,
+                            color=ft.Colors.WHITE,
+                            max_lines=1, overflow=ft.TextOverflow.ELLIPSIS),
+                    ft.Text(f"{applied}/{total}", size=12, color=ft.Colors.GREY_400),
+                ],
+                spacing=8,
+                tight=True,
+            ),
         ]
         if spicy_on:
             s_applied, s_total = ctx.album.spicy_character_progress(char.id)
             if s_total:
-                lines.append(ft.Text(f"🌶️ {s_applied} / {s_total}", size=12,
+                lines.append(ft.Text(f"🌶️ {s_applied} / {s_total}", size=11,
                                      color=_SPICY_COLOR))
         card = ft.Container(
             height=CARD_H,
+            bgcolor=_BOARD_BG,
             border_radius=14,
             clip_behavior=ft.ClipBehavior.ANTI_ALIAS,
-            border=ft.border.all(1, ft.Colors.with_opacity(0.35, theme)),
             image=ft.DecorationImage(src=src, fit=ft.ImageFit.COVER) if src else None,
             gradient=None if src else ft.LinearGradient(
                 begin=ft.alignment.top_center,
@@ -146,10 +161,7 @@ def build_album(page: ft.Page, ctx, nav, collection_id: str) -> ft.Control:
                         content=character_portrait(char, 120, theme),
                         visible=src is None,
                     ),
-                    ft.Container(
-                        content=scrim_overlay(lines),
-                        left=0, right=0, top=0, bottom=0,
-                    ),
+                    ft.Container(content=_tile_sign(lines), bottom=8, left=8),
                 ],
                 expand=True,
             ),
@@ -188,51 +200,63 @@ def build_album(page: ft.Page, ctx, nav, collection_id: str) -> ft.Control:
         return slot
 
     def spicy_header(applied: int, total: int) -> ft.Control:
+        # Rendered on the white board, so text needs dark-on-light colors.
         return ft.Row(
             [
                 ft.Text("🌶️", size=18),
                 ft.Text("Spicy stickers", size=14, weight=ft.FontWeight.BOLD,
                         color=_SPICY_COLOR),
-                ft.Text(f"{applied} / {total}", size=12, color=ft.Colors.GREY_400),
-                ft.Container(content=ft.Divider(height=1, color="#3a2a26"), expand=True),
+                ft.Text(f"{applied} / {total}", size=12, color=ft.Colors.GREY_600),
+                ft.Container(content=ft.Divider(height=1, color="#e8e2d8"), expand=True),
             ],
             spacing=10,
             vertical_alignment=ft.CrossAxisAlignment.CENTER,
         )
 
+    def board(sections: list[ft.Control]) -> ft.Control:
+        """The big white board the stickers are placed on. Sticker edges and
+        the board share the same white, so vignettes blend together."""
+        return ft.Container(
+            bgcolor=_BOARD_BG,
+            border_radius=16,
+            padding=ft.padding.only(left=18, right=18, top=20, bottom=20),
+            content=ft.Column(sections, spacing=22),
+        )
+
     def build_overview_grid() -> list[ft.Control]:
         stickers = ctx.stickers.list_by_collection(collection_id, spicy=False)
-        controls: list[ft.Control] = [
+        # spacing 0: white vignette edges touch and blend into one surface
+        sections: list[ft.Control] = [
             ft.Row([make_slot(s, OVER_SLOT_W, OVER_SLOT_H) for s in stickers],
-                   wrap=True, spacing=12, run_spacing=12),
+                   wrap=True, spacing=0, run_spacing=0),
         ]
         if spicy_on:
             spicy = ctx.stickers.list_by_collection(collection_id, spicy=True)
             if spicy:
                 applied = sum(1 for s in spicy if ctx.album.applied_style(s.id))
-                controls.append(spicy_header(applied, len(spicy)))
-                controls.append(
+                sections.append(spicy_header(applied, len(spicy)))
+                sections.append(
                     ft.Row([make_slot(s, OVER_SLOT_W, OVER_SLOT_H) for s in spicy],
-                           wrap=True, spacing=12, run_spacing=12)
+                           wrap=True, spacing=0, run_spacing=0)
                 )
-        return controls
+        return [board(sections)]
 
     def build_character_grid(char) -> list[ft.Control]:
         stickers = ctx.stickers.list_by_character(char.id, spicy=False)
-        controls: list[ft.Control] = [
+        sections: list[ft.Control] = [
             ft.Row([make_slot(s, CHAR_SLOT_W, CHAR_SLOT_H) for s in stickers],
-                   wrap=True, spacing=14, run_spacing=14),
+                   wrap=True, spacing=0, run_spacing=0),
         ]
         if spicy_on:
             spicy = ctx.stickers.list_by_character(char.id, spicy=True)
             if spicy:
                 s_applied, s_total = ctx.album.spicy_character_progress(char.id)
-                controls.append(spicy_header(s_applied, s_total))
-                controls.append(
+                sections.append(spicy_header(s_applied, s_total))
+                sections.append(
                     ft.Row([make_slot(s, CHAR_SLOT_W, CHAR_SLOT_H) for s in spicy],
-                           wrap=True, spacing=14, run_spacing=14)
+                           wrap=True, spacing=0, run_spacing=0)
                 )
-        return controls
+        return [board(sections)]
 
     # ---- refresh / navigation ---------------------------------------------------
 

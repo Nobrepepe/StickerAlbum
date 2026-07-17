@@ -4,6 +4,8 @@ from typing import Callable
 
 import flet as ft
 
+from components.assets import resolve_image, sticker_mask_image
+from components.foil_shimmer import FoilShimmer
 from components.placeholders import sticker_art
 from components.rarity_chip import rarity_chip
 from models.catalog import Character, Sticker
@@ -11,6 +13,29 @@ from services.album_service import APPLIED, OWNED, AlbumService
 from services.errors import ApplyError
 
 _STYLE_LABELS = {"normal": "Normal", "foil": "Foil ✨"}
+
+_ART_W, _ART_H = 300, 400  # 3:4, matching the sticker artwork
+
+
+def _art_display(sticker: Sticker, foil: bool) -> ft.Control:
+    """Sticker art on a white backing plate (so the vignette reads as it
+    does on the board), with the masked shimmer when inspecting a foil."""
+    src = resolve_image(sticker.image)
+    if not src:
+        return sticker_art(sticker, _ART_W, _ART_H)
+    layers: list[ft.Control] = [
+        ft.Image(src=src, width=_ART_W, height=_ART_H, fit=ft.ImageFit.CONTAIN),
+    ]
+    if foil:
+        mask = sticker_mask_image(sticker.id)
+        if mask:
+            layers.append(FoilShimmer(mask, _ART_W, _ART_H))
+    return ft.Container(
+        bgcolor="#ffffff",
+        border_radius=12,
+        padding=6,
+        content=ft.Stack(layers, width=_ART_W, height=_ART_H),
+    )
 
 
 def open_sticker_dialog(
@@ -53,7 +78,7 @@ def open_sticker_dialog(
     ]
 
     if state == APPLIED:
-        body_art: ft.Control = sticker_art(sticker, 300, 360)
+        body_art: ft.Control = _art_display(sticker, foil=applied_style == "foil")
         info.append(ft.Text(
             f"Applied · {_STYLE_LABELS.get(applied_style, applied_style)}",
             size=13, color="#81c784", weight=ft.FontWeight.BOLD,
@@ -67,14 +92,15 @@ def open_sticker_dialog(
         if dups:
             info.append(ft.Text(f"Spare copies: {dups}", size=12, color=ft.Colors.GREY_500))
     elif state == OWNED:
-        body_art = sticker_art(sticker, 300, 360)
+        # Preview shimmers if the only owned style is foil.
+        body_art = _art_display(sticker, foil="normal" not in owned)
         counts = " · ".join(
             f"{_STYLE_LABELS[s]} ×{q}" for s, q in owned.items()
         )
         info.append(ft.Text(f"Owned, not applied yet — {counts}", size=13, color="#ffb300"))
     else:
         body_art = ft.Container(
-            width=300, height=360, border_radius=8,
+            width=_ART_W, height=_ART_H, border_radius=8,
             border=ft.border.all(1, ft.Colors.GREY_800),
             alignment=ft.alignment.center,
             content=ft.Text("Not collected yet", color=ft.Colors.GREY_600),

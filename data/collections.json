@@ -1,23 +1,9 @@
 [
   {
-    "id": "HGT",
-    "name": "Alturas Heights",
-    "description": "A wind-swept city of impossible towers, where couriers race across the skyline.",
-    "cover_image": "covers/HGT.png",
-    "theme_color": "#7c4dff"
-  },
-  {
-    "id": "TDL",
-    "name": "Tidelow Reef",
-    "description": "A drowned kingdom lit by lantern fish, where every street is a current.",
-    "cover_image": "covers/TDL.png",
-    "theme_color": "#00bcd4"
-  },
-  {
-    "id": "CST",
-    "name": "Eden Castle",
-    "description": "",
-    "cover_image": "covers/CST.png",
-    "theme_color": "#7c4dff"
+    "id": "MRC",
+    "name": "Eden Mercenaries",
+    "description": "Company of mercenaries using Mechs to fight.",
+    "cover_image": "covers/MRC.png",
+    "theme_color": "#26a69a"
   }
 ]

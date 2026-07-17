@@ -1,17 +1,17 @@
 {
   "collections": [
     {
-      "id": "MRC",
-      "name": "Mercenaries",
-      "description": "",
-      "theme_color": "#f44336",
-      "cover_image": null,
+      "id": "CST",
+      "name": "Eden Castle",
+      "description": "Demon King's Castle",
+      "theme_color": "#7c4dff",
+      "cover_image": "covers/CST.png",
       "characters": [
         {
           "index": 1,
           "name": "",
           "description": "",
-          "portrait_image": null,
+          "portrait_image": "portraits/CST_C01.png",
           "stickers": [
             {
               "position": 1,
@@ -109,7 +109,7 @@
           "index": 2,
           "name": "",
           "description": "",
-          "portrait_image": null,
+          "portrait_image": "portraits/CST_C02.png",
           "stickers": [
             {
               "position": 1,
@@ -207,7 +207,7 @@
           "index": 3,
           "name": "",
           "description": "",
-          "portrait_image": null,
+          "portrait_image": "portraits/CST_C03.png",
           "stickers": [
             {
               "position": 1,
@@ -305,7 +305,7 @@
           "index": 4,
           "name": "",
           "description": "",
-          "portrait_image": null,
+          "portrait_image": "portraits/CST_C04.png",
           "stickers": [
             {
               "position": 1,
@@ -403,7 +403,7 @@
           "index": 5,
           "name": "",
           "description": "",
-          "portrait_image": null,
+          "portrait_image": "portraits/CST_C05.png",
           "stickers": [
             {
               "position": 1,
@@ -501,7 +501,7 @@
           "index": 6,
           "name": "",
           "description": "",
-          "portrait_image": null,
+          "portrait_image": "portraits/CST_C06.png",
           "stickers": [
             {
               "position": 1,
@@ -599,7 +599,7 @@
           "index": 7,
           "name": "",
           "description": "",
-          "portrait_image": null,
+          "portrait_image": "portraits/CST_C07.png",
           "stickers": [
             {
               "position": 1,
@@ -697,7 +697,7 @@
           "index": 8,
           "name": "",
           "description": "",
-          "portrait_image": null,
+          "portrait_image": "portraits/CST_C08.png",
           "stickers": [
             {
               "position": 1,
@@ -795,7 +795,7 @@
           "index": 9,
           "name": "",
           "description": "",
-          "portrait_image": null,
+          "portrait_image": "portraits/CST_C09.png",
           "stickers": [
             {
               "position": 1,
@@ -893,7 +893,7 @@
           "index": 10,
           "name": "",
           "description": "",
-          "portrait_image": null,
+          "portrait_image": "portraits/CST_C10.png",
           "stickers": [
             {
               "position": 1,

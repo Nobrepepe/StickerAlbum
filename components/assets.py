@@ -46,3 +46,10 @@ def character_card_image(character_id: str) -> str | None:
     """9:16 portrait full-body card shown when the character is selected.
     Convention: assets/portraits/<CHARACTER_ID>_card.png"""
     return _resolve_any_ext(f"portraits/{character_id}_card")
+
+
+def sticker_mask_image(sticker_id: str) -> str | None:
+    """Alpha mask isolating the sticker's subject from its white vignette
+    (transparent background, opaque silhouette). Used to keep the foil
+    shimmer inside the artwork. Convention: assets/stickers/<ID>_mask.png"""
+    return _resolve_any_ext(f"stickers/{sticker_id}_mask")

@@ -2,6 +2,13 @@ Art assets live here. Everything is optional; the app shows styled
 placeholders for anything missing. Formats: png, jpg, jpeg, webp.
 
   stickers/<STICKER_ID>.png        sticker art, e.g. stickers/HGT_008.png
+  stickers/<STICKER_ID>_mask.png   foil shimmer mask: TRANSPARENT background
+                                   with an opaque silhouette of the subject
+                                   (any color; only the alpha matters).
+                                   Same aspect ratio/framing as the sticker
+                                   art so the shimmer lines up. The shimmer
+                                   only plays inside the silhouette, never
+                                   on the white vignette edges.
   portraits/<CHARACTER_ID>.png     small square-ish portrait (avatars)
   portraits/<CHARACTER_ID>_tile.png
                                    16:9 LANDSCAPE banner for the album
