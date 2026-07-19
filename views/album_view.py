@@ -13,14 +13,12 @@ import asyncio
 
 import flet as ft
 
-from components.assets import character_card_image, character_tile_image
-from components.placeholders import character_portrait
+from components.character_tiles import character_card, character_tile
 from components.sticker_dialog import open_sticker_dialog
 from components.sticker_slot import build_sticker_slot
+from components.theme import BOARD_BG
 
 SIDEBAR_W = 252
-TILE_H = SIDEBAR_W * 9 / 16       # 16:9 landscape tile
-CARD_H = SIDEBAR_W * 16 / 9       # 9:16 portrait card
 
 # Slots share the artwork's 3:4 ratio. Focused character view goes big;
 # the overview shows the whole collection at a glance.
@@ -28,23 +26,7 @@ CHAR_SLOT_W, CHAR_SLOT_H = 225.0, 300.0
 OVER_SLOT_W, OVER_SLOT_H = 150.0, 200.0
 
 _SPICY_COLOR = "#ff7043"
-_BOARD_BG = "#ffffff"  # the big white board the stickers blend into
-_SIGN_SHADOW = ft.BoxShadow(
-    blur_radius=4, color=ft.Colors.with_opacity(0.35, "#000000"),
-    offset=ft.Offset(0, 1),
-)
-
-
-def _tile_sign(lines: list[ft.Control]) -> ft.Control:
-    """Floating dark chip over tile/card art (keeps white edges visible)."""
-    return ft.Container(
-        content=ft.Column(lines, spacing=1, tight=True,
-                          horizontal_alignment=ft.CrossAxisAlignment.START),
-        bgcolor=ft.Colors.with_opacity(0.82, "#14141c"),
-        border_radius=8,
-        padding=ft.padding.symmetric(horizontal=8, vertical=4),
-        shadow=_SIGN_SHADOW,
-    )
+_BOARD_BG = BOARD_BG
 
 
 def build_album(page: ft.Page, ctx, nav, collection_id: str) -> ft.Control:
@@ -77,7 +59,6 @@ def build_album(page: ft.Page, ctx, nav, collection_id: str) -> ft.Control:
     def char_tile(i: int, char) -> ft.Control:
         applied, total = ctx.album.character_progress(char.id)
         complete = total > 0 and applied == total
-        src = character_tile_image(char.id)
         name_line = ft.Row(
             [
                 ft.Text(char.name, size=12, weight=ft.FontWeight.BOLD,
@@ -90,21 +71,10 @@ def build_album(page: ft.Page, ctx, nav, collection_id: str) -> ft.Control:
             spacing=6,
             tight=True,
         )
-        return ft.Container(
-            height=TILE_H,
-            bgcolor=_BOARD_BG,
+        return character_tile(
+            char, theme, [name_line],
             on_click=lambda e, i=i: select_character(i),
-            image=ft.DecorationImage(src=src, fit=ft.ImageFit.COVER) if src else None,
-            gradient=None if src else ft.LinearGradient(
-                begin=ft.alignment.top_left,
-                end=ft.alignment.bottom_right,
-                colors=[ft.Colors.with_opacity(0.6, theme), "#14141c"],
-            ),
-            content=ft.Stack(
-                [ft.Container(content=_tile_sign([name_line]), bottom=6, left=6)],
-                expand=True,
-            ),
-            tooltip=char.name,
+            width=SIDEBAR_W,
         )
 
     def build_char_list() -> ft.Control:
@@ -124,7 +94,6 @@ def build_album(page: ft.Page, ctx, nav, collection_id: str) -> ft.Control:
 
     def build_char_card(char) -> ft.Control:
         applied, total = ctx.album.character_progress(char.id)
-        src = character_card_image(char.id)
         lines: list[ft.Control] = [
             ft.Row(
                 [
@@ -142,33 +111,9 @@ def build_album(page: ft.Page, ctx, nav, collection_id: str) -> ft.Control:
             if s_total:
                 lines.append(ft.Text(f"🌶️ {s_applied} / {s_total}", size=11,
                                      color=_SPICY_COLOR))
-        card = ft.Container(
-            height=CARD_H,
-            bgcolor=_BOARD_BG,
-            border_radius=14,
-            clip_behavior=ft.ClipBehavior.ANTI_ALIAS,
-            image=ft.DecorationImage(src=src, fit=ft.ImageFit.COVER) if src else None,
-            gradient=None if src else ft.LinearGradient(
-                begin=ft.alignment.top_center,
-                end=ft.alignment.bottom_center,
-                colors=[ft.Colors.with_opacity(0.55, theme), "#101018"],
-            ),
-            content=ft.Stack(
-                [
-                    # Placeholder portrait only when there is no card art yet.
-                    ft.Container(
-                        alignment=ft.alignment.center,
-                        content=character_portrait(char, 120, theme),
-                        visible=src is None,
-                    ),
-                    ft.Container(content=_tile_sign(lines), bottom=8, left=8),
-                ],
-                expand=True,
-            ),
-        )
         return ft.Column(
             [
-                card,
+                character_card(char, theme, lines, width=SIDEBAR_W),
                 ft.TextButton(
                     "All characters",
                     icon=ft.Icons.ARROW_BACK,

@@ -2,11 +2,13 @@
 
 import flet as ft
 
+from components.theme import PANEL_BG, PANEL_BORDER
+
 from repositories.errors import AppError
 from views.errors_ui import show_error, show_info
 
-_CARD_BG = "#191922"
-_BORDER = ft.border.all(1, "#2a2a36")
+_CARD_BG = PANEL_BG
+_BORDER = ft.border.all(1, PANEL_BORDER)
 
 
 def _section(title: str, subtitle: str, controls: list[ft.Control]) -> ft.Control:
@@ -168,4 +170,5 @@ def build_settings(page: ft.Page, ctx, nav) -> ft.Control:
         spacing=18,
         scroll=ft.ScrollMode.AUTO,
         expand=True,
+        alignment=ft.MainAxisAlignment.START,
     )

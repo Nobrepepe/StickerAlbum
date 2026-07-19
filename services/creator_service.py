@@ -18,6 +18,7 @@ from repositories.errors import AppError
 log = logging.getLogger(__name__)
 
 ALLOWED_IMAGE_EXTS = (".png", ".jpg", ".jpeg", ".webp")
+ALLOWED_SOUND_EXTS = (".mp3", ".wav", ".ogg", ".m4a")
 
 _CODE_RE = re.compile(r"^[A-Z]{3}$")
 
@@ -119,44 +120,24 @@ class CreatorService:
 
     # ---- images ------------------------------------------------------------
 
-    def attach_image(
-        self,
-        draft: DraftCollection,
-        kind: str,  # "cover" | "portrait" | "sticker"
-        source: str,
-        char_index: int | None = None,
-        position: int | None = None,
-    ) -> str:
-        """Copy an image file into assets/ under its canonical name and point
-        the draft at it. Returns the stored relative path."""
+    def _import_file(self, source: str, rel: str, old: str | None,
+                     allowed: tuple[str, ...], what: str) -> str:
+        """Copy a media file into assets/ under its canonical name."""
         src = Path(source)
         ext = src.suffix.lower()
-        if ext not in ALLOWED_IMAGE_EXTS:
+        if ext not in allowed:
             raise CreatorError(
-                f"Unsupported image type {ext or '(none)'}; use png, jpg, jpeg or webp."
+                f"Unsupported {what} type {ext or '(none)'}; "
+                f"use {', '.join(e.lstrip('.') for e in allowed)}."
             )
         if not src.is_file():
             raise CreatorError(f"File not found: {src.name}")
-
-        if kind == "cover":
-            rel = f"covers/{draft.id}{ext}"
-            old = draft.cover_image
-        elif kind == "portrait":
-            rel = f"portraits/{character_id(draft.id, char_index)}{ext}"
-            old = draft.characters[char_index - 1].portrait_image
-        elif kind == "sticker":
-            rel = f"stickers/{sticker_id(draft.id, char_index, position)}{ext}"
-            old = draft.characters[char_index - 1].stickers[position - 1].image
-        else:
-            raise ValueError(f"Unknown image kind: {kind}")
-
         dest = self._assets_dir / rel
         dest.parent.mkdir(parents=True, exist_ok=True)
         try:
             shutil.copyfile(src, dest)
         except OSError as exc:
-            raise CreatorError(f"Could not import the image: {exc}") from exc
-
+            raise CreatorError(f"Could not import the {what}: {exc}") from exc
         # Re-uploading with a different extension leaves the old file behind;
         # drop it so the assets folder doesn't accumulate strays.
         if old and old != rel:
@@ -164,13 +145,57 @@ class CreatorService:
                 (self._assets_dir / old).unlink(missing_ok=True)
             except OSError:
                 pass
+        return rel
 
+    def attach_image(
+        self,
+        draft: DraftCollection,
+        kind: str,  # "cover" | "tile" | "card" | "sticker"
+        source: str,
+        char_index: int | None = None,
+        position: int | None = None,
+    ) -> str:
+        """Import an image and point the draft at it. Tile and card art are
+        convention-named (portraits/<CHAR_ID>_tile / _card) and picked up by
+        the UI from disk, so they don't live in a draft field."""
+        ext = Path(source).suffix.lower()
         if kind == "cover":
+            rel = self._import_file(source, f"covers/{draft.id}{ext}",
+                                    draft.cover_image, ALLOWED_IMAGE_EXTS, "image")
             draft.cover_image = rel
-        elif kind == "portrait":
-            draft.characters[char_index - 1].portrait_image = rel
+        elif kind == "tile":
+            cid = character_id(draft.id, char_index)
+            rel = self._import_file(source, f"portraits/{cid}_tile{ext}",
+                                    None, ALLOWED_IMAGE_EXTS, "image")
+        elif kind == "card":
+            cid = character_id(draft.id, char_index)
+            rel = self._import_file(source, f"portraits/{cid}_card{ext}",
+                                    None, ALLOWED_IMAGE_EXTS, "image")
+        elif kind == "sticker":
+            sticker = draft.characters[char_index - 1].stickers[position - 1]
+            rel = self._import_file(
+                source, f"stickers/{sticker_id(draft.id, char_index, position)}{ext}",
+                sticker.image, ALLOWED_IMAGE_EXTS, "image")
+            sticker.image = rel
         else:
-            draft.characters[char_index - 1].stickers[position - 1].image = rel
+            raise ValueError(f"Unknown image kind: {kind}")
+        self._drafts.upsert(draft)
+        return rel
+
+    def attach_sound(
+        self,
+        draft: DraftCollection,
+        source: str,
+        char_index: int,
+        position: int,
+    ) -> str:
+        """Optional voice line for a sticker's flavor text."""
+        sticker = draft.characters[char_index - 1].stickers[position - 1]
+        ext = Path(source).suffix.lower()
+        rel = self._import_file(
+            source, f"sounds/{sticker_id(draft.id, char_index, position)}{ext}",
+            sticker.sound, ALLOWED_SOUND_EXTS, "sound")
+        sticker.sound = rel
         self._drafts.upsert(draft)
         return rel
 
@@ -225,6 +250,7 @@ class CreatorService:
                     "image": s.image,
                     "flavor_text": s.flavor_text.strip(),
                     "spicy": s.spicy,
+                    "sound": s.sound,
                 })
 
         atomic_write_json(collections_path, collections)

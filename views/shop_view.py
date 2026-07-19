@@ -71,4 +71,5 @@ def build_shop(page: ft.Page, ctx, nav) -> ft.Control:
         spacing=18,
         scroll=ft.ScrollMode.AUTO,
         expand=True,
+        alignment=ft.MainAxisAlignment.START,
     )

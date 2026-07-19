@@ -44,6 +44,7 @@ class StickerRepository:
                     image=r.get("image"),
                     flavor_text=str(r.get("flavor_text", "")),
                     spicy=bool(r.get("spicy", False)),
+                    sound=r.get("sound"),
                 )
                 for r in raw
             ])

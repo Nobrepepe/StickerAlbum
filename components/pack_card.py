@@ -2,6 +2,8 @@ from typing import Callable
 
 import flet as ft
 
+from components.theme import PANEL_BG, PANEL_BORDER
+
 from components.placeholders import cover_band
 from models.catalog import Pack
 from models.money import format_money
@@ -22,9 +24,9 @@ def pack_card(
     width = 300.0
     return ft.Container(
         width=width,
-        bgcolor="#191922",
+        bgcolor=PANEL_BG,
         border_radius=14,
-        border=ft.border.all(1, ft.Colors.with_opacity(0.15, ft.Colors.WHITE)),
+        border=ft.border.all(1, PANEL_BORDER),
         clip_behavior=ft.ClipBehavior.ANTI_ALIAS,
         content=ft.Column(
             [

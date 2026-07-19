@@ -3,7 +3,7 @@
 import flet as ft
 
 from components.assets import resolve_image
-from models.catalog import Character, Sticker
+from models.catalog import Sticker
 from models.rarity import RARITY_COLORS
 
 _DARK = "#14141c"
@@ -54,33 +54,8 @@ def sticker_art(sticker: Sticker, width: float, height: float) -> ft.Control:
     )
 
 
-def character_portrait(
-    character: Character, size: float = 64, color: str | None = None
-) -> ft.Control:
-    """Circular portrait or an initials placeholder."""
-    src = resolve_image(character.portrait_image)
-    if src:
-        return ft.Container(
-            width=size, height=size, border_radius=size / 2,
-            content=ft.Image(src=src, fit=ft.ImageFit.COVER),
-            clip_behavior=ft.ClipBehavior.ANTI_ALIAS,
-        )
-    initials = "".join(w[0] for w in character.name.split()[:2]).upper()
-    tint = color or "#5c6bc0"
-    return ft.Container(
-        width=size,
-        height=size,
-        border_radius=size / 2,
-        gradient=ft.LinearGradient(
-            begin=ft.alignment.top_center,
-            end=ft.alignment.bottom_center,
-            colors=[ft.Colors.with_opacity(0.8, tint), _DARK],
-        ),
-        alignment=ft.alignment.center,
-        content=ft.Text(
-            initials, size=size * 0.36, weight=ft.FontWeight.BOLD, color=ft.Colors.WHITE
-        ),
-    )
+# (Circular profile portraits were retired: characters are represented by
+# their 16:9 tile and 9:16 card art everywhere.)
 
 
 def cover_band(image: str | None, color: str | None, height: float = 90) -> ft.Control:

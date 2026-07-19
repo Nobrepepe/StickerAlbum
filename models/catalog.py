@@ -32,6 +32,7 @@ class Sticker:
     image: str | None = None
     flavor_text: str = ""
     spicy: bool = False  # hidden bonus sticker, only visible when enabled
+    sound: str | None = None  # optional voice line for the flavor text
 
 
 @dataclass(frozen=True)

@@ -17,6 +17,7 @@ class DraftSticker:
     name: str = ""
     flavor_text: str = ""
     image: str | None = None
+    sound: str | None = None  # optional voice line (attached in the Creator)
 
     @property
     def spicy(self) -> bool:

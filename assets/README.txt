@@ -21,6 +21,11 @@ placeholders for anything missing. Formats: png, jpg, jpeg, webp.
   covers/<COLLECTION_ID>.png       16:9 widescreen collection cover,
                                    e.g. covers/CST.png
   packs/<PACK_ID>.png              16:9 widescreen pack art
+  sounds/<STICKER_ID>.mp3          optional voice line for the sticker's
+                                   flavor text (mp3/wav/ogg/m4a)
+
+Tile, card, sticker, cover, and sound files can all be imported from the
+Creator screen, which copies them here under these names automatically.
 
 Character IDs are <CODE>_C01 .. <CODE>_C10 (so the first character of a
 collection with code CST is CST_C01). Sticker IDs are <CODE>_001 .. _100

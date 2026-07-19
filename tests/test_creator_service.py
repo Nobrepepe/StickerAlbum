@@ -156,10 +156,51 @@ def test_attach_image_copies_and_names_canonically(env, tmp_path):
     src.write_bytes(b"fake-png")
 
     assert service.attach_image(draft, "cover", str(src)) == "covers/NEW.png"
-    assert service.attach_image(draft, "portrait", str(src), 3) == "portraits/NEW_C03.png"
+    assert service.attach_image(draft, "tile", str(src), 3) == "portraits/NEW_C03_tile.png"
+    assert service.attach_image(draft, "card", str(src), 3) == "portraits/NEW_C03_card.png"
     assert service.attach_image(draft, "sticker", str(src), 3, 7) == "stickers/NEW_027.png"
     assert (assets_dir / "stickers/NEW_027.png").read_bytes() == b"fake-png"
+    assert (assets_dir / "portraits/NEW_C03_tile.png").exists()
     assert draft.characters[2].stickers[6].image == "stickers/NEW_027.png"
+
+
+def test_attach_sound(env, tmp_path):
+    service, _, data_dir, assets_dir = env
+    draft = service.create_collection("NEW", "Test")
+    src = tmp_path / "voice.mp3"
+    src.write_bytes(b"fake-mp3")
+
+    assert service.attach_sound(draft, str(src), 3, 7) == "sounds/NEW_027.mp3"
+    assert (assets_dir / "sounds/NEW_027.mp3").read_bytes() == b"fake-mp3"
+    assert draft.characters[2].stickers[6].sound == "sounds/NEW_027.mp3"
+    # persisted with the draft
+    from repositories.draft_repository import DraftRepository
+    reloaded = DraftRepository(data_dir / "drafts.json").get("NEW")
+    assert reloaded.characters[2].stickers[6].sound == "sounds/NEW_027.mp3"
+
+
+def test_attach_sound_rejects_bad_extension(env, tmp_path):
+    service, *_ = env
+    draft = service.create_collection("NEW", "Test")
+    src = tmp_path / "voice.txt"
+    src.write_bytes(b"x")
+    import pytest as _pytest
+    with _pytest.raises(CreatorError, match="Unsupported sound type"):
+        service.attach_sound(draft, str(src), 1, 1)
+
+
+def test_publish_carries_sound_field(env, tmp_path):
+    service, _, data_dir, _ = env
+    draft = _complete(service.create_collection("NEW", "Test"))
+    src = tmp_path / "voice.ogg"
+    src.write_bytes(b"s")
+    service.attach_sound(draft, str(src), 1, 2)
+    service.save(draft)
+    service.publish("NEW")
+    stickers = json.loads((data_dir / "stickers.json").read_text())
+    by_id = {s["id"]: s for s in stickers if s["collection_id"] == "NEW"}
+    assert by_id["NEW_002"]["sound"] == "sounds/NEW_002.ogg"
+    assert by_id["NEW_001"]["sound"] is None
 
 
 def test_attach_image_rejects_bad_extension(env, tmp_path):

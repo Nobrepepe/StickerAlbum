@@ -97,6 +97,7 @@ class DraftRepository:
                 ds.name = str(s.get("name", ""))
                 ds.flavor_text = str(s.get("flavor_text", ""))
                 ds.image = s.get("image")
+                ds.sound = s.get("sound")
         return draft
 
     def _warn(self, msg: str) -> None:
@@ -124,6 +125,7 @@ class DraftRepository:
                                     "name": s.name,
                                     "flavor_text": s.flavor_text,
                                     "image": s.image,
+                                    "sound": s.sound,
                                 }
                                 for s in c.stickers
                             ],

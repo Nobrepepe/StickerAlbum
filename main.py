@@ -7,6 +7,7 @@ import logging
 
 import flet as ft
 
+from components.theme import PAGE_BG, RAIL_BG
 from context import AppContext
 from repositories.errors import AppError
 from views.album_view import build_album
@@ -32,12 +33,19 @@ class AppShell:
     def __init__(self, page: ft.Page, ctx: AppContext):
         self.page = page
         self.ctx = ctx
-        self.content = ft.Container(expand=True, padding=ft.padding.all(24))
+        # top_left keeps short screens (Settings, Collections, ...) anchored
+        # to the top instead of floating in the middle.
+        self.content = ft.Container(
+            expand=True,
+            padding=ft.padding.all(24),
+            alignment=ft.alignment.top_left,
+        )
         self.rail = ft.NavigationRail(
             selected_index=0,
             label_type=ft.NavigationRailLabelType.ALL,
             min_width=84,
             group_alignment=-0.9,
+            bgcolor=RAIL_BG,
             on_change=self._on_rail_change,
         )
         self._entries: list[tuple] = []
@@ -118,8 +126,10 @@ class AppShell:
 
 def main(page: ft.Page):
     page.title = "Sticker Album"
+    # Single fixed look — no dark/light modes; the art is authored against
+    # the white boards, and the chrome stays a soft warm graphite.
     page.theme_mode = ft.ThemeMode.DARK
-    page.bgcolor = "#101018"
+    page.bgcolor = PAGE_BG
     page.window.width = 1280
     page.window.height = 860
     page.window.min_width = 1000

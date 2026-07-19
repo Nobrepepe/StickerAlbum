@@ -9,9 +9,11 @@ and sticker numbers follow the fixed 3/3/2/1/1 slot pattern automatically.
 import flet as ft
 
 from components.empty_state import empty_state
-from components.placeholders import character_portrait, cover_band, sticker_art
+from components.assets import character_tile_image
+from components.placeholders import cover_band, sticker_art
+from components.theme import PANEL_BG, PANEL_BORDER
 from components.rarity_chip import rarity_chip
-from models.catalog import Character, Sticker
+from models.catalog import Sticker
 from models.draft import SLOTS_PER_CHARACTER, DraftCollection
 from models.rarity import slot_rarity
 from repositories.errors import AppError
@@ -32,20 +34,8 @@ _THEME_COLORS = {
     "Teal": "#26a69a",
 }
 
-_CARD_BG = "#191922"
-_BORDER = ft.border.all(1, "#2a2a36")
-
-
-def _draft_character(draft: DraftCollection, index: int) -> Character:
-    """Adapter so draft characters reuse the catalog placeholder controls."""
-    c = draft.characters[index - 1]
-    return Character(
-        id=character_id(draft.id, index),
-        collection_id=draft.id,
-        name=c.name or f"Character #{index}",
-        description=c.description,
-        portrait_image=c.portrait_image,
-    )
+_CARD_BG = PANEL_BG
+_BORDER = ft.border.all(1, PANEL_BORDER)
 
 
 def _draft_sticker(draft: DraftCollection, char_index: int, position: int) -> Sticker:
@@ -79,10 +69,16 @@ def build_creator(page: ft.Page, ctx, nav) -> ft.Control:
             show_error(page, "Image import is only available in the desktop app.")
             return
         try:
-            rel = creator.attach_image(
-                state["draft"], pending["kind"], path,
-                pending.get("char_index"), pending.get("position"),
-            )
+            if pending["kind"] == "sound":
+                rel = creator.attach_sound(
+                    state["draft"], path,
+                    pending["char_index"], pending["position"],
+                )
+            else:
+                rel = creator.attach_image(
+                    state["draft"], pending["kind"], path,
+                    pending.get("char_index"), pending.get("position"),
+                )
         except AppError as exc:
             show_error(page, str(exc))
             return
@@ -91,7 +87,8 @@ def build_creator(page: ft.Page, ctx, nav) -> ft.Control:
             after(rel)
         else:
             render()
-        show_info(page, "Image imported.")
+        show_info(page, "Sound imported." if pending["kind"] == "sound"
+                  else "Image imported.")
 
     picker = ft.FilePicker(on_result=on_pick_result)
     page.overlay[:] = [c for c in page.overlay if not isinstance(c, ft.FilePicker)]
@@ -101,11 +98,18 @@ def build_creator(page: ft.Page, ctx, nav) -> ft.Control:
                    position: int | None = None, after=None):
         pending.clear()
         pending.update(kind=kind, char_index=char_index, position=position, after=after)
-        picker.pick_files(
-            dialog_title="Choose an image",
-            allow_multiple=False,
-            allowed_extensions=["png", "jpg", "jpeg", "webp"],
-        )
+        if kind == "sound":
+            picker.pick_files(
+                dialog_title="Choose a sound",
+                allow_multiple=False,
+                allowed_extensions=["mp3", "wav", "ogg", "m4a"],
+            )
+        else:
+            picker.pick_files(
+                dialog_title="Choose an image",
+                allow_multiple=False,
+                allowed_extensions=["png", "jpg", "jpeg", "webp"],
+            )
 
     # ---- publishing -------------------------------------------------------
 
@@ -427,7 +431,8 @@ def build_creator(page: ft.Page, ctx, nav) -> ft.Control:
                     ], wrap=True, spacing=12),
                 ], spacing=8),
             ),
-        ], spacing=18, scroll=ft.ScrollMode.AUTO, expand=True)
+        ], spacing=18, scroll=ft.ScrollMode.AUTO, expand=True,
+           alignment=ft.MainAxisAlignment.START)
         page.update()
 
     # ---- sticker dialog ------------------------------------------------------
@@ -450,6 +455,11 @@ def build_creator(page: ft.Page, ctx, nav) -> ft.Control:
                 padding=ft.padding.symmetric(horizontal=8, vertical=2),
             )] if s.spicy else []
         )
+        sound_label = ft.Text(
+            f"🔊 {s.sound.split('/')[-1]}" if s.sound else "",
+            size=11, color=ft.Colors.GREY_500, visible=bool(s.sound),
+            text_align=ft.TextAlign.CENTER,
+        )
         dialog = ft.AlertDialog(
             modal=True,
             title=ft.Text(f"Sticker #{sticker_number(char_index, position):02d}"
@@ -462,17 +472,31 @@ def build_creator(page: ft.Page, ctx, nav) -> ft.Control:
                        alignment=ft.MainAxisAlignment.CENTER, spacing=10),
                 name_field,
                 flavor_field,
-                ft.OutlinedButton(
-                    "Import image…", icon=ft.Icons.IMAGE,
-                    on_click=lambda e: pick_image(
-                        "sticker", char_index, position, after=refresh_preview),
-                ),
+                ft.Row([
+                    ft.OutlinedButton(
+                        "Image…", icon=ft.Icons.IMAGE,
+                        on_click=lambda e: pick_image(
+                            "sticker", char_index, position, after=refresh_preview),
+                    ),
+                    ft.OutlinedButton(
+                        "Sound…", icon=ft.Icons.MUSIC_NOTE,
+                        tooltip="Optional voice line for the flavor text",
+                        on_click=lambda e: pick_image(
+                            "sound", char_index, position, after=refresh_sound),
+                    ),
+                ], spacing=8, alignment=ft.MainAxisAlignment.CENTER),
+                sound_label,
             ], tight=True, spacing=12, width=340),
         )
 
         def refresh_preview(rel: str):
             preview.content = sticker_art(
                 _draft_sticker(draft, char_index, position), 200, 200)
+            page.update()
+
+        def refresh_sound(rel: str):
+            sound_label.value = f"🔊 {rel.split('/')[-1]}"
+            sound_label.visible = True
             page.update()
 
         def save(e):
@@ -501,7 +525,8 @@ def build_creator(page: ft.Page, ctx, nav) -> ft.Control:
         ci = state["char"]
         character = draft.characters[ci - 1]
 
-        sidebar = ft.Column(spacing=4, scroll=ft.ScrollMode.AUTO, expand=True)
+        sidebar = ft.Column(spacing=4, scroll=ft.ScrollMode.AUTO, expand=True,
+        alignment=ft.MainAxisAlignment.START)
         publish_button = ft.FilledButton("Publish", icon=ft.Icons.ROCKET_LAUNCH,
                                          on_click=lambda e: publish(draft))
         progress_text = ft.Text(size=13, color=ft.Colors.GREY_300)
@@ -511,6 +536,17 @@ def build_creator(page: ft.Page, ctx, nav) -> ft.Control:
             done, total = creator.character_progress(c)
             complete = creator.character_complete(c)
             selected = i == state["char"]
+            tile_src = character_tile_image(character_id(draft.id, i))
+            thumb = ft.Container(
+                width=64, height=36, border_radius=6,
+                clip_behavior=ft.ClipBehavior.ANTI_ALIAS,
+                image=ft.DecorationImage(src=tile_src, fit=ft.ImageFit.COVER)
+                if tile_src else None,
+                gradient=None if tile_src else ft.LinearGradient(
+                    begin=ft.alignment.top_left, end=ft.alignment.bottom_right,
+                    colors=[ft.Colors.with_opacity(0.6, theme), "#14141c"],
+                ),
+            )
             return ft.Container(
                 bgcolor=ft.Colors.with_opacity(0.18, theme) if selected else None,
                 border_radius=10,
@@ -518,7 +554,7 @@ def build_creator(page: ft.Page, ctx, nav) -> ft.Control:
                 on_click=lambda e, i=i: switch_character(i),
                 ink=True,
                 content=ft.Row([
-                    character_portrait(_draft_character(draft, i), 36, theme),
+                    thumb,
                     ft.Column([
                         ft.Text(c.name or f"Character #{i}", size=13,
                                 weight=ft.FontWeight.BOLD if selected else None,
@@ -633,14 +669,33 @@ def build_creator(page: ft.Page, ctx, nav) -> ft.Control:
                       horizontal_alignment=ft.CrossAxisAlignment.END, tight=True),
         ], vertical_alignment=ft.CrossAxisAlignment.CENTER)
 
+        panel_tile_src = character_tile_image(character_id(draft.id, ci))
+        panel_thumb = ft.Container(
+            width=128, height=72, border_radius=8,
+            clip_behavior=ft.ClipBehavior.ANTI_ALIAS,
+            image=ft.DecorationImage(src=panel_tile_src, fit=ft.ImageFit.COVER)
+            if panel_tile_src else None,
+            gradient=None if panel_tile_src else ft.LinearGradient(
+                begin=ft.alignment.top_left, end=ft.alignment.bottom_right,
+                colors=[ft.Colors.with_opacity(0.6, theme), "#14141c"],
+            ),
+            tooltip="16:9 tile art (shown in album sidebars)",
+        )
         character_panel = ft.Column([
             ft.Row([
-                character_portrait(_draft_character(draft, ci), 72, theme),
+                panel_thumb,
                 ft.Column([
-                    ft.Row([name_field, ft.OutlinedButton(
-                        "Portrait…", icon=ft.Icons.PORTRAIT,
-                        on_click=lambda e: pick_image("portrait", ci))],
-                        spacing=10),
+                    ft.Row([
+                        name_field,
+                        ft.OutlinedButton(
+                            "Tile…", icon=ft.Icons.PANORAMA_WIDE_ANGLE,
+                            tooltip="16:9 landscape banner (e.g. the eyes)",
+                            on_click=lambda e: pick_image("tile", ci)),
+                        ft.OutlinedButton(
+                            "Card…", icon=ft.Icons.PORTRAIT,
+                            tooltip="9:16 full-body card",
+                            on_click=lambda e: pick_image("card", ci)),
+                    ], spacing=10, run_spacing=8, wrap=True),
                     desc_field,
                 ], spacing=10, tight=True, expand=True),
             ], spacing=16, vertical_alignment=ft.CrossAxisAlignment.START),
@@ -663,7 +718,7 @@ def build_creator(page: ft.Page, ctx, nav) -> ft.Control:
         root.content = ft.Column([
             header,
             ft.Row([
-                ft.Container(width=230, bgcolor="#15151d", border_radius=12,
+                ft.Container(width=230, bgcolor="#2b2735", border_radius=12,
                              padding=8, content=sidebar),
                 character_panel,
             ], spacing=16, expand=True, vertical_alignment=ft.CrossAxisAlignment.START),
