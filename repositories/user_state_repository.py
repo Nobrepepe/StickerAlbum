@@ -113,6 +113,34 @@ class UserStateRepository:
         self.state = UserState()
         self.save()
 
+    def purge_progress_for(
+        self,
+        sticker_ids: set[str],
+        character_ids: set[str] = frozenset(),
+        collection_id: str | None = None,
+    ) -> tuple[int, int]:
+        """Erase progress tied to a collection leaving play (its stickers'
+        owned copies and placements; the favorite/last-collection pointers if
+        they reference it). Savings are deliberately untouched — deposits
+        happened regardless. Returns (copies_removed, placements_removed)."""
+        copies = sum(
+            qty for (sid, _style), qty in self.state.inventory.items()
+            if sid in sticker_ids
+        )
+        placements = sum(1 for sid in self.state.placements if sid in sticker_ids)
+        self.state.inventory = {
+            k: v for k, v in self.state.inventory.items() if k[0] not in sticker_ids
+        }
+        self.state.placements = {
+            k: v for k, v in self.state.placements.items() if k not in sticker_ids
+        }
+        if self.state.favorite_character_id in character_ids:
+            self.state.favorite_character_id = None
+        if collection_id and self.state.last_collection_id == collection_id:
+            self.state.last_collection_id = None
+        self.save()
+        return copies, placements
+
     # ---- saving --------------------------------------------------------
 
     def to_payload(self) -> dict:

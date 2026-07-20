@@ -42,6 +42,16 @@ def sticker_id(code: str, char_index: int, position: int) -> str:
     return f"{code}_{sticker_number(char_index, position):03d}"
 
 
+def slot_from_number(number: int) -> tuple[int, int]:
+    """Inverse of sticker_number: (char_index, position) for numbers 1-150."""
+    if 1 <= number <= 100:
+        return (number - 1) // 10 + 1, (number - 1) % 10 + 1
+    if 101 <= number <= 150:
+        offset = number - 101
+        return offset // SPICY_PER_CHARACTER + 1, 10 + offset % SPICY_PER_CHARACTER + 1
+    raise ValueError(f"Sticker number out of range: {number}")
+
+
 class CreatorService:
     def __init__(
         self,
@@ -49,11 +59,13 @@ class CreatorService:
         collections: CollectionRepository,
         data_dir: Path,
         assets_dir: Path,
+        state=None,  # UserStateRepository; needed for unpublish()
     ):
         self._drafts = drafts
         self._collections = collections
         self._data_dir = data_dir
         self._assets_dir = assets_dir
+        self._state = state
 
     # ---- codes -----------------------------------------------------------
 
@@ -258,3 +270,80 @@ class CreatorService:
         atomic_write_json(stickers_path, stickers)
         self._drafts.delete(code)
         log.info("Published collection %s (%s)", draft.id, draft.name)
+
+    # ---- unpublishing ---------------------------------------------------------
+
+    def unpublish(self, code: str) -> DraftCollection:
+        """Revert a published collection to a fully pre-filled draft.
+
+        The collection leaves the catalog (and therefore play): its owned
+        copies and placements are erased from the user's progress — savings
+        records are kept. Everything authored (names, descriptions, flavor
+        text, images, sounds, cover, theme) lands back in the draft, ready
+        to be edited and published again.
+        """
+        code = self.normalize_code(code)
+        if self._drafts.get(code) is not None:
+            raise CreatorError(f"{code} is already a draft.")
+
+        collections_path = self._data_dir / "collections.json"
+        characters_path = self._data_dir / "characters.json"
+        stickers_path = self._data_dir / "stickers.json"
+        collections = load_json_file(collections_path)
+        characters = load_json_file(characters_path)
+        stickers = load_json_file(stickers_path)
+
+        col = next((c for c in collections if c.get("id") == code), None)
+        if col is None:
+            raise CreatorError(f"No published collection with code {code}.")
+
+        draft = new_draft_skeleton(
+            code,
+            str(col.get("name", "")),
+            str(col.get("description", "")),
+            col.get("theme_color"),
+        )
+        draft.cover_image = col.get("cover_image")
+
+        own_characters = [c for c in characters if c.get("collection_id") == code]
+        own_stickers = [s for s in stickers if s.get("collection_id") == code]
+
+        for c in own_characters:
+            try:
+                index = int(str(c["id"]).rsplit("C", 1)[1])
+                dc = draft.characters[index - 1]
+            except (IndexError, KeyError, ValueError):
+                log.warning("Unpublish %s: character %r has a nonstandard id; skipped",
+                            code, c.get("id"))
+                continue
+            dc.name = str(c.get("name", ""))
+            dc.description = str(c.get("description", ""))
+        for s in own_stickers:
+            try:
+                char_index, position = slot_from_number(int(s["number"]))
+            except (KeyError, TypeError, ValueError):
+                log.warning("Unpublish %s: sticker %r has a nonstandard number; skipped",
+                            code, s.get("id"))
+                continue
+            ds = draft.characters[char_index - 1].stickers[position - 1]
+            ds.name = str(s.get("name", ""))
+            ds.flavor_text = str(s.get("flavor_text", ""))
+            ds.image = s.get("image")
+            ds.sound = s.get("sound")
+
+        atomic_write_json(collections_path, [c for c in collections if c.get("id") != code])
+        atomic_write_json(characters_path,
+                          [c for c in characters if c.get("collection_id") != code])
+        atomic_write_json(stickers_path,
+                          [s for s in stickers if s.get("collection_id") != code])
+
+        if self._state is not None:
+            self._state.purge_progress_for(
+                {str(s["id"]) for s in own_stickers if "id" in s},
+                {str(c["id"]) for c in own_characters if "id" in c},
+                collection_id=code,
+            )
+
+        self._drafts.upsert(draft)
+        log.info("Unpublished collection %s back to draft", code)
+        return draft

@@ -50,7 +50,7 @@ class AppContext:
         album = AlbumService(stickers, characters, state)
         pack_service = PackOpeningService(stickers, packs, state, settings)
         summary = SummaryService(collections, characters, stickers, state, album, settings)
-        creator = CreatorService(drafts, collections, DATA_DIR, ASSETS_DIR)
+        creator = CreatorService(drafts, collections, DATA_DIR, ASSETS_DIR, state)
         backup = BackupService(state, drafts, DATA_DIR)
         return cls(
             collections=collections,

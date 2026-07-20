@@ -15,6 +15,7 @@ def collection_card(
     chars_done: int,
     chars_total: int,
     on_open: Callable[[], None],
+    on_revert: Callable[[], None] | None = None,
 ) -> ft.Control:
     pct = (applied / total * 100) if total else 0.0
     width = 330.0
@@ -56,10 +57,23 @@ def collection_card(
                                 color=collection.theme_color or "#7c4dff",
                                 bgcolor=ft.Colors.with_opacity(0.1, ft.Colors.WHITE),
                             ),
-                            ft.FilledButton(
-                                "Open album",
-                                icon=ft.Icons.MENU_BOOK,
-                                on_click=lambda e: on_open(),
+                            ft.Row(
+                                [
+                                    ft.FilledButton(
+                                        "Open album",
+                                        icon=ft.Icons.MENU_BOOK,
+                                        on_click=lambda e: on_open(),
+                                    ),
+                                    ft.Container(expand=True),
+                                    ft.IconButton(
+                                        ft.Icons.EDIT_NOTE,
+                                        tooltip="Revert to draft for editing "
+                                                "(erases this collection's progress)",
+                                        icon_color=ft.Colors.GREY_400,
+                                        on_click=lambda e: on_revert(),
+                                        visible=on_revert is not None,
+                                    ),
+                                ],
                             ),
                         ],
                         spacing=10,

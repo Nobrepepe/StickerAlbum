@@ -71,6 +71,11 @@ Packs are still added by hand: after publishing, add an entry to
 `data/packs.json` whose `distribution[].pool` is the collection (or a
 character) ID. Prices are integer cents (`2500` → `R$ 25,00`).
 
+Published collections can be edited again: with the Creator enabled, each
+collection card has a revert button that turns it back into a fully
+pre-filled draft. The collection leaves play, so its progress (owned copies
+and placements) is erased after a confirmation — savings records are kept.
+
 Hand-editing the catalog files also still works — follow the existing shape,
 and never rename published sticker `id`s like `HGT_042` (saved user state
 references them).
