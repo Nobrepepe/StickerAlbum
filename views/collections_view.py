@@ -60,6 +60,7 @@ def build_collections(page: ft.Page, ctx, nav) -> ft.Control:
                 collection, applied, total, chars_done, chars_total,
                 on_open=lambda cid=collection.id: nav.go_album(cid),
                 on_revert=(lambda c=collection: revert_to_draft(c)) if creator_on else None,
+                on_edit=(lambda cid=collection.id: nav.go_live_edit(cid)) if creator_on else None,
             )
         )
     return ft.Column(

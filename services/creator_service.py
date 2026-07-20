@@ -166,6 +166,7 @@ class CreatorService:
         source: str,
         char_index: int | None = None,
         position: int | None = None,
+        persist: bool = True,  # False while hot-editing a live collection
     ) -> str:
         """Import an image and point the draft at it. Tile and card art are
         convention-named (portraits/<CHAR_ID>_tile / _card) and picked up by
@@ -191,7 +192,8 @@ class CreatorService:
             sticker.image = rel
         else:
             raise ValueError(f"Unknown image kind: {kind}")
-        self._drafts.upsert(draft)
+        if persist:
+            self._drafts.upsert(draft)
         return rel
 
     def attach_sound(
@@ -200,6 +202,7 @@ class CreatorService:
         source: str,
         char_index: int,
         position: int,
+        persist: bool = True,
     ) -> str:
         """Optional voice line for a sticker's flavor text."""
         sticker = draft.characters[char_index - 1].stickers[position - 1]
@@ -208,7 +211,8 @@ class CreatorService:
             source, f"sounds/{sticker_id(draft.id, char_index, position)}{ext}",
             sticker.sound, ALLOWED_SOUND_EXTS, "sound")
         sticker.sound = rel
-        self._drafts.upsert(draft)
+        if persist:
+            self._drafts.upsert(draft)
         return rel
 
     # ---- publishing ----------------------------------------------------------
@@ -271,6 +275,113 @@ class CreatorService:
         self._drafts.delete(code)
         log.info("Published collection %s (%s)", draft.id, draft.name)
 
+    # ---- published-collection loading ------------------------------------------
+
+    def _load_catalog(self):
+        paths = {name: self._data_dir / f"{name}.json"
+                 for name in ("collections", "characters", "stickers")}
+        return paths, {name: load_json_file(path) for name, path in paths.items()}
+
+    def _draft_from_catalog(self, col: dict, characters: list, stickers: list) -> DraftCollection:
+        """Rebuild a DraftCollection from published records (ids stay stable,
+        so slots are recovered from the canonical numbering)."""
+        code = str(col["id"])
+        draft = new_draft_skeleton(
+            code,
+            str(col.get("name", "")),
+            str(col.get("description", "")),
+            col.get("theme_color"),
+        )
+        draft.cover_image = col.get("cover_image")
+        for c in characters:
+            try:
+                index = int(str(c["id"]).rsplit("C", 1)[1])
+                dc = draft.characters[index - 1]
+            except (IndexError, KeyError, ValueError):
+                log.warning("Load %s: character %r has a nonstandard id; skipped",
+                            code, c.get("id"))
+                continue
+            dc.name = str(c.get("name", ""))
+            dc.description = str(c.get("description", ""))
+        for s in stickers:
+            try:
+                char_index, position = slot_from_number(int(s["number"]))
+            except (KeyError, TypeError, ValueError):
+                log.warning("Load %s: sticker %r has a nonstandard number; skipped",
+                            code, s.get("id"))
+                continue
+            ds = draft.characters[char_index - 1].stickers[position - 1]
+            ds.name = str(s.get("name", ""))
+            ds.flavor_text = str(s.get("flavor_text", ""))
+            ds.image = s.get("image")
+            ds.sound = s.get("sound")
+        return draft
+
+    def load_live(self, code: str) -> DraftCollection:
+        """Load a published collection as an editable draft object for
+        hot-editing. Nothing is written; the object is NOT stored in
+        drafts.json."""
+        code = self.normalize_code(code)
+        _paths, data = self._load_catalog()
+        col = next((c for c in data["collections"] if c.get("id") == code), None)
+        if col is None:
+            raise CreatorError(f"No published collection with code {code}.")
+        return self._draft_from_catalog(
+            col,
+            [c for c in data["characters"] if c.get("collection_id") == code],
+            [s for s in data["stickers"] if s.get("collection_id") == code],
+        )
+
+    # ---- hot-editing a live collection -------------------------------------------
+
+    def apply_live_edits(self, draft: DraftCollection) -> None:
+        """Write name/description/flavor/image/sound edits back onto the
+        published records, matched by stable IDs. Structure, rarities,
+        numbers, and the user's progress are untouched. Live collections
+        must stay complete, so every name has to remain filled in."""
+        code = draft.id
+        paths, data = self._load_catalog()
+        col = next((c for c in data["collections"] if c.get("id") == code), None)
+        if col is None:
+            raise CreatorError(f"No published collection with code {code}.")
+        if not draft.name.strip():
+            raise CreatorError("The collection needs a name.")
+        for dc in draft.characters:
+            if not dc.name.strip():
+                raise CreatorError(
+                    f"Character #{dc.index} needs a name — live collections stay complete."
+                )
+            if any(not ds.name.strip() for ds in dc.stickers):
+                raise CreatorError(
+                    f"Every sticker of {dc.name or f'character #{dc.index}'} needs "
+                    "a name — live collections stay complete."
+                )
+
+        col["name"] = draft.name.strip()
+        col["description"] = draft.description.strip()
+        col["theme_color"] = draft.theme_color
+        col["cover_image"] = draft.cover_image
+
+        char_by_id = {c.get("id"): c for c in data["characters"]}
+        sticker_by_id = {s.get("id"): s for s in data["stickers"]}
+        for dc in draft.characters:
+            rec = char_by_id.get(character_id(code, dc.index))
+            if rec is not None:
+                rec["name"] = dc.name.strip()
+                rec["description"] = dc.description.strip()
+            for ds in dc.stickers:
+                srec = sticker_by_id.get(sticker_id(code, dc.index, ds.position))
+                if srec is not None:
+                    srec["name"] = ds.name.strip()
+                    srec["flavor_text"] = ds.flavor_text.strip()
+                    srec["image"] = ds.image
+                    srec["sound"] = ds.sound
+
+        atomic_write_json(paths["collections"], data["collections"])
+        atomic_write_json(paths["characters"], data["characters"])
+        atomic_write_json(paths["stickers"], data["stickers"])
+        log.info("Applied live edits to collection %s", code)
+
     # ---- unpublishing ---------------------------------------------------------
 
     def unpublish(self, code: str) -> DraftCollection:
@@ -297,39 +408,9 @@ class CreatorService:
         if col is None:
             raise CreatorError(f"No published collection with code {code}.")
 
-        draft = new_draft_skeleton(
-            code,
-            str(col.get("name", "")),
-            str(col.get("description", "")),
-            col.get("theme_color"),
-        )
-        draft.cover_image = col.get("cover_image")
-
         own_characters = [c for c in characters if c.get("collection_id") == code]
         own_stickers = [s for s in stickers if s.get("collection_id") == code]
-
-        for c in own_characters:
-            try:
-                index = int(str(c["id"]).rsplit("C", 1)[1])
-                dc = draft.characters[index - 1]
-            except (IndexError, KeyError, ValueError):
-                log.warning("Unpublish %s: character %r has a nonstandard id; skipped",
-                            code, c.get("id"))
-                continue
-            dc.name = str(c.get("name", ""))
-            dc.description = str(c.get("description", ""))
-        for s in own_stickers:
-            try:
-                char_index, position = slot_from_number(int(s["number"]))
-            except (KeyError, TypeError, ValueError):
-                log.warning("Unpublish %s: sticker %r has a nonstandard number; skipped",
-                            code, s.get("id"))
-                continue
-            ds = draft.characters[char_index - 1].stickers[position - 1]
-            ds.name = str(s.get("name", ""))
-            ds.flavor_text = str(s.get("flavor_text", ""))
-            ds.image = s.get("image")
-            ds.sound = s.get("sound")
+        draft = self._draft_from_catalog(col, own_characters, own_stickers)
 
         atomic_write_json(collections_path, [c for c in collections if c.get("id") != code])
         atomic_write_json(characters_path,

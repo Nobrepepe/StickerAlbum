@@ -53,11 +53,28 @@ def _draft_sticker(draft: DraftCollection, char_index: int, position: int) -> St
     )
 
 
-def build_creator(page: ft.Page, ctx, nav) -> ft.Control:
+def build_creator(page: ft.Page, ctx, nav,
+                  live_collection_id: str | None = None) -> ft.Control:
+    """The Creator. With live_collection_id set, the editor opens in
+    hot-edit mode: it edits the PUBLISHED collection in place (names,
+    images, sounds, flavor) — progress is kept, structure is fixed."""
     creator = ctx.creator
     root = ft.Container(expand=True)
-    state: dict = {"draft": None, "char": 1}
+    state: dict = {"draft": None, "char": 1, "live": False}
     pending: dict = {}
+
+    def persist_draft() -> bool:
+        """Commit the working object: drafts go to drafts.json, live
+        collections go straight back onto the catalog."""
+        if state["live"]:
+            try:
+                creator.apply_live_edits(state["draft"])
+            except AppError as exc:
+                show_error(page, str(exc))
+                return False
+        else:
+            creator.save(state["draft"])
+        return True
 
     # One picker for every upload; replace any picker left by a previous
     # build so page.overlay doesn't accumulate them.
@@ -73,12 +90,16 @@ def build_creator(page: ft.Page, ctx, nav) -> ft.Control:
                 rel = creator.attach_sound(
                     state["draft"], path,
                     pending["char_index"], pending["position"],
+                    persist=not state["live"],
                 )
             else:
                 rel = creator.attach_image(
                     state["draft"], pending["kind"], path,
                     pending.get("char_index"), pending.get("position"),
+                    persist=not state["live"],
                 )
+            if state["live"]:
+                creator.apply_live_edits(state["draft"])
         except AppError as exc:
             show_error(page, str(exc))
             return
@@ -203,7 +224,8 @@ def build_creator(page: ft.Page, ctx, nav) -> ft.Control:
                 draft.name = name
                 draft.description = desc_field.value.strip()
                 draft.theme_color = color_field.value
-                creator.save(draft)
+                if not persist_draft():
+                    return
                 page.close(dialog)
                 render()
 
@@ -502,7 +524,8 @@ def build_creator(page: ft.Page, ctx, nav) -> ft.Control:
         def save(e):
             s.name = name_field.value.strip()
             s.flavor_text = flavor_field.value.strip()
-            creator.save(draft)
+            if not persist_draft():
+                return  # live edit rejected (e.g. blank name); keep the dialog
             page.close(dialog)
             render()
 
@@ -582,12 +605,18 @@ def build_creator(page: ft.Page, ctx, nav) -> ft.Control:
             page.update()
 
         def switch_character(i: int):
-            creator.save(draft)  # commit any pending text edits
+            persist_draft()  # commit any pending text edits
             state["char"] = i
             render()
 
         def back_to_list(e):
-            creator.save(draft)
+            persist_draft()
+            if state["live"]:
+                # Leaving the hot editor: the rest of the app must see the
+                # edited catalog.
+                nav.reload_catalog()
+                nav.go_collections()
+                return
             state["draft"] = None
             render()
 
@@ -599,7 +628,7 @@ def build_creator(page: ft.Page, ctx, nav) -> ft.Control:
             return on_change
 
         def persist(e):
-            creator.save(draft)
+            persist_draft()
             refresh_sidebar()
 
         name_field = ft.TextField(
@@ -645,8 +674,24 @@ def build_creator(page: ft.Page, ctx, nav) -> ft.Control:
                 tooltip="Edit spicy sticker" if s.spicy else "Edit sticker",
             )
 
+        live = state["live"]
+        banner = (
+            ft.Text("LIVE — edits apply to the published collection "
+                    "immediately; your progress is kept",
+                    size=11, color="#81c784")
+            if live else
+            ft.Text("DRAFT — visible only in the Creator until published",
+                    size=11, color="#ffb300")
+        )
+        header_right = (
+            ft.FilledTonalButton("Done", icon=ft.Icons.CHECK, on_click=back_to_list)
+            if live else
+            ft.Column([progress_text, publish_button], spacing=6,
+                      horizontal_alignment=ft.CrossAxisAlignment.END, tight=True)
+        )
         header = ft.Row([
-            ft.IconButton(ft.Icons.ARROW_BACK, tooltip="Back to drafts",
+            ft.IconButton(ft.Icons.ARROW_BACK,
+                          tooltip="Back to collections" if live else "Back to drafts",
                           on_click=back_to_list),
             ft.Column([
                 ft.Row([
@@ -662,11 +707,9 @@ def build_creator(page: ft.Page, ctx, nav) -> ft.Control:
                     ft.OutlinedButton("Cover image…", icon=ft.Icons.IMAGE,
                                       on_click=lambda e: pick_image("cover")),
                 ], spacing=8, vertical_alignment=ft.CrossAxisAlignment.CENTER),
-                ft.Text("DRAFT — visible only in the Creator until published",
-                        size=11, color="#ffb300"),
+                banner,
             ], spacing=2, tight=True, expand=True),
-            ft.Column([progress_text, publish_button], spacing=6,
-                      horizontal_alignment=ft.CrossAxisAlignment.END, tight=True),
+            header_right,
         ], vertical_alignment=ft.CrossAxisAlignment.CENTER)
 
         panel_tile_src = character_tile_image(character_id(draft.id, ci))
@@ -706,7 +749,9 @@ def build_creator(page: ft.Page, ctx, nav) -> ft.Control:
                        wrap=True, spacing=12, run_spacing=12),
                 ft.Row([
                     ft.Text("🌶️", size=16),
-                    ft.Text("Spicy stickers — required before publishing, "
+                    ft.Text("Spicy stickers — hidden in the album unless "
+                            "enabled in Settings" if live else
+                            "Spicy stickers — required before publishing, "
                             "hidden in the album unless enabled in Settings",
                             size=12, weight=ft.FontWeight.BOLD, color=_SPICY_COLOR),
                 ], spacing=8),
@@ -733,5 +778,11 @@ def build_creator(page: ft.Page, ctx, nav) -> ft.Control:
         else:
             render_editor()
 
+    if live_collection_id is not None:
+        try:
+            state["draft"] = creator.load_live(live_collection_id)
+            state["live"] = True
+        except AppError as exc:
+            show_error(page, str(exc))
     render()
     return root

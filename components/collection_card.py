@@ -16,6 +16,7 @@ def collection_card(
     chars_total: int,
     on_open: Callable[[], None],
     on_revert: Callable[[], None] | None = None,
+    on_edit: Callable[[], None] | None = None,
 ) -> ft.Control:
     pct = (applied / total * 100) if total else 0.0
     width = 330.0
@@ -66,7 +67,15 @@ def collection_card(
                                     ),
                                     ft.Container(expand=True),
                                     ft.IconButton(
-                                        ft.Icons.EDIT_NOTE,
+                                        ft.Icons.EDIT_OUTLINED,
+                                        tooltip="Hot-edit live: names, images, "
+                                                "sounds — progress is kept",
+                                        icon_color=ft.Colors.GREY_400,
+                                        on_click=lambda e: on_edit(),
+                                        visible=on_edit is not None,
+                                    ),
+                                    ft.IconButton(
+                                        ft.Icons.UNPUBLISHED_OUTLINED,
                                         tooltip="Revert to draft for editing "
                                                 "(erases this collection's progress)",
                                         icon_color=ft.Colors.GREY_400,

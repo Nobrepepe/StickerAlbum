@@ -71,10 +71,17 @@ Packs are still added by hand: after publishing, add an entry to
 `data/packs.json` whose `distribution[].pool` is the collection (or a
 character) ID. Prices are integer cents (`2500` → `R$ 25,00`).
 
-Published collections can be edited again: with the Creator enabled, each
-collection card has a revert button that turns it back into a fully
-pre-filled draft. The collection leaves play, so its progress (owned copies
-and placements) is erased after a confirmation — savings records are kept.
+Published collections can be edited again in two ways (both need the
+Creator enabled, via icons on the collection card):
+
+- **Hot-edit** (pencil): edits the live collection in place — names,
+  descriptions, flavor text, cover/tile/card/sticker images, and sounds.
+  Structure and rarities are fixed, every name must stay filled in, and
+  your progress is untouched.
+- **Revert to draft**: turns it back into a fully pre-filled draft for
+  structural rework. The collection leaves play, so its progress (owned
+  copies and placements) is erased after a confirmation — savings records
+  are kept.
 
 Hand-editing the catalog files also still works — follow the existing shape,
 and never rename published sticker `id`s like `HGT_042` (saved user state

@@ -115,6 +115,11 @@ class AppShell:
     def go_creator(self):
         self._set("creator", build_creator(self.page, self.ctx, self))
 
+    def go_live_edit(self, collection_id: str):
+        """Hot-edit a published collection (names/images/sounds; progress kept)."""
+        self._set("creator", build_creator(self.page, self.ctx, self,
+                                           live_collection_id=collection_id))
+
     def go_settings(self):
         self._set("settings", build_settings(self.page, self.ctx, self))
 
