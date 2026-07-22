@@ -53,3 +53,15 @@ def sticker_mask_image(sticker_id: str) -> str | None:
     (transparent background, opaque silhouette). Used to keep the foil
     shimmer inside the artwork. Convention: assets/stickers/<ID>_mask.png"""
     return _resolve_any_ext(f"stickers/{sticker_id}_mask")
+
+
+def resolve_sound(relative: str | None) -> str | None:
+    """Return an Audio src (relative to flet's assets_dir) or None."""
+    if not relative:
+        return None
+    if (ASSETS_DIR / relative).is_file():
+        return f"/{relative}"
+    if relative not in _missing_logged:
+        _missing_logged.add(relative)
+        log.info("Asset missing, using placeholder: %s", relative)
+    return None

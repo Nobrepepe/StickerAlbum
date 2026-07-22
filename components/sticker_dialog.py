@@ -5,6 +5,7 @@ from typing import Callable
 import flet as ft
 
 from components.assets import resolve_image, sticker_mask_image
+from components.audio_player import play_sound
 from components.foil_shimmer import FoilShimmer
 from components.placeholders import sticker_art
 from components.rarity_chip import rarity_chip
@@ -84,9 +85,23 @@ def open_sticker_dialog(
             size=13, color="#81c784", weight=ft.FontWeight.BOLD,
         ))
         if sticker.flavor_text:
-            info.append(ft.Text(
-                f"“{sticker.flavor_text}”", size=13, italic=True,
-                color=ft.Colors.GREY_400, text_align=ft.TextAlign.CENTER,
+            flavor_line: list[ft.Control] = [
+                ft.Text(
+                    f"“{sticker.flavor_text}”", size=13, italic=True,
+                    color=ft.Colors.GREY_400, text_align=ft.TextAlign.CENTER,
+                ),
+            ]
+            if sticker.sound:
+                flavor_line.append(ft.IconButton(
+                    ft.Icons.VOLUME_UP,
+                    icon_size=16,
+                    tooltip="Play voice line",
+                    on_click=lambda e: play_sound(page, sticker.sound),
+                ))
+            info.append(ft.Row(
+                flavor_line, alignment=ft.MainAxisAlignment.CENTER,
+                vertical_alignment=ft.CrossAxisAlignment.CENTER,
+                spacing=4, tight=True, wrap=True,
             ))
         dups = album.duplicate_count(sticker.id)
         if dups:

@@ -2,7 +2,7 @@
   {
     "id": "MRC",
     "name": "Eden Mercenaries",
-    "description": "Company of mercenaries using Mechs to fight.",
+    "description": "Mercenaries that fly Mechs into battle.",
     "cover_image": "covers/MRC.png",
     "theme_color": "#26a69a"
   }

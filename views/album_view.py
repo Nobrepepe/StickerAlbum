@@ -13,6 +13,7 @@ import asyncio
 
 import flet as ft
 
+from components.audio_player import play_sound, play_stamp
 from components.character_tiles import character_card, character_tile
 from components.sticker_dialog import open_sticker_dialog
 from components.sticker_slot import build_sticker_slot
@@ -36,7 +37,10 @@ def build_album(page: ft.Page, ctx, nav, collection_id: str) -> ft.Control:
     spicy_on = ctx.settings.state.spicy_enabled
 
     # None -> collection overview; 0-9 -> that character's page.
-    state: dict = {"char": None, "stamp": None, "stamp_control": None, "sliding": False}
+    state: dict = {
+        "char": None, "stamp": None, "stamp_control": None, "stamp_sticker": None,
+        "sliding": False,
+    }
 
     title_text = ft.Text(size=22, weight=ft.FontWeight.BOLD)
     subtitle_text = ft.Text(size=12, color=ft.Colors.GREY_400,
@@ -244,9 +248,19 @@ def build_album(page: ft.Page, ctx, nav, collection_id: str) -> ft.Control:
             slot.update()
         except Exception:
             pass  # view was torn down mid-animation
+            return
+        # Let the settle animation (420ms) actually finish before the
+        # character's voice line comes in on top of it.
+        await asyncio.sleep(0.42)
+        sticker = state["stamp_sticker"]
+        state["stamp_sticker"] = None
+        if sticker is not None and page is not None:
+            play_sound(page, sticker.sound)
 
     def on_applied(sticker):
         state["stamp"] = sticker.id
+        state["stamp_sticker"] = sticker
+        play_stamp(page)
         refresh_content()
 
     async def _slide_to(target: int | None):

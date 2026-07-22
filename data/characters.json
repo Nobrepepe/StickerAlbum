@@ -3,70 +3,70 @@
     "id": "MRC_C01",
     "collection_id": "MRC",
     "name": "Karmen",
-    "description": "Pilot of \"Zephyr\"",
-    "portrait_image": "portraits/MRC_C01.png"
+    "description": "Pilot of the Zephyr.",
+    "portrait_image": null
   },
   {
     "id": "MRC_C02",
     "collection_id": "MRC",
     "name": "Farlin",
-    "description": "Valkyrie",
-    "portrait_image": "portraits/MRC_C02.png"
+    "description": "Pilot of the Valkyrie.",
+    "portrait_image": null
   },
   {
     "id": "MRC_C03",
     "collection_id": "MRC",
     "name": "Marine",
-    "description": "Pilot of \"Bulwark\"",
-    "portrait_image": "portraits/MRC_C03.png"
+    "description": "Pilot of the Bulwark.",
+    "portrait_image": null
   },
   {
     "id": "MRC_C04",
     "collection_id": "MRC",
     "name": "Shimu",
-    "description": "Pilot of \"Mantis\"",
-    "portrait_image": "portraits/MRC_C04.png"
+    "description": "Pilot of the Mantis.",
+    "portrait_image": null
   },
   {
     "id": "MRC_C05",
     "collection_id": "MRC",
     "name": "Koza",
-    "description": "Pilot of \"Pawn\"",
-    "portrait_image": "portraits/MRC_C05.png"
+    "description": "Pilot of the Pawn.",
+    "portrait_image": null
   },
   {
     "id": "MRC_C06",
     "collection_id": "MRC",
     "name": "Trisha",
-    "description": "Pilot of \"Whisper\"",
-    "portrait_image": "portraits/MRC_C06.png"
+    "description": "Pilot of Whisper",
+    "portrait_image": null
   },
   {
     "id": "MRC_C07",
     "collection_id": "MRC",
     "name": "Karalina",
-    "description": "Pilot of \"Oracle\"",
-    "portrait_image": "portraits/MRC_C07.png"
+    "description": "Pilot of the Oracle",
+    "portrait_image": null
   },
   {
     "id": "MRC_C08",
     "collection_id": "MRC",
     "name": "Coleen",
-    "description": "Pilot of \"Quake\"",
-    "portrait_image": "portraits/MRC_C08.png"
+    "description": "Pilot of Quake",
+    "portrait_image": null
   },
   {
     "id": "MRC_C09",
     "collection_id": "MRC",
     "name": "Juliet",
-    "description": "Reckless Pilot of \"Firebrand\"",
-    "portrait_image": "portraits/MRC_C09.png"
+    "description": "Pilot of Firebrand.",
+    "portrait_image": null
   },
   {
     "id": "MRC_C10",
     "collection_id": "MRC",
     "name": "Seraph",
-    "description": "Ace Pilot of \"Apex\"",
-    "portrait_image": "portraits/MRC_C10.png"
+    "description": "",
+    "portrait_image": null
   }
 ]

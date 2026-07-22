@@ -1,5 +1,6 @@
 import flet as ft
 
+from components.audio_player import play_spicy
 from components.placeholders import sticker_art
 from components.rarity_chip import rarity_chip
 from models.money import format_money
@@ -104,18 +105,28 @@ def build_pack_result(page: ft.Page, ctx, nav, result: PackOpenResult) -> ft.Con
         album_btn.visible = done
         page.update()
 
+    def _play_if_spicy(indices) -> None:
+        # One cue per reveal action, even if it covers several spicy items
+        # (e.g. "Reveal all" skipping past more than one at once).
+        if any(items[j].sticker.spicy for j in indices):
+            play_spicy(page)
+
     def reveal_next(e):
         if state["index"] < len(items) - 1:
             state["index"] += 1
             render()
+            _play_if_spicy([state["index"]])
 
     def reveal_all(e):
+        start = state["index"] + 1
         state["index"] = len(items) - 1
         render()
+        _play_if_spicy(range(start, len(items)))
 
     reveal_next_btn.on_click = reveal_next
     reveal_all_btn.on_click = reveal_all
     render()
+    _play_if_spicy([0])  # the first card is already on screen when this view opens
 
     new_count = sum(1 for it in items if it.is_new)
     return ft.Column(
