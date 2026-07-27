@@ -78,6 +78,7 @@ def test_spicy_drops_are_additional_and_flagged(repos, state_repo, settings_repo
     spicy = [i for i in result.items if i.sticker.spicy]
     assert len(base) == 5  # base distribution untouched
     assert all(s.sticker.id.startswith("TST_1") for s in spicy)  # numbers 101+
+    assert all(s.sticker.rarity == "spicy" for s in spicy)
 
 
 def test_spicy_chain_rolls_until_miss(repos, state_repo, settings_repo):

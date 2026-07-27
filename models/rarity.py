@@ -10,6 +10,7 @@ RARITY_ORDER: dict[str, int] = {
     "rare": 2,
     "epic": 3,
     "legendary": 4,
+    "spicy": 5,
 }
 
 RARITIES: tuple[str, ...] = tuple(RARITY_ORDER)
@@ -19,7 +20,8 @@ RARITY_COLORS: dict[str, str] = {
     "uncommon": "#4caf50",
     "rare": "#2196f3",
     "epic": "#9c27b0",
-    "legendary": "#f44336",
+    "legendary": "#fbc02d",
+    "spicy": "#f44336",
 }
 
 RARITY_LABELS: dict[str, str] = {
@@ -28,6 +30,7 @@ RARITY_LABELS: dict[str, str] = {
     "rare": "Rare",
     "epic": "Epic",
     "legendary": "Legendary",
+    "spicy": "Spicy",
 }
 
 # Per-character slot layout: slots 1-3 common, 4-6 uncommon, 7-8 rare,
@@ -40,10 +43,11 @@ RARITY_PATTERN: tuple[str, ...] = (
     "legendary",
 )
 
-# Spicy stickers: 5 hidden bonus stickers per character, one per rarity.
+# Spicy stickers: 5 hidden bonus stickers per character, all with the special
+# presentation-only spicy rarity.
 # They never count toward the 10/100 album completion.
 SPICY_PER_CHARACTER = 5
-SPICY_RARITY_PATTERN: tuple[str, ...] = ("common", "uncommon", "rare", "epic", "legendary")
+SPICY_RARITY_PATTERN: tuple[str, ...] = ("spicy",) * SPICY_PER_CHARACTER
 
 
 def slot_rarity(position: int) -> str:
@@ -70,3 +74,15 @@ SELECTORS: dict[str, set[str]] = {
 # Sticker copy styles. Foil is a style of the same sticker, not a separate
 # album slot: one placement of either style completes the slot.
 STYLES: tuple[str, ...] = ("normal", "foil")
+
+# Vice conversion values are inverse to expected rarity frequency in the
+# starter pack: 2 common, 2 uncommon, .7 rare, .25 epic, .05 legendary.
+# Spicy uses its default 20% first-hit chance: 2 common / .2 spicy = 10.
+VICE_VALUES: dict[str, int] = {
+    "common": 1,
+    "uncommon": 1,
+    "rare": 3,
+    "epic": 8,
+    "legendary": 40,
+    "spicy": 10,
+}

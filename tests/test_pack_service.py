@@ -1,8 +1,9 @@
 import random
+import json
 
 import pytest
 
-from models.catalog import Pack, PackDistribution
+from models.catalog import Pack, PackDistribution, PackPool
 from models.rarity import SELECTORS
 from repositories.pack_repository import PackRepository
 from services.errors import PackConfigError
@@ -43,6 +44,72 @@ def test_rare_plus_only_yields_rare_or_better(repos, state_repo):
     assert all(
         item.sticker.rarity in {"rare", "epic", "legendary"} for item in result.items
     )
+
+
+def test_custom_rarity_weights_are_applied_before_card_selection(repos, state_repo):
+    dist = PackDistribution(
+        "", "", 10000,
+        pools=(PackPool("TST"),),
+        rarity_weights=(("rare", 0.7), ("epic", 0.25), ("legendary", 0.05)),
+    )
+    result = _service(repos, state_repo, _pack([dist]), seed=17).open_pack("P")
+    counts = {
+        rarity: sum(i.sticker.rarity == rarity for i in result.items)
+        for rarity in ("rare", "epic", "legendary")
+    }
+    assert 0.68 < counts["rare"] / 10000 < 0.72
+    assert 0.23 < counts["epic"] / 10000 < 0.27
+    assert 0.04 < counts["legendary"] / 10000 < 0.06
+
+
+def test_custom_pool_weights_mix_character_pools(repos, state_repo):
+    dist = PackDistribution(
+        "", "", 4000,
+        pools=(PackPool("TST_C01", 0.75), PackPool("TST_C02", 0.25)),
+        rarity_weights=(("common", 1.0),),
+    )
+    result = _service(repos, state_repo, _pack([dist]), seed=23).open_pack("P")
+    first = sum(i.sticker.character_id == "TST_C01" for i in result.items)
+    assert 0.72 < first / 4000 < 0.78
+
+
+def test_custom_include_and_exclude_limit_cards(repos, state_repo):
+    dist = PackDistribution(
+        "", "", 30,
+        pools=(PackPool("TST"),),
+        rarity_weights=(("rare", 1.0),),
+        include=("TST_007", "TST_008"),
+        exclude=("TST_008",),
+    )
+    result = _service(repos, state_repo, _pack([dist])).open_pack("P")
+    assert {i.sticker.id for i in result.items} == {"TST_007"}
+
+
+def test_custom_distribution_loads_from_json(tmp_path):
+    path = tmp_path / "packs.json"
+    path.write_text(json.dumps({
+        "MIX": {
+            "collection_id": "TST", "name": "Mixed", "price": 5000,
+            "spicy_pools": [
+                {"pool": "TST", "weight": 0.6},
+                {"pool": "OTH", "weight": 0.4},
+            ],
+            "distribution": [{
+                "quantity": 5,
+                "pools": ["TST", {"pool": "OTH", "weight": 0.5}],
+                "rarity_weights": {"rare": 0.7, "epic": 0.25, "legendary": 0.05},
+                "include": ["TST_007"],
+                "exclude": ["OTH_099"],
+            }],
+        }
+    }))
+    pack = PackRepository.from_file(path).get("MIX")
+    dist = pack.distribution[0]
+    assert dist.pools == (PackPool("TST"), PackPool("OTH", 0.5))
+    assert dict(dist.rarity_weights) == {
+        "rare": 0.7, "epic": 0.25, "legendary": 0.05,
+    }
+    assert pack.spicy_pools == (PackPool("TST", 0.6), PackPool("OTH", 0.4))
 
 
 def test_quantities_respected(repos, state_repo):

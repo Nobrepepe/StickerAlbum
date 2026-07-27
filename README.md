@@ -8,6 +8,25 @@ bank connection).
 **The loop:** confirm savings deposit → open pack → reveal stickers → collect
 new copies and duplicates → manually apply stickers → watch the album fill.
 
+## Vice Shop
+
+Only spare copies you explicitly choose are converted into vice points, and
+one copy is always protected for the album. Open a sticker's inspection
+dialog, choose **Vice Conversion**, and enter how many spares to convert.
+
+| Rarity | Points per spare |
+|---|---:|
+| Common | 1 |
+| Uncommon | 1 |
+| Rare | 3 |
+| Epic | 8 |
+| Legendary | 40 |
+| Spicy | 10 |
+
+The Vice Shop stores editable indulgences with a name, description, point
+price, and available quantity. Claiming deducts the price and reduces the
+quantity by one. Points and offerings are part of progress backups and resets.
+
 ## Run
 
 ```bash
@@ -30,7 +49,7 @@ packageable for other platforms later).
 | Path | Purpose |
 |---|---|
 | `data/` | Static catalog: `collections.json`, `characters.json`, `stickers.json`, `packs.json`; plus `drafts.json` for Creator drafts |
-| `app_data/user_state.json` | Mutable progress: inventory, placements, favorite, total savings (created on first run, saved atomically) |
+| `app_data/user_state.json` | Mutable progress: inventory, placements, favorite, savings, vice points and offerings (created on first run, saved atomically) |
 | `app_data/settings.json` | App settings: Creator screen toggle, spicy toggle (both off by default) |
 | `assets/` | Optional artwork (see `assets/README.txt`); anything missing renders as a styled placeholder |
 | `models/` | Frozen dataclasses + centralized rarity/selector/money rules |
@@ -49,27 +68,48 @@ packs are untouched). Both resets ask for confirmation.
 
 ## Spicy stickers 🌶️
 
-Each character has 5 hidden bonus stickers (numbers 101–150, one per rarity).
+Each character has 5 hidden bonus stickers (numbers 101–150), all using the
+special red `spicy` rarity.
 While the 🌶️ toggle is off they are invisible everywhere — album, stats,
 carousel, and pack drops. When on, packs roll bonus spicy drops using the
 pack's `spicy_rate` (default `0.2`): each hit adds one random spicy sticker
-from the pack's collection and rolls again until a miss. Spicy stickers never
-count toward the 10/100 album completion.
+from its configured `spicy_pools` (or its collection by default) and rolls
+again until a miss. Spicy stickers never count toward the 10/100 album
+completion.
 
 ## Adding a collection
 
 Use the **Creator** screen (enable it in Settings): pick a unique
 three-letter code, name the collection, then fill in its 10 characters and
 their 15 stickers each — 10 regular (3× common, 3× uncommon, 2× rare,
-1× epic, 1× legendary by slot) plus 5 spicy, one per rarity. Cover, portrait,
+1× epic, 1× legendary by slot) plus 5 special spicy stickers. Cover, portrait,
 and sticker images can be imported from disk at any point. Incomplete
 collections stay as drafts, visible only in the Creator; once every character
 has a name and 15 named stickers, the Publish button moves it into the
 catalog.
 
-Packs are still added by hand: after publishing, add an entry to
-`data/packs.json` whose `distribution[].pool` is the collection (or a
-character) ID. Prices are integer cents (`2500` → `R$ 25,00`).
+Packs are still added by hand in `data/packs.json`. Legacy distributions use
+`pool` (a collection or character ID), `value`, and `quantity`. Custom
+distributions use weighted `pools`, `rarity_weights`, and `quantity`; optional
+`include` and `exclude` sticker-ID lists provide exact control. A pack-level
+`spicy_pools` list controls weighted spicy sources for mixed packs. See the
+example below. Prices are integer cents (`2500` → `R$ 25,00`).
+
+```json
+{
+  "quantity": 5,
+  "pools": [
+    {"pool": "MRC", "weight": 0.6},
+    {"pool": "MGA", "weight": 0.4}
+  ],
+  "rarity_weights": {
+    "rare": 0.7,
+    "epic": 0.25,
+    "legendary": 0.05
+  },
+  "exclude": ["MRC_099"]
+}
+```
 
 Published collections can be edited again in two ways (both need the
 Creator enabled, via icons on the collection card):

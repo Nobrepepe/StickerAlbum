@@ -84,7 +84,8 @@ def build_settings(page: ft.Page, ctx, nav) -> ft.Control:
             title=ft.Text("Reset all progress?"),
             content=ft.Text(
                 "This permanently deletes your inventory, album placements, "
-                "favorite character, and recorded savings. The catalog "
+                "favorite character, recorded savings, vice points, and vice "
+                "offerings. The catalog "
                 "(collections and stickers) is not touched. Consider exporting "
                 "a backup first.",
                 size=14,
@@ -123,7 +124,7 @@ def build_settings(page: ft.Page, ctx, nav) -> ft.Control:
 
     progress_section = _section(
         "Playthrough progress",
-        "Your inventory, album placements, favorite character, and savings.",
+        "Your inventory, album placements, favorite, savings, and Vice Shop.",
         [
             ft.Row(
                 [

@@ -9,13 +9,13 @@ and sticker numbers follow the fixed 3/3/2/1/1 slot pattern automatically.
 import flet as ft
 
 from components.empty_state import empty_state
-from components.assets import character_tile_image
+from components.assets import character_tile_image, resolve_image
 from components.placeholders import cover_band, sticker_art
 from components.theme import PANEL_BG, PANEL_BORDER
 from components.rarity_chip import rarity_chip
 from models.catalog import Sticker
 from models.draft import SLOTS_PER_CHARACTER, DraftCollection
-from models.rarity import slot_rarity
+from models.rarity import RARITY_COLORS, RARITY_LABELS, slot_rarity
 from repositories.errors import AppError
 from services.creator_service import character_id, sticker_id, sticker_number
 from views.errors_ui import show_error, show_info
@@ -36,6 +36,37 @@ _THEME_COLORS = {
 
 _CARD_BG = PANEL_BG
 _BORDER = ft.border.all(1, PANEL_BORDER)
+
+# Sticker slots share the artwork's 3:4 ratio, so imported art fills the tile
+# without being cropped.
+_TILE_W, _TILE_H = 147.0, 196.0
+_TILE_RADIUS = 12
+
+
+def _slot_border_color(rarity: str) -> str:
+    """A slot's rarity is carried by its border color alone. Spicy keeps the
+    warmer orange-red used for spicy chrome elsewhere in the Creator."""
+    if rarity == "spicy":
+        return _SPICY_COLOR
+    return RARITY_COLORS.get(rarity, "#9e9e9e")
+
+
+def _art_scrim() -> ft.LinearGradient:
+    """Darkens the top and bottom of a slot so the number, icons, and name
+    stay readable over imported artwork, leaving the middle mostly clear."""
+    return ft.LinearGradient(
+        begin=ft.alignment.top_center,
+        end=ft.alignment.bottom_center,
+        colors=[ft.Colors.with_opacity(o, "#0d0d13")
+                for o in (0.85, 0.3, 0.55, 0.9)],
+        stops=[0.0, 0.32, 0.62, 1.0],
+    )
+
+
+# Keeps a slot's name crisp over the brightest artwork without dimming it.
+_NAME_ON_ART = ft.TextStyle(
+    shadow=ft.BoxShadow(blur_radius=4, color=ft.Colors.with_opacity(0.9, "#000000")),
+)
 
 
 def _draft_sticker(draft: DraftCollection, char_index: int, position: int) -> Sticker:
@@ -425,8 +456,8 @@ def build_creator(page: ft.Page, ctx, nav,
             ft.Text(
                 "Drafts live only here until they're complete: 10 characters, "
                 "each with 15 named stickers — 10 regular (3 common, "
-                "3 uncommon, 2 rare, 1 epic, 1 legendary) plus 5 spicy, one "
-                "per rarity.",
+                "3 uncommon, 2 rare, 1 epic, 1 legendary) plus 5 special "
+                "spicy stickers.",
                 size=13, color=ft.Colors.GREY_400,
             ),
             body,
@@ -482,8 +513,16 @@ def build_creator(page: ft.Page, ctx, nav,
             size=11, color=ft.Colors.GREY_500, visible=bool(s.sound),
             text_align=ft.TextAlign.CENTER,
         )
+        # Imports commit as soon as they're picked, so a cancelled dialog
+        # still has to refresh the grid when art or a sound was attached.
+        touched = {"assets": False, "saved": False}
         dialog = ft.AlertDialog(
-            modal=True,
+            # Not modal: tapping outside dismisses and drops the text edits,
+            # exactly like Cancel.
+            modal=False,
+            on_dismiss=lambda e: (
+                render() if touched["assets"] and not touched["saved"] else None
+            ),
             title=ft.Text(f"Sticker #{sticker_number(char_index, position):02d}"
                           + (" 🌶️" if s.spicy else "")),
             content=ft.Column([
@@ -512,11 +551,13 @@ def build_creator(page: ft.Page, ctx, nav,
         )
 
         def refresh_preview(rel: str):
+            touched["assets"] = True
             preview.content = sticker_art(
                 _draft_sticker(draft, char_index, position), 200, 200)
             page.update()
 
         def refresh_sound(rel: str):
+            touched["assets"] = True
             sound_label.value = f"🔊 {rel.split('/')[-1]}"
             sound_label.visible = True
             page.update()
@@ -526,6 +567,7 @@ def build_creator(page: ft.Page, ctx, nav,
             s.flavor_text = flavor_field.value.strip()
             if not persist_draft():
                 return  # live edit rejected (e.g. blank name); keep the dialog
+            touched["saved"] = True  # the render below covers on_dismiss
             page.close(dialog)
             render()
 
@@ -645,33 +687,63 @@ def build_creator(page: ft.Page, ctx, nav,
             s = character.stickers[position - 1]
             rarity = slot_rarity(position)
             named = creator.sticker_complete(s)
-            if s.spicy:
-                border_color = _SPICY_COLOR if named else "#5a3028"
-            else:
-                border_color = "#3a3a48" if named else "#26262f"
+            # Rarity reads from the border; unnamed slots keep the hue but
+            # stay visibly unfinished (thinner, faded).
+            color = _slot_border_color(rarity)
+            art = resolve_image(s.image)
+
+            indicators: list[ft.Control] = []
+            if not art:
+                # With art in the tile, the image icon is only worth showing
+                # while it's still missing.
+                indicators.append(ft.Icon(
+                    ft.Icons.IMAGE_OUTLINED, size=14, color=ft.Colors.GREY_700,
+                    tooltip="No image yet"))
+            indicators.append(ft.Icon(
+                ft.Icons.VOLUME_UP if s.sound else ft.Icons.VOLUME_OFF_OUTLINED,
+                size=14, color="#81c784" if s.sound else ft.Colors.GREY_700,
+                tooltip="Has voice line" if s.sound else "No voice line yet"))
+
+            edge = 2 if named else 1
+            # Art and scrim live one level in, clipped to the radius *inside*
+            # the border: clipping the bordered container itself shaves the
+            # border off at the rounded corners.
+            face = ft.Container(
+                border_radius=_TILE_RADIUS - edge,
+                clip_behavior=ft.ClipBehavior.ANTI_ALIAS,
+                image=ft.DecorationImage(src=art, fit=ft.ImageFit.COVER,
+                                         opacity=0.9) if art else None,
+                content=ft.Container(
+                    padding=10,
+                    gradient=_art_scrim() if art else None,
+                    content=ft.Column([
+                        ft.Row([
+                            ft.Text(f"#{sticker_number(ci, position):02d}", size=12,
+                                    weight=ft.FontWeight.BOLD,
+                                    color=ft.Colors.GREY_300 if art
+                                    else ft.Colors.GREY_400),
+                            *([ft.Text("🌶️", size=12)] if s.spicy else []),
+                            ft.Container(expand=True),
+                            *indicators,
+                        ], spacing=4),
+                        ft.Text(s.name or "Unnamed", size=13,
+                                color=None if named else ft.Colors.GREY_500,
+                                max_lines=3, overflow=ft.TextOverflow.ELLIPSIS,
+                                weight=ft.FontWeight.BOLD if named else None,
+                                style=_NAME_ON_ART if art else None,
+                                expand=True),
+                    ], spacing=6),
+                ),
+            )
             return ft.Container(
-                width=148, height=150, bgcolor=_CARD_BG, border_radius=12,
-                border=ft.border.all(1, border_color),
-                padding=10, ink=True,
+                width=_TILE_W, height=_TILE_H,
+                bgcolor=_CARD_BG, border_radius=_TILE_RADIUS,
+                border=ft.border.all(edge, color if named
+                                     else ft.Colors.with_opacity(0.4, color)),
+                ink=True,
                 on_click=lambda e, p=position: sticker_dialog(draft, ci, p),
-                content=ft.Column([
-                    ft.Row([
-                        ft.Text(f"#{sticker_number(ci, position):02d}", size=12,
-                                weight=ft.FontWeight.BOLD, color=ft.Colors.GREY_400),
-                        *([ft.Text("🌶️", size=12)] if s.spicy else []),
-                        ft.Container(expand=True),
-                        ft.Icon(ft.Icons.IMAGE, size=14,
-                                color="#81c784" if s.image else ft.Colors.GREY_700,
-                                tooltip="Has image" if s.image else "No image yet"),
-                    ]),
-                    ft.Text(s.name or "Unnamed", size=13,
-                            color=None if named else ft.Colors.GREY_600,
-                            max_lines=2, overflow=ft.TextOverflow.ELLIPSIS,
-                            weight=ft.FontWeight.BOLD if named else None,
-                            expand=True),
-                    rarity_chip(rarity, size=8),
-                ], spacing=6),
-                tooltip="Edit spicy sticker" if s.spicy else "Edit sticker",
+                content=face,
+                tooltip=f"{RARITY_LABELS.get(rarity, rarity)} — tap to edit",
             )
 
         live = state["live"]

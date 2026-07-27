@@ -23,7 +23,7 @@
   {
     "id": "MRC_C04",
     "collection_id": "MRC",
-    "name": "Shimu",
+    "name": "Shumi",
     "description": "Pilot of the Mantis.",
     "portrait_image": null
   },
@@ -67,6 +67,146 @@
     "collection_id": "MRC",
     "name": "Seraph",
     "description": "",
+    "portrait_image": null
+  },
+  {
+    "id": "MGA_C01",
+    "collection_id": "MGA",
+    "name": "Carol",
+    "description": "3rd-year student. Specializes in Lightning Magic.",
+    "portrait_image": null
+  },
+  {
+    "id": "MGA_C02",
+    "collection_id": "MGA",
+    "name": "Bridget",
+    "description": "1st-year Student. Specializes in Ground Magic.",
+    "portrait_image": null
+  },
+  {
+    "id": "MGA_C03",
+    "collection_id": "MGA",
+    "name": "Ashley",
+    "description": "1st-year Student. Specializes in Fire Magic.",
+    "portrait_image": null
+  },
+  {
+    "id": "MGA_C04",
+    "collection_id": "MGA",
+    "name": "Tix",
+    "description": "2nd-year Student. Specializes in Nature Magic.",
+    "portrait_image": null
+  },
+  {
+    "id": "MGA_C05",
+    "collection_id": "MGA",
+    "name": "Elian",
+    "description": "2nd-year Student. Specializes in Ice Magic.",
+    "portrait_image": null
+  },
+  {
+    "id": "MGA_C06",
+    "collection_id": "MGA",
+    "name": "Kin",
+    "description": "",
+    "portrait_image": null
+  },
+  {
+    "id": "MGA_C07",
+    "collection_id": "MGA",
+    "name": "Aurora",
+    "description": "Teacher of Alchemy. Specializes in Love Magic.",
+    "portrait_image": null
+  },
+  {
+    "id": "MGA_C08",
+    "collection_id": "MGA",
+    "name": "Irina",
+    "description": "Teacher of Summoning. Specializes in Spatial Magic.",
+    "portrait_image": null
+  },
+  {
+    "id": "MGA_C09",
+    "collection_id": "MGA",
+    "name": "Malefia",
+    "description": "4th-year Student. Specializes in Darkness Magic.",
+    "portrait_image": null
+  },
+  {
+    "id": "MGA_C10",
+    "collection_id": "MGA",
+    "name": "Liadriel",
+    "description": "",
+    "portrait_image": null
+  },
+  {
+    "id": "HDV_C01",
+    "collection_id": "HDV",
+    "name": "Genjiro",
+    "description": "Wandering Samurai.",
+    "portrait_image": null
+  },
+  {
+    "id": "HDV_C02",
+    "collection_id": "HDV",
+    "name": "Mei",
+    "description": "Server Girl. Dark Secret.",
+    "portrait_image": null
+  },
+  {
+    "id": "HDV_C03",
+    "collection_id": "HDV",
+    "name": "Suzume",
+    "description": "Hard-working Ninja.",
+    "portrait_image": null
+  },
+  {
+    "id": "HDV_C04",
+    "collection_id": "HDV",
+    "name": "Hoshi",
+    "description": "Traveling Monk.",
+    "portrait_image": null
+  },
+  {
+    "id": "HDV_C05",
+    "collection_id": "HDV",
+    "name": "Tsubaki",
+    "description": "Party Girl, Martial Artist.",
+    "portrait_image": null
+  },
+  {
+    "id": "HDV_C06",
+    "collection_id": "HDV",
+    "name": "Yuki",
+    "description": "Guardian Oni.",
+    "portrait_image": null
+  },
+  {
+    "id": "HDV_C07",
+    "collection_id": "HDV",
+    "name": "Sakura",
+    "description": "Shrine Miko.",
+    "portrait_image": null
+  },
+  {
+    "id": "HDV_C08",
+    "collection_id": "HDV",
+    "name": "Ayame",
+    "description": "Daughter of the Shogun.",
+    "portrait_image": null
+  },
+  {
+    "id": "HDV_C09",
+    "collection_id": "HDV",
+    "name": "Kaguya",
+    "description": "Gorgeous Geisha.",
+    "portrait_image": null
+  },
+  {
+    "id": "HDV_C10",
+    "collection_id": "HDV",
+    "name": "Kimiko",
+    "description": "Ninja Prodigy.",
     "portrait_image": null
   }
 ]

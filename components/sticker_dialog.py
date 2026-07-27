@@ -12,6 +12,7 @@ from components.rarity_chip import rarity_chip
 from models.catalog import Character, Sticker
 from services.album_service import APPLIED, OWNED, AlbumService
 from services.errors import ApplyError
+from services.errors import ViceError
 
 _STYLE_LABELS = {"normal": "Normal", "foil": "Foil ✨"}
 
@@ -45,6 +46,7 @@ def open_sticker_dialog(
     sticker: Sticker,
     character: Character,
     on_change: Callable[[Sticker], None],
+    vice=None,
 ) -> None:
     """One dialog for all three slot states. `on_change` runs after a
     successful apply/restyle, receiving the sticker that changed so the
@@ -53,7 +55,7 @@ def open_sticker_dialog(
     owned = album.owned_styles(sticker.id)
     applied_style = album.applied_style(sticker.id)
 
-    dialog = ft.AlertDialog(modal=True)
+    dialog = ft.AlertDialog(modal=False)
 
     def close(e=None):
         page.close(dialog)
@@ -85,23 +87,9 @@ def open_sticker_dialog(
             size=13, color="#81c784", weight=ft.FontWeight.BOLD,
         ))
         if sticker.flavor_text:
-            flavor_line: list[ft.Control] = [
-                ft.Text(
-                    f"“{sticker.flavor_text}”", size=13, italic=True,
-                    color=ft.Colors.GREY_400, text_align=ft.TextAlign.CENTER,
-                ),
-            ]
-            if sticker.sound:
-                flavor_line.append(ft.IconButton(
-                    ft.Icons.VOLUME_UP,
-                    icon_size=16,
-                    tooltip="Play voice line",
-                    on_click=lambda e: play_sound(page, sticker.sound),
-                ))
-            info.append(ft.Row(
-                flavor_line, alignment=ft.MainAxisAlignment.CENTER,
-                vertical_alignment=ft.CrossAxisAlignment.CENTER,
-                spacing=4, tight=True, wrap=True,
+            info.append(ft.Text(
+                f"“{sticker.flavor_text}”", size=13, italic=True,
+                color=ft.Colors.GREY_400, text_align=ft.TextAlign.CENTER,
             ))
         dups = album.duplicate_count(sticker.id)
         if dups:
@@ -123,7 +111,63 @@ def open_sticker_dialog(
         info.append(ft.Text("Open packs in the Shop to find this sticker.",
                             size=13, color=ft.Colors.GREY_500))
 
-    actions: list[ft.Control] = [ft.TextButton("Close", on_click=close)]
+    right_actions: list[ft.Control] = [ft.TextButton("Close", on_click=close)]
+
+    if vice is not None and vice.spare_count(sticker.id):
+        spare_count = vice.spare_count(sticker.id)
+        each = vice.conversion_value(sticker)
+
+        def confirm_conversion(e):
+            quantity = ft.TextField(
+                label=f"Copies to convert (1–{spare_count})",
+                value=str(spare_count),
+                keyboard_type=ft.KeyboardType.NUMBER,
+            )
+            confirm = ft.AlertDialog(
+                modal=True,
+                title=ft.Text("Vice Conversion"),
+                content=ft.Column(
+                    [
+                        ft.Text(
+                            f"Each spare {sticker.name} is worth {each} vice "
+                            "points. One copy will always be kept for your album."
+                        ),
+                        quantity,
+                    ],
+                    width=380, tight=True, spacing=12,
+                ),
+            )
+
+            def convert(ev):
+                try:
+                    converted, earned = vice.convert_spares(
+                        sticker, int(quantity.value)
+                    )
+                except (ValueError, ViceError) as exc:
+                    message = (
+                        str(exc) if isinstance(exc, ViceError)
+                        else "Quantity must be a whole number."
+                    )
+                    page.open(ft.SnackBar(ft.Text(message), bgcolor="#b71c1c"))
+                    return
+                page.close(confirm)
+                page.close(dialog)
+                page.open(ft.SnackBar(ft.Text(
+                    f"Converted {converted} spare copies into {earned} vice points."
+                )))
+                on_change(sticker)
+
+            confirm.actions = [
+                ft.TextButton("Cancel", on_click=lambda ev: page.close(confirm)),
+                ft.FilledButton("Convert", on_click=convert),
+            ]
+            page.open(confirm)
+
+        right_actions.append(ft.OutlinedButton(
+            f"Vice Conversion (+{spare_count * each})",
+            icon=ft.Icons.RECYCLING,
+            on_click=confirm_conversion,
+        ))
     for style, qty in owned.items():
         if style == applied_style:
             continue  # already in the slot with this style
@@ -132,7 +176,7 @@ def open_sticker_dialog(
             if applied_style is None
             else f"Switch to {_STYLE_LABELS[style]}"
         )
-        actions.append(ft.FilledButton(f"{label} (×{qty})", on_click=apply_style(style)))
+        right_actions.append(ft.FilledButton(f"{label} (×{qty})", on_click=apply_style(style)))
 
     dialog.title = ft.Text(sticker.name, text_align=ft.TextAlign.CENTER)
     dialog.content = ft.Column(
@@ -142,6 +186,18 @@ def open_sticker_dialog(
         spacing=10,
         width=360,
     )
-    dialog.actions = actions
-    dialog.actions_alignment = ft.MainAxisAlignment.END
+    if state == APPLIED and sticker.sound:
+        # Pinned on the opposite side from Close/Apply so it never shifts
+        # around with the flavor text's line count.
+        dialog.actions = [
+            ft.IconButton(
+                ft.Icons.VOLUME_UP, icon_size=18, tooltip="Play voice line",
+                on_click=lambda e: play_sound(page, sticker.sound),
+            ),
+            ft.Row(right_actions, spacing=8, tight=True),
+        ]
+        dialog.actions_alignment = ft.MainAxisAlignment.SPACE_BETWEEN
+    else:
+        dialog.actions = right_actions
+        dialog.actions_alignment = ft.MainAxisAlignment.END
     page.open(dialog)

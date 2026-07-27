@@ -108,29 +108,41 @@ def build_sticker_slot(
             ),
         ))
         status_signs.append(_sign("READY TO APPLY", "#ffb300", size=sign_size))
-    else:  # missing: grey socket with the number, satisfying to fill in
-        layers.append(ft.Container(
-            margin=6,
-            border_radius=10,
-            bgcolor=_EMPTY_BG,
-            alignment=ft.alignment.center,
-            content=ft.Column(
-                [
-                    ft.Text(
-                        f"#{sticker.number:02d}",
-                        size=26 * k,
-                        weight=ft.FontWeight.BOLD,
-                        color=ft.Colors.with_opacity(0.35, ft.Colors.WHITE),
-                    ),
-                    ft.Text(sticker.id, size=round(10 * k),
-                            color=ft.Colors.with_opacity(0.5, ft.Colors.WHITE)),
-                ],
-                alignment=ft.MainAxisAlignment.CENTER,
-                horizontal_alignment=ft.CrossAxisAlignment.CENTER,
-                spacing=2,
-                tight=True,
-            ),
-        ))
+    else:  # missing: preview the sticker's silhouette on the white board
+        mask = sticker_mask_image(sticker.id)
+        if mask:
+            layers.append(ft.Image(
+                src=mask,
+                width=width,
+                height=height,
+                fit=ft.ImageFit.CONTAIN,
+                color="#b0b0b0",
+                color_blend_mode=ft.BlendMode.SRC_IN,
+            ))
+        else:
+            # Older/custom catalogs may not have foil masks yet.
+            layers.append(ft.Container(
+                margin=6,
+                border_radius=10,
+                bgcolor=_EMPTY_BG,
+                alignment=ft.alignment.center,
+                content=ft.Column(
+                    [
+                        ft.Text(
+                            f"#{sticker.number:02d}",
+                            size=26 * k,
+                            weight=ft.FontWeight.BOLD,
+                            color=ft.Colors.with_opacity(0.35, ft.Colors.WHITE),
+                        ),
+                        ft.Text(sticker.id, size=round(10 * k),
+                                color=ft.Colors.with_opacity(0.5, ft.Colors.WHITE)),
+                    ],
+                    alignment=ft.MainAxisAlignment.CENTER,
+                    horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+                    spacing=2,
+                    tight=True,
+                ),
+            ))
 
     if status_signs:
         layers.append(ft.Row(status_signs, alignment=ft.MainAxisAlignment.END,
@@ -152,5 +164,4 @@ def build_sticker_slot(
         bgcolor="#ffffff",
         on_click=lambda e: on_tap(sticker),
         content=ft.Stack(layers, expand=True, clip_behavior=ft.ClipBehavior.NONE),
-        tooltip=f"{sticker.name} · {sticker.rarity}",
     )

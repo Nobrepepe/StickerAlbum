@@ -64,7 +64,6 @@ def character_tile(
             [ft.Container(content=tile_sign(sign_lines), bottom=6, left=6)],
             expand=True,
         ),
-        tooltip=char.name,
     )
 
 

@@ -258,13 +258,14 @@ def test_publish_writes_catalog_and_removes_draft(env):
     assert sorted(s["number"] for s in normal) == list(range(1, 101))
     # spicy stickers number 101-150
     assert sorted(s["number"] for s in spicy) == list(range(101, 151))
-    # 3/3/2/1/1 per character in slot order, plus one spicy per rarity
+    # 3/3/2/1/1 regular slots plus five special spicy slots per character
     per_char = [s["rarity"] for s in normal if s["character_id"] == "NEW_C04"]
     assert per_char == list(RARITY_PATTERN)
     per_char_spicy = [s["rarity"] for s in spicy if s["character_id"] == "NEW_C04"]
-    assert per_char_spicy == ["common", "uncommon", "rare", "epic", "legendary"]
+    assert per_char_spicy == ["spicy"] * 5
     assert Counter(s["rarity"] for s in new_stickers) == {
-        "common": 40, "uncommon": 40, "rare": 30, "epic": 20, "legendary": 20,
+        "common": 30, "uncommon": 30, "rare": 20, "epic": 10,
+        "legendary": 10, "spicy": 50,
     }
     assert drafts.get("NEW") is None
 

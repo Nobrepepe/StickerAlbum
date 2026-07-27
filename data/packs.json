@@ -3,9 +3,9 @@
     "collection_id": "MRC",
     "name": "Mercenaries Starter Pack",
     "description": "5 random Eden Mercenaries stickers: 4 standard, 1 guaranteed rare or better.",
-    "price": 5000,
+    "price": 2500,
     "foil_rate": 0.1,
-    "spicy_rate": 0.2,
+    "spicy_rate": 0.3,
     "image": "packs/MRC_standard.png",
     "distribution": [
       {
@@ -14,9 +14,78 @@
         "quantity": 4
       },
       {
-        "pool": "MRC",
-        "value": "rare+",
-        "quantity": 1
+        "quantity": 1,
+        "pools": [
+          {
+            "pool": "MRC",
+            "weight": 1.0
+          }
+        ],
+        "rarity_weights": {
+          "rare": 0.7,
+          "epic": 0.25,
+          "legendary": 0.05
+        }
+      }
+    ]
+  },
+  "MGA_standard": {
+    "collection_id": "MGA",
+    "name": "Magic Academy Starter Pack",
+    "description": "5 random Eden Magic Academy stickers: 4 standard, 1 guaranteed rare or better.",
+    "price": 2500,
+    "foil_rate": 0.1,
+    "spicy_rate": 0.3,
+    "image": "packs/MGA_standard.png",
+    "distribution": [
+      {
+        "pool": "MGA",
+        "value": "standard",
+        "quantity": 4
+      },
+      {
+        "quantity": 1,
+        "pools": [
+          {
+            "pool": "MGA",
+            "weight": 1.0
+          }
+        ],
+        "rarity_weights": {
+          "rare": 0.7,
+          "epic": 0.25,
+          "legendary": 0.05
+        }
+      }
+    ]
+  },
+  "HDV_standard": {
+    "collection_id": "HDV",
+    "name": "Hidden Village Starter Pack",
+    "description": "5 random Eden Hidden Village stickers: 4 standard, 1 guaranteed rare or better.",
+    "price": 2500,
+    "foil_rate": 0.1,
+    "spicy_rate": 0.3,
+    "image": "packs/HDV_standard.png",
+    "distribution": [
+      {
+        "pool": "HDV",
+        "value": "standard",
+        "quantity": 4
+      },
+      {
+        "quantity": 1,
+        "pools": [
+          {
+            "pool": "HDV",
+            "weight": 1.0
+          }
+        ],
+        "rarity_weights": {
+          "rare": 0.7,
+          "epic": 0.25,
+          "legendary": 0.05
+        }
       }
     ]
   }

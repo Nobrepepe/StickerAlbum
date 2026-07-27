@@ -3,7 +3,16 @@ placements by sticker_id — each sticker has exactly one album slot."""
 
 from dataclasses import dataclass, field
 
-SCHEMA_VERSION = 1
+SCHEMA_VERSION = 2
+
+
+@dataclass
+class ViceOffering:
+    id: str
+    name: str
+    description: str
+    price: int
+    quantity: int
 
 
 @dataclass
@@ -17,3 +26,5 @@ class UserState:
     # sticker_id -> applied style
     placements: dict[str, str] = field(default_factory=dict)
     last_collection_id: str | None = None
+    vice_points: int = 0
+    vice_offerings: list[ViceOffering] = field(default_factory=list)

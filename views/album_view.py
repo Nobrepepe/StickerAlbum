@@ -13,7 +13,7 @@ import asyncio
 
 import flet as ft
 
-from components.audio_player import play_sound, play_stamp
+from components.audio_player import play_stamp_then
 from components.character_tiles import character_card, character_tile
 from components.sticker_dialog import open_sticker_dialog
 from components.sticker_slot import build_sticker_slot
@@ -38,8 +38,7 @@ def build_album(page: ft.Page, ctx, nav, collection_id: str) -> ft.Control:
 
     # None -> collection overview; 0-9 -> that character's page.
     state: dict = {
-        "char": None, "stamp": None, "stamp_control": None, "stamp_sticker": None,
-        "sliding": False,
+        "char": None, "stamp": None, "stamp_control": None, "sliding": False,
     }
 
     title_text = ft.Text(size=22, weight=ft.FontWeight.BOLD)
@@ -132,7 +131,9 @@ def build_album(page: ft.Page, ctx, nav, collection_id: str) -> ft.Control:
 
     def on_slot_tap(sticker):
         character = ctx.characters.get(sticker.character_id)
-        open_sticker_dialog(page, ctx.album, sticker, character, on_change=on_applied)
+        open_sticker_dialog(
+            page, ctx.album, sticker, character, on_change=on_applied, vice=ctx.vice
+        )
 
     def make_slot(s, w: float, h: float) -> ft.Control:
         slot = build_sticker_slot(ctx.album, s, on_slot_tap, width=w, height=h)
@@ -249,18 +250,10 @@ def build_album(page: ft.Page, ctx, nav, collection_id: str) -> ft.Control:
         except Exception:
             pass  # view was torn down mid-animation
             return
-        # Let the settle animation (420ms) actually finish before the
-        # character's voice line comes in on top of it.
-        await asyncio.sleep(0.42)
-        sticker = state["stamp_sticker"]
-        state["stamp_sticker"] = None
-        if sticker is not None and page is not None:
-            play_sound(page, sticker.sound)
 
     def on_applied(sticker):
         state["stamp"] = sticker.id
-        state["stamp_sticker"] = sticker
-        play_stamp(page)
+        page.run_task(play_stamp_then, page, sticker.sound)
         refresh_content()
 
     async def _slide_to(target: int | None):

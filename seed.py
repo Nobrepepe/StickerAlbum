@@ -75,7 +75,7 @@ _STICKER_TEMPLATES = [
     ("Golden Portrait", "A legend, captured in gold."),
 ]
 
-# Hidden spicy stickers: one per rarity for every character (numbers 101-150).
+# Five hidden special-rarity spicy stickers per character (numbers 101-150).
 _SPICY_TEMPLATES = [
     ("Secret Side", "Not everyone gets to see this."),
     ("After Hours", "When the day job ends, the real story begins."),

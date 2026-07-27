@@ -99,7 +99,7 @@ def build_home(page: ft.Page, ctx, nav) -> ft.Control:
     def on_slot_tap(sticker):
         character = ctx.characters.get(sticker.character_id)
         open_sticker_dialog(page, ctx.album, sticker, character,
-                            on_change=lambda st: nav.go_home())
+                            on_change=lambda st: nav.go_home(), vice=ctx.vice)
 
     def build_fav_view(fav) -> ft.Control:
         theme = fav.collection.theme_color or "#7c4dff"

@@ -5,7 +5,7 @@ import time
 from pathlib import Path
 
 from models.rarity import STYLES
-from models.user_state import SCHEMA_VERSION, UserState
+from models.user_state import SCHEMA_VERSION, UserState, ViceOffering
 from repositories._files import atomic_write_json
 from repositories.errors import StateSaveError
 
@@ -59,6 +59,31 @@ class UserStateRepository:
 
         last = raw.get("last_collection_id")
         state.last_collection_id = str(last) if last else None
+
+        points = raw.get("vice_points", 0)
+        state.vice_points = points if isinstance(points, int) and points >= 0 else 0
+
+        seen_offerings: set[str] = set()
+        for item in raw.get("vice_offerings", []) or []:
+            try:
+                oid = str(item["id"])
+                name = str(item["name"]).strip()
+                description = str(item.get("description", "")).strip()
+                price = item["price"]
+                quantity = item["quantity"]
+                if (
+                    not oid or oid in seen_offerings or not name
+                    or not isinstance(price, int) or price < 1
+                    or not isinstance(quantity, int) or quantity < 0
+                ):
+                    raise ValueError
+                state.vice_offerings.append(ViceOffering(
+                    id=oid, name=name, description=description,
+                    price=price, quantity=quantity,
+                ))
+                seen_offerings.add(oid)
+            except (KeyError, TypeError, ValueError):
+                self._warn(f"Ignored malformed vice offering: {item!r}")
 
         for item in raw.get("inventory", []) or []:
             sid = item.get("sticker_id")
@@ -149,6 +174,17 @@ class UserStateRepository:
             "favorite_character_id": self.state.favorite_character_id,
             "total_saved": self.state.total_saved,
             "last_collection_id": self.state.last_collection_id,
+            "vice_points": self.state.vice_points,
+            "vice_offerings": [
+                {
+                    "id": offering.id,
+                    "name": offering.name,
+                    "description": offering.description,
+                    "price": offering.price,
+                    "quantity": offering.quantity,
+                }
+                for offering in self.state.vice_offerings
+            ],
             "inventory": [
                 {"sticker_id": sid, "style": style, "quantity": qty}
                 for (sid, style), qty in sorted(self.state.inventory.items())
@@ -186,6 +222,19 @@ class UserStateRepository:
             raise ValueError("count must be positive")
         key = (sticker_id, style)
         self.state.inventory[key] = self.state.inventory.get(key, 0) + count
+
+    def remove_copy(self, sticker_id: str, style: str, count: int = 1) -> None:
+        if style not in STYLES or count < 1:
+            raise ValueError("Invalid copy removal")
+        key = (sticker_id, style)
+        current = self.state.inventory.get(key, 0)
+        if current < count:
+            raise ValueError("Not enough copies")
+        remaining = current - count
+        if remaining:
+            self.state.inventory[key] = remaining
+        else:
+            self.state.inventory.pop(key, None)
 
     # ---- placements ----------------------------------------------------
 

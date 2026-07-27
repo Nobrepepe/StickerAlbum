@@ -18,6 +18,7 @@ from views.home_view import build_home
 from views.pack_result_view import build_pack_result
 from views.settings_view import build_settings
 from views.shop_view import build_shop
+from views.vice_shop_view import build_vice_shop
 
 logging.basicConfig(
     level=logging.INFO,
@@ -63,6 +64,8 @@ class AppShell:
              ft.Icons.COLLECTIONS_BOOKMARK, "Collections", self.go_collections),
             ("shop", ft.Icons.STOREFRONT_OUTLINED, ft.Icons.STOREFRONT, "Shop",
              self.go_shop),
+            ("vice", ft.Icons.LOCAL_BAR_OUTLINED, ft.Icons.LOCAL_BAR, "Vice Shop",
+             self.go_vice_shop),
         ]
         if self.ctx.settings.state.creator_enabled:
             entries.append(("creator", ft.Icons.DESIGN_SERVICES_OUTLINED,
@@ -111,6 +114,9 @@ class AppShell:
 
     def go_pack_result(self, result):
         self._set("shop", build_pack_result(self.page, self.ctx, self, result))
+
+    def go_vice_shop(self):
+        self._set("vice", build_vice_shop(self.page, self.ctx, self))
 
     def go_creator(self):
         self._set("creator", build_creator(self.page, self.ctx, self))

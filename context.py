@@ -17,6 +17,7 @@ from services.backup_service import BackupService
 from services.creator_service import CreatorService
 from services.pack_service import PackOpeningService
 from services.summary_service import SummaryService
+from services.vice_service import ViceService
 
 
 @dataclass
@@ -33,6 +34,7 @@ class AppContext:
     summary: SummaryService
     creator: CreatorService
     backup: BackupService
+    vice: ViceService
 
     @classmethod
     def build(cls) -> "AppContext":
@@ -52,6 +54,7 @@ class AppContext:
         summary = SummaryService(collections, characters, stickers, state, album, settings)
         creator = CreatorService(drafts, collections, DATA_DIR, ASSETS_DIR, state)
         backup = BackupService(state, drafts, DATA_DIR)
+        vice = ViceService(state)
         return cls(
             collections=collections,
             characters=characters,
@@ -65,4 +68,5 @@ class AppContext:
             summary=summary,
             creator=creator,
             backup=backup,
+            vice=vice,
         )
