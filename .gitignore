@@ -5,3 +5,14 @@ __pycache__/
 app_data/
 .claude/settings.local.json
 .claude/launch.json
+
+# Collection art and voice lines are imported through the Creator and backed
+# up outside the repo — keeping them here made every version gigabytes wide.
+# Only the app's own cues and the naming conventions stay tracked; anything
+# missing renders as a styled placeholder.
+assets/*
+!assets/README.txt
+!assets/sounds/
+assets/sounds/*
+!assets/sounds/stamp.wav
+!assets/sounds/spicy.wav
