@@ -12,7 +12,7 @@ from typing import Callable
 import flet as ft
 
 from components.assets import character_card_image, character_tile_image
-from components.theme import SIGN_BG
+from components.theme import CARD_BG, DISPLAY_FONT, INK, META_FONT, SIGN_BG
 
 TILE_W = 252.0
 TILE_H = TILE_W * 9 / 16
@@ -31,7 +31,7 @@ def tile_sign(lines: list[ft.Control]) -> ft.Control:
         content=ft.Column(lines, spacing=1, tight=True,
                           horizontal_alignment=ft.CrossAxisAlignment.START),
         bgcolor=ft.Colors.with_opacity(0.82, SIGN_BG),
-        border_radius=8,
+        border_radius=0,
         padding=ft.padding.symmetric(horizontal=8, vertical=4),
         shadow=_SIGN_SHADOW,
     )
@@ -41,7 +41,7 @@ def _fallback_gradient(theme: str) -> ft.LinearGradient:
     return ft.LinearGradient(
         begin=ft.alignment.top_left,
         end=ft.alignment.bottom_right,
-        colors=[ft.Colors.with_opacity(0.6, theme), "#14141c"],
+        colors=[ft.Colors.with_opacity(0.5, theme), CARD_BG],
     )
 
 
@@ -79,22 +79,23 @@ def character_card(
         layers.append(ft.Container(
             alignment=ft.alignment.center,
             content=ft.Text(char.name, size=20, weight=ft.FontWeight.BOLD,
-                            color=ft.Colors.with_opacity(0.85, ft.Colors.WHITE),
+                            font_family=DISPLAY_FONT, color=INK,
                             text_align=ft.TextAlign.CENTER),
             padding=16,
         ))
-    layers.append(ft.Container(content=tile_sign(sign_lines), bottom=8, left=8))
+    if sign_lines:
+        layers.append(ft.Container(content=tile_sign(sign_lines), bottom=8, left=8))
     return ft.Container(
         width=width,
         height=width * 16 / 9,
         bgcolor="#ffffff",
-        border_radius=14,
+        border_radius=0,
         clip_behavior=ft.ClipBehavior.ANTI_ALIAS,
         image=ft.DecorationImage(src=src, fit=ft.ImageFit.COVER) if src else None,
         gradient=None if src else ft.LinearGradient(
             begin=ft.alignment.top_center,
             end=ft.alignment.bottom_center,
-            colors=[ft.Colors.with_opacity(0.55, theme), "#101018"],
+            colors=[ft.Colors.with_opacity(0.5, theme), CARD_BG],
         ),
         content=ft.Stack(layers, expand=True),
     )

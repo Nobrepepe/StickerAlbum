@@ -1,6 +1,13 @@
 import flet as ft
 
-from components.theme import PANEL_BG, PANEL_BORDER
+from components.paper import (
+    PAPER_SHADOW, destructive_button, ink_button, outline_button, paper_label,
+    tool_button,
+)
+from components.theme import (
+    BODY_FONT, CARD_BG, CARD_BORDER, DISPLAY_FONT, INK, INK_SOFT, META_FONT,
+    STAMP_RED,
+)
 from services.errors import ViceError
 from views.errors_ui import show_error, show_info
 
@@ -22,7 +29,10 @@ def build_vice_shop(page: ft.Page, ctx, nav) -> ft.Control:
         )
         dialog = ft.AlertDialog(
             modal=True,
-            title=ft.Text("Edit vice" if offering else "Add a vice"),
+            bgcolor=CARD_BG,
+            title=ft.Text(("EDIT VICE" if offering else "ADD A VICE"),
+                          font_family=DISPLAY_FONT, weight=ft.FontWeight.W_700,
+                          color=INK),
             content=ft.Column(
                 [name, description, price, quantity],
                 width=420, tight=True, spacing=12,
@@ -50,15 +60,17 @@ def build_vice_shop(page: ft.Page, ctx, nav) -> ft.Control:
             nav.go_vice_shop()
 
         dialog.actions = [
-            ft.TextButton("Cancel", on_click=lambda e: page.close(dialog)),
-            ft.FilledButton("Save", on_click=save),
+            outline_button("CANCEL", lambda e: page.close(dialog)),
+            ink_button("SAVE", save),
         ]
         page.open(dialog)
 
     def remove(offering):
         dialog = ft.AlertDialog(
             modal=True,
-            title=ft.Text("Remove this vice?"),
+            bgcolor=CARD_BG,
+            title=ft.Text("REMOVE THIS VICE?", font_family=DISPLAY_FONT,
+                          weight=ft.FontWeight.W_700, color=INK),
             content=ft.Text(
                 f"{offering.name} will be removed from the shop. "
                 "Previously claimed quantities are not restored."
@@ -75,19 +87,17 @@ def build_vice_shop(page: ft.Page, ctx, nav) -> ft.Control:
             nav.go_vice_shop()
 
         dialog.actions = [
-            ft.TextButton("Cancel", on_click=lambda e: page.close(dialog)),
-            ft.FilledButton(
-                "Remove", icon=ft.Icons.DELETE,
-                style=ft.ButtonStyle(bgcolor="#b71c1c", color=ft.Colors.WHITE),
-                on_click=confirm,
-            ),
+            outline_button("CANCEL", lambda e: page.close(dialog)),
+            destructive_button("REMOVE", confirm, icon=ft.Icons.DELETE),
         ]
         page.open(dialog)
 
     def claim(offering):
         dialog = ft.AlertDialog(
             modal=True,
-            title=ft.Text(f"Claim {offering.name}?"),
+            bgcolor=CARD_BG,
+            title=ft.Text(f"CLAIM {offering.name}?", font_family=DISPLAY_FONT,
+                          weight=ft.FontWeight.W_700, color=INK),
             content=ft.Text(
                 f"This costs {offering.price} vice points. Treat yourself, "
                 "then mark one quantity as claimed."
@@ -106,8 +116,8 @@ def build_vice_shop(page: ft.Page, ctx, nav) -> ft.Control:
             nav.go_vice_shop()
 
         dialog.actions = [
-            ft.TextButton("Cancel", on_click=lambda e: page.close(dialog)),
-            ft.FilledButton("Claim", icon=ft.Icons.CHECK, on_click=confirm),
+            outline_button("CANCEL", lambda e: page.close(dialog)),
+            ink_button("CLAIM", confirm, icon=ft.Icons.CHECK),
         ]
         page.open(dialog)
 
@@ -116,39 +126,41 @@ def build_vice_shop(page: ft.Page, ctx, nav) -> ft.Control:
         sold_out = offering.quantity < 1
         cards.append(ft.Container(
             width=340,
-            bgcolor=PANEL_BG,
-            border=ft.border.all(1, PANEL_BORDER),
-            border_radius=14,
+            bgcolor=CARD_BG,
+            border=ft.border.all(1, CARD_BORDER),
+            border_radius=0,
             padding=18,
+            shadow=PAPER_SHADOW,
             content=ft.Column(
                 [
                     ft.Row(
                         [
-                            ft.Text(offering.name, size=17, weight=ft.FontWeight.BOLD,
-                                    expand=True),
-                            ft.IconButton(ft.Icons.EDIT, tooltip="Edit",
-                                          on_click=lambda e, o=offering: offering_dialog(o)),
-                            ft.IconButton(ft.Icons.DELETE_OUTLINE, tooltip="Remove",
-                                          on_click=lambda e, o=offering: remove(o)),
+                            ft.Text(offering.name, size=17, font_family=DISPLAY_FONT,
+                                    weight=ft.FontWeight.W_700, color=INK, expand=True),
+                            tool_button("ed",
+                                        lambda e, o=offering: offering_dialog(o),
+                                        "Edit"),
+                            tool_button("rm", lambda e, o=offering: remove(o),
+                                        "Remove"),
                         ],
                         spacing=4,
                     ),
                     ft.Text(offering.description or "A well-earned indulgence.",
-                            size=12, color=ft.Colors.GREY_400),
+                            size=12, font_family=META_FONT, color=INK_SOFT),
                     ft.Row(
                         [
                             ft.Text(f"{offering.price} points", size=16,
-                                    weight=ft.FontWeight.BOLD, color="#ef5350"),
+                                    font_family=META_FONT, color=INK),
                             ft.Text(f"{offering.quantity} available", size=12,
-                                    color=ft.Colors.GREY_400),
+                                    font_family=META_FONT, color=INK_SOFT),
                         ],
                         alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
                     ),
-                    ft.FilledButton(
-                        "Sold out" if sold_out else "Claim",
+                    ink_button(
+                        "SOLD OUT" if sold_out else "CLAIM",
+                        lambda e, o=offering: claim(o),
                         icon=ft.Icons.CHECK_CIRCLE_OUTLINE,
                         disabled=sold_out or ctx.vice.points < offering.price,
-                        on_click=lambda e, o=offering: claim(o),
                     ),
                 ],
                 spacing=12,
@@ -165,11 +177,12 @@ def build_vice_shop(page: ft.Page, ctx, nav) -> ft.Control:
             content=ft.Column(
                 [
                     ft.Icon(ft.Icons.LOCAL_BAR_OUTLINED, size=48,
-                            color=ft.Colors.GREY_600),
-                    ft.Text("No vices on offer yet", size=17,
-                            weight=ft.FontWeight.BOLD),
+                            color=INK_SOFT),
+                    ft.Text("NO VICES ON OFFER YET", size=17,
+                            font_family=DISPLAY_FONT, weight=ft.FontWeight.W_700,
+                            color=INK),
                     ft.Text("Add an indulgence worth working toward.",
-                            color=ft.Colors.GREY_400),
+                            font_family=META_FONT, color=INK_SOFT),
                 ],
                 horizontal_alignment=ft.CrossAxisAlignment.CENTER,
                 tight=True,
@@ -182,25 +195,23 @@ def build_vice_shop(page: ft.Page, ctx, nav) -> ft.Control:
                 [
                     ft.Column(
                         [
-                            ft.Text("Vice Shop", size=26, weight=ft.FontWeight.BOLD),
+                            ft.Text("VICE SHOP", size=30, font_family=DISPLAY_FONT,
+                                    weight=ft.FontWeight.W_900, color=INK),
                             ft.Text(
                                 "Turn chosen spare stickers into permission to indulge.",
-                                size=13, color=ft.Colors.GREY_400,
+                                size=13, font_family=META_FONT, color=INK_SOFT,
                             ),
                         ],
                         expand=True, spacing=3,
                     ),
                     ft.Container(
-                        bgcolor="#49272d", border_radius=12, padding=14,
-                        content=ft.Text(
-                            f"{ctx.vice.points} vice points",
-                            size=18, weight=ft.FontWeight.BOLD, color="#ef9a9a",
+                        content=paper_label(
+                            f"{ctx.vice.points} VICE POINTS", fill="#f6ddd4",
+                            size=12,
                         ),
                     ),
-                    ft.FilledButton(
-                        "Add vice", icon=ft.Icons.ADD,
-                        on_click=lambda e: offering_dialog(),
-                    ),
+                    ink_button("ADD VICE", lambda e: offering_dialog(),
+                               icon=ft.Icons.ADD),
                 ],
                 vertical_alignment=ft.CrossAxisAlignment.CENTER,
             ),

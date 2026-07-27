@@ -12,6 +12,9 @@ app_data/
 # missing renders as a styled placeholder.
 assets/*
 !assets/README.txt
+!assets/fonts/
+!assets/fonts/*.ttf
+!assets/fonts/*-OFL.txt
 !assets/sounds/
 assets/sounds/*
 !assets/sounds/stamp.wav

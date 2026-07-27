@@ -2,25 +2,30 @@
 
 import flet as ft
 
-from components.theme import PANEL_BG, PANEL_BORDER
+from components.paper import PAPER_SHADOW, destructive_button, ink_button, outline_button
+from components.theme import (
+    BODY_FONT, CARD_BG, CARD_BORDER, DISPLAY_FONT, INK, INK_SOFT, META_FONT,
+)
 
 from repositories.errors import AppError
 from views.errors_ui import show_error, show_info
 
-_CARD_BG = PANEL_BG
-_BORDER = ft.border.all(1, PANEL_BORDER)
+_CARD_BG = CARD_BG
+_BORDER = ft.border.all(1, CARD_BORDER)
 
 
 def _section(title: str, subtitle: str, controls: list[ft.Control]) -> ft.Control:
     return ft.Container(
         bgcolor=_CARD_BG,
         border=_BORDER,
-        border_radius=14,
+        border_radius=0,
         padding=20,
+        shadow=PAPER_SHADOW,
         content=ft.Column(
             [
-                ft.Text(title, size=16, weight=ft.FontWeight.BOLD),
-                ft.Text(subtitle, size=12, color=ft.Colors.GREY_400),
+                ft.Text(title.upper(), size=16, font_family=DISPLAY_FONT,
+                        weight=ft.FontWeight.W_700, color=INK),
+                ft.Text(subtitle, size=12, font_family=META_FONT, color=INK_SOFT),
                 *controls,
             ],
             spacing=12,
@@ -81,14 +86,16 @@ def build_settings(page: ft.Page, ctx, nav) -> ft.Control:
     def reset_progress(e):
         dialog = ft.AlertDialog(
             modal=True,
-            title=ft.Text("Reset all progress?"),
+            bgcolor=CARD_BG,
+            title=ft.Text("RESET ALL PROGRESS?", font_family=DISPLAY_FONT,
+                          weight=ft.FontWeight.W_700, color=INK),
             content=ft.Text(
                 "This permanently deletes your inventory, album placements, "
                 "favorite character, recorded savings, vice points, and vice "
                 "offerings. The catalog "
                 "(collections and stickers) is not touched. Consider exporting "
                 "a backup first.",
-                size=14,
+                size=14, font_family=BODY_FONT, color=INK,
             ),
         )
 
@@ -103,13 +110,9 @@ def build_settings(page: ft.Page, ctx, nav) -> ft.Control:
             nav.go_settings()
 
         dialog.actions = [
-            ft.TextButton("Cancel", on_click=lambda ev: page.close(dialog)),
-            ft.FilledButton(
-                "Reset everything",
-                icon=ft.Icons.DELETE_FOREVER,
-                style=ft.ButtonStyle(bgcolor="#b71c1c", color=ft.Colors.WHITE),
-                on_click=do_reset,
-            ),
+            outline_button("CANCEL", lambda ev: page.close(dialog)),
+            destructive_button("RESET EVERYTHING", do_reset,
+                               icon=ft.Icons.DELETE_FOREVER),
         ]
         page.open(dialog)
 
@@ -128,15 +131,13 @@ def build_settings(page: ft.Page, ctx, nav) -> ft.Control:
         [
             ft.Row(
                 [
-                    ft.FilledTonalButton("Export backup…", icon=ft.Icons.UPLOAD,
-                                         on_click=export_progress),
-                    ft.FilledTonalButton("Import backup…", icon=ft.Icons.DOWNLOAD,
-                                         on_click=import_progress),
-                    ft.OutlinedButton(
-                        "Reset progress…", icon=ft.Icons.DELETE_FOREVER,
-                        style=ft.ButtonStyle(color="#e57373"),
-                        on_click=reset_progress,
-                    ),
+                    ink_button("EXPORT BACKUP…", export_progress,
+                               icon=ft.Icons.UPLOAD),
+                    outline_button("IMPORT BACKUP…", import_progress,
+                                   icon=ft.Icons.DOWNLOAD),
+                    outline_button("RESET PROGRESS…", reset_progress,
+                                   icon=ft.Icons.DELETE_FOREVER,
+                                   color="#a8563a"),
                 ],
                 wrap=True,
                 spacing=12,
@@ -164,7 +165,8 @@ def build_settings(page: ft.Page, ctx, nav) -> ft.Control:
 
     return ft.Column(
         [
-            ft.Text("Settings", size=26, weight=ft.FontWeight.BOLD),
+            ft.Text("SETTINGS", size=30, font_family=DISPLAY_FONT,
+                    weight=ft.FontWeight.W_900, color=INK),
             progress_section,
             features_section,
         ],

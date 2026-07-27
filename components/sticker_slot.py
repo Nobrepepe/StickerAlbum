@@ -14,40 +14,26 @@ import flet as ft
 
 from components.assets import resolve_image, sticker_mask_image
 from components.foil_shimmer import FoilShimmer
+from components.paper import paper_label
 from components.placeholders import sticker_art
+from components.theme import CARD_BG, INK, META_FONT, TRACK_BG
 from models.catalog import Sticker
-from models.rarity import RARITY_COLORS
 from services.album_service import APPLIED, OWNED, AlbumService
 
 # Slots share the 3:4 ratio of the sticker artwork.
 SLOT_W = 150.0
 SLOT_H = 200.0
 
-_EMPTY_BG = "#23232e"
-_FOIL_GOLD = "#ffd54f"
-
-_SIGN_SHADOW = ft.BoxShadow(
-    blur_radius=4, color=ft.Colors.with_opacity(0.35, "#000000"),
-    offset=ft.Offset(0, 1),
-)
-
-
-def _sign(text: str, color: str, text_color: str = "#101014",
-          size: int = 9, max_width: float | None = None) -> ft.Control:
+def _sign(text: str, rarity: str | None = None, *, gold: bool = False,
+          size: int = 9, max_width: float | None = None,
+          fill: str | None = None) -> ft.Control:
     # Shrink-to-fit, but cap long names so the sign stays on its sticker.
     # (Flet has no max-width constraint, so estimate the rendered width.)
     width = None
     if max_width is not None and len(text) * size * 0.62 > max_width:
         width = max_width
-    return ft.Container(
-        content=ft.Text(text, size=size, weight=ft.FontWeight.BOLD,
-                        color=text_color, max_lines=1,
-                        overflow=ft.TextOverflow.ELLIPSIS),
-        bgcolor=color,
-        border_radius=8,
-        padding=ft.padding.symmetric(horizontal=6, vertical=2),
-        shadow=_SIGN_SHADOW,
-        width=width,
+    return paper_label(
+        text, rarity, gold=gold, size=size, max_width=width, fill=fill
     )
 
 
@@ -59,13 +45,12 @@ def build_sticker_slot(
     height: float = SLOT_H,
 ) -> ft.Container:
     state = album.slot_state(sticker.id)
-    rarity_color = RARITY_COLORS.get(sticker.rarity, "#9e9e9e")
     k = max(1.0, width / SLOT_W)
     sign_size = round(9 * k**0.5)
 
     status_signs: list[ft.Control] = []
     if sticker.spicy:
-        status_signs.append(_sign("🌶️", "#ff7043", size=sign_size))
+        status_signs.append(_sign("🌶️", "spicy", size=sign_size))
 
     layers: list[ft.Control] = []
     if state == APPLIED:
@@ -86,28 +71,28 @@ def build_sticker_slot(
                 margin=6,
             ))
         if style == "foil":
-            status_signs.append(_sign("FOIL ✨", _FOIL_GOLD, size=sign_size))
+            status_signs.append(_sign("FOIL", gold=True, size=sign_size))
         dups = album.duplicate_count(sticker.id)
         if dups > 0:
-            status_signs.append(_sign(f"+{dups}", "#b0bec5", size=sign_size))
+            status_signs.append(_sign(f"+{dups}", size=sign_size))
     elif state == OWNED:
         # Owned but not pasted: a dark sticker "back", never the artwork.
         layers.append(ft.Container(
             margin=6,
-            border_radius=10,
+            border_radius=0,
             gradient=ft.LinearGradient(
                 begin=ft.alignment.top_center,
                 end=ft.alignment.bottom_center,
-                colors=[ft.Colors.with_opacity(0.5, rarity_color), "#101018"],
+                colors=[CARD_BG, TRACK_BG],
             ),
             alignment=ft.alignment.center,
             content=ft.Icon(
                 ft.Icons.STICKY_NOTE_2_OUTLINED,
                 size=36 * k,
-                color=ft.Colors.with_opacity(0.85, rarity_color),
+                color="#2f26188c",
             ),
         ))
-        status_signs.append(_sign("READY TO APPLY", "#ffb300", size=sign_size))
+        status_signs.append(_sign("READY TO APPLY", gold=True, size=sign_size))
     else:  # missing: preview the sticker's silhouette on the white board
         mask = sticker_mask_image(sticker.id)
         if mask:
@@ -116,26 +101,27 @@ def build_sticker_slot(
                 width=width,
                 height=height,
                 fit=ft.ImageFit.CONTAIN,
-                color="#b0b0b0",
+                color="#e7e3d9",
                 color_blend_mode=ft.BlendMode.SRC_IN,
             ))
         else:
             # Older/custom catalogs may not have foil masks yet.
             layers.append(ft.Container(
                 margin=6,
-                border_radius=10,
-                bgcolor=_EMPTY_BG,
+                border_radius=0,
+                bgcolor="#ffffff",
+                border=ft.border.all(1.5, "#d8d2c4"),
                 alignment=ft.alignment.center,
                 content=ft.Column(
                     [
                         ft.Text(
                             f"#{sticker.number:02d}",
                             size=26 * k,
-                            weight=ft.FontWeight.BOLD,
-                            color=ft.Colors.with_opacity(0.35, ft.Colors.WHITE),
+                            font_family=META_FONT,
+                            color="#2f261859",
                         ),
                         ft.Text(sticker.id, size=round(10 * k),
-                                color=ft.Colors.with_opacity(0.5, ft.Colors.WHITE)),
+                                font_family=META_FONT, color="#2f261859"),
                     ],
                     alignment=ft.MainAxisAlignment.CENTER,
                     horizontal_alignment=ft.CrossAxisAlignment.CENTER,
@@ -151,7 +137,7 @@ def build_sticker_slot(
     # Kept just inside the bottom edge: rows below paint over anything that
     # overflows downward, so only the top signs invade their neighbour.
     layers.append(ft.Container(
-        content=_sign(sticker.name, rarity_color, text_color="#ffffff",
+        content=_sign(sticker.name, sticker.rarity,
                       size=sign_size, max_width=width - 20),
         bottom=5, left=6,
     ))

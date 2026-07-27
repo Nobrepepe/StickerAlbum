@@ -15,9 +15,24 @@ import flet as ft
 
 from components.audio_player import play_stamp_then
 from components.character_tiles import character_card, character_tile
+from components.paper import (
+    PAPER_SHADOW,
+    dashed_rule,
+    outline_button,
+    paper_progress,
+    tape_strip,
+    tool_button,
+)
 from components.sticker_dialog import open_sticker_dialog
 from components.sticker_slot import build_sticker_slot
-from components.theme import BOARD_BG
+from components.theme import (
+    BOARD_BG,
+    DISPLAY_FONT,
+    INK,
+    INK_SOFT,
+    META_FONT,
+    STAMP_RED,
+)
 
 SIDEBAR_W = 252
 
@@ -26,7 +41,7 @@ SIDEBAR_W = 252
 CHAR_SLOT_W, CHAR_SLOT_H = 225.0, 300.0
 OVER_SLOT_W, OVER_SLOT_H = 150.0, 200.0
 
-_SPICY_COLOR = "#ff7043"
+_SPICY_COLOR = STAMP_RED
 _BOARD_BG = BOARD_BG
 
 
@@ -41,13 +56,13 @@ def build_album(page: ft.Page, ctx, nav, collection_id: str) -> ft.Control:
         "char": None, "stamp": None, "stamp_control": None, "sliding": False,
     }
 
-    title_text = ft.Text(size=22, weight=ft.FontWeight.BOLD)
-    subtitle_text = ft.Text(size=12, color=ft.Colors.GREY_400,
+    title_text = ft.Text(size=25, font_family=DISPLAY_FONT,
+                         weight=ft.FontWeight.W_900, color=INK)
+    subtitle_text = ft.Text(size=12, color=INK_SOFT, font_family=META_FONT,
                             max_lines=1, overflow=ft.TextOverflow.ELLIPSIS)
-    progress_text = ft.Text(size=13, color=ft.Colors.GREY_300)
-    progress_bar = ft.ProgressBar(
-        color=theme, bgcolor=ft.Colors.with_opacity(0.1, ft.Colors.WHITE), width=220
-    )
+    progress_text = ft.Text(size=14, color=INK, font_family=DISPLAY_FONT,
+                            weight=ft.FontWeight.W_900)
+    progress_bar = ft.Container(content=paper_progress(0, width=220))
     grid = ft.Column(spacing=16, scroll=ft.ScrollMode.AUTO, expand=True)
     sidebar = ft.Container(
         width=SIDEBAR_W,
@@ -83,15 +98,21 @@ def build_album(page: ft.Page, ctx, nav, collection_id: str) -> ft.Control:
     def build_char_list() -> ft.Control:
         strip = ft.Container(
             bgcolor=_BOARD_BG,
-            border_radius=14,
-            clip_behavior=ft.ClipBehavior.ANTI_ALIAS,
+            border_radius=0,
             content=ft.Column(
                 [char_tile(i, c) for i, c in enumerate(characters)],
                 spacing=0,  # edges touch: the whole strip reads as one piece
                 tight=True,
             ),
         )
-        return ft.Column([strip], scroll=ft.ScrollMode.AUTO, expand=True)
+        return ft.Stack(
+            [
+                ft.Column([strip], scroll=ft.ScrollMode.AUTO, expand=True),
+                ft.Container(content=tape_strip(92, -2.5), top=-10, left=65),
+            ],
+            expand=True,
+            clip_behavior=ft.ClipBehavior.NONE,
+        )
 
     # ---- sidebar: selected character card -----------------------------------
 
@@ -117,11 +138,9 @@ def build_album(page: ft.Page, ctx, nav, collection_id: str) -> ft.Control:
         return ft.Column(
             [
                 character_card(char, theme, lines, width=SIDEBAR_W),
-                ft.TextButton(
-                    "All characters",
-                    icon=ft.Icons.ARROW_BACK,
-                    on_click=lambda e: back_to_overview(),
-                ),
+                outline_button("ALL CHARACTERS",
+                               lambda e: back_to_overview(),
+                               icon=ft.Icons.ARROW_BACK),
             ],
             spacing=8,
             horizontal_alignment=ft.CrossAxisAlignment.START,
@@ -154,10 +173,11 @@ def build_album(page: ft.Page, ctx, nav, collection_id: str) -> ft.Control:
         return ft.Row(
             [
                 ft.Text("🌶️", size=18),
-                ft.Text("Spicy stickers", size=14, weight=ft.FontWeight.BOLD,
-                        color=_SPICY_COLOR),
-                ft.Text(f"{applied} / {total}", size=12, color=ft.Colors.GREY_600),
-                ft.Container(content=ft.Divider(height=1, color="#e8e2d8"), expand=True),
+                ft.Text("SPICY STICKERS", size=14, font_family=DISPLAY_FONT,
+                        weight=ft.FontWeight.W_700, color=_SPICY_COLOR),
+                ft.Text(f"{applied} / {total}", size=12,
+                        font_family=META_FONT, color=INK_SOFT),
+                ft.Container(content=dashed_rule(320), expand=True),
             ],
             spacing=10,
             vertical_alignment=ft.CrossAxisAlignment.CENTER,
@@ -166,11 +186,16 @@ def build_album(page: ft.Page, ctx, nav, collection_id: str) -> ft.Control:
     def board(sections: list[ft.Control]) -> ft.Control:
         """The big white board the stickers are placed on. Sticker edges and
         the board share the same white, so vignettes blend together."""
-        return ft.Container(
+        sheet = ft.Container(
             bgcolor=_BOARD_BG,
-            border_radius=16,
+            border_radius=0,
             padding=ft.padding.only(left=18, right=18, top=20, bottom=20),
+            shadow=PAPER_SHADOW,
             content=ft.Column(sections, spacing=22),
+        )
+        return ft.Stack(
+            [sheet, ft.Container(content=tape_strip(), top=-10, left=44)],
+            clip_behavior=ft.ClipBehavior.NONE,
         )
 
     def build_overview_grid() -> list[ft.Control]:
@@ -217,7 +242,9 @@ def build_album(page: ft.Page, ctx, nav, collection_id: str) -> ft.Control:
             title_text.value = collection.name
             subtitle_text.value = collection.description
             progress_text.value = f"{col_applied} / {col_total} stickers"
-            progress_bar.value = col_applied / col_total if col_total else 0
+            progress_bar.content = paper_progress(
+                col_applied / col_total if col_total else 0, width=220
+            )
             grid.controls = build_overview_grid()
             sidebar.content = build_char_list()
         else:
@@ -226,7 +253,9 @@ def build_album(page: ft.Page, ctx, nav, collection_id: str) -> ft.Control:
             title_text.value = char.name
             subtitle_text.value = char.description
             progress_text.value = f"{applied} / {total} applied"
-            progress_bar.value = applied / total if total else 0
+            progress_bar.content = paper_progress(
+                applied / total if total else 0, width=220
+            )
             grid.controls = build_character_grid(char)
             sidebar.content = build_char_card(char)
         page.update()
@@ -292,8 +321,7 @@ def build_album(page: ft.Page, ctx, nav, collection_id: str) -> ft.Control:
         [
             ft.Row(
                 [
-                    ft.IconButton(ft.Icons.ARROW_BACK, on_click=on_back,
-                                  tooltip="Back"),
+                    tool_button("←", on_back, "Back"),
                     ft.Column([title_text, subtitle_text], spacing=2, tight=True,
                               expand=True),
                     ft.Column(

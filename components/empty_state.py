@@ -1,14 +1,16 @@
 import flet as ft
+from components.theme import DISPLAY_FONT, INK, INK_SOFT
 
 
 def empty_state(icon: str, title: str, subtitle: str = "") -> ft.Control:
     items: list[ft.Control] = [
-        ft.Icon(icon, size=48, color=ft.Colors.with_opacity(0.4, ft.Colors.WHITE)),
-        ft.Text(title, size=16, color=ft.Colors.with_opacity(0.8, ft.Colors.WHITE)),
+        ft.Icon(icon, size=48, color="#2f261866"),
+        ft.Text(title.upper(), size=16, color=INK, font_family=DISPLAY_FONT,
+                weight=ft.FontWeight.W_700),
     ]
     if subtitle:
         items.append(
-            ft.Text(subtitle, size=13, color=ft.Colors.with_opacity(0.5, ft.Colors.WHITE))
+            ft.Text(subtitle, size=13, color=INK_SOFT)
         )
     return ft.Container(
         content=ft.Column(

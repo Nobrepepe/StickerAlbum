@@ -4,9 +4,10 @@ import flet as ft
 
 from components.assets import resolve_image
 from models.catalog import Sticker
-from models.rarity import RARITY_COLORS
+from components.theme import CARD_BG, INK, INK_SOFT, META_FONT
+from models.rarity import RARITY_PAPER
 
-_DARK = "#14141c"
+_DARK = "#6b5842"
 
 
 def sticker_art(sticker: Sticker, width: float, height: float) -> ft.Control:
@@ -17,30 +18,28 @@ def sticker_art(sticker: Sticker, width: float, height: float) -> ft.Control:
             src=src, width=width, height=height,
             fit=ft.ImageFit.CONTAIN, border_radius=8,
         )
-    color = RARITY_COLORS.get(sticker.rarity, "#9e9e9e")
+    paper, edge = RARITY_PAPER.get(sticker.rarity, ("#ffffff", "#c8bda6"))
     return ft.Container(
         width=width,
         height=height,
-        border_radius=8,
-        gradient=ft.LinearGradient(
-            begin=ft.alignment.top_left,
-            end=ft.alignment.bottom_right,
-            colors=[ft.Colors.with_opacity(0.55, color), _DARK],
-        ),
+        border_radius=0,
+        bgcolor=paper,
+        border=ft.border.all(1, edge),
         alignment=ft.alignment.center,
         content=ft.Column(
             [
                 ft.Text(
                     f"#{sticker.number:02d}",
                     size=min(width, height) * 0.28,
-                    weight=ft.FontWeight.BOLD,
-                    color=ft.Colors.with_opacity(0.9, ft.Colors.WHITE),
+                    font_family=META_FONT,
+                    color=INK,
                 ),
                 ft.Text(
                     sticker.name,
                     size=11,
                     text_align=ft.TextAlign.CENTER,
-                    color=ft.Colors.with_opacity(0.75, ft.Colors.WHITE),
+                    font_family=META_FONT,
+                    color=INK_SOFT,
                     max_lines=2,
                     overflow=ft.TextOverflow.ELLIPSIS,
                 ),

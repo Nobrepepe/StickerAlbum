@@ -10,18 +10,23 @@ import flet as ft
 
 from components.empty_state import empty_state
 from components.assets import character_tile_image, resolve_image
+from components.paper import (
+    PAPER_SHADOW, ink_button, outline_button, paper_label, paper_progress,
+    tool_button,
+)
 from components.placeholders import cover_band, sticker_art
-from components.theme import PANEL_BG, PANEL_BORDER
-from components.rarity_chip import rarity_chip
+from components.theme import (
+    CARD_BG, CARD_BORDER, DISPLAY_FONT, INK, INK_SOFT, META_FONT, STAMP_RED,
+)
 from models.catalog import Sticker
 from models.draft import SLOTS_PER_CHARACTER, DraftCollection
-from models.rarity import RARITY_COLORS, RARITY_LABELS, slot_rarity
+from models.rarity import RARITY_LABELS, RARITY_PAPER, slot_rarity
 from repositories.errors import AppError
 from services.creator_service import character_id, sticker_id, sticker_number
 from views.errors_ui import show_error, show_info
 
 _TOTAL_STICKERS = 10 * SLOTS_PER_CHARACTER  # 150 per collection
-_SPICY_COLOR = "#ff7043"
+_SPICY_COLOR = STAMP_RED
 
 _THEME_COLORS = {
     "Purple": "#7c4dff",
@@ -34,13 +39,13 @@ _THEME_COLORS = {
     "Teal": "#26a69a",
 }
 
-_CARD_BG = PANEL_BG
-_BORDER = ft.border.all(1, PANEL_BORDER)
+_CARD_BG = CARD_BG
+_BORDER = ft.border.all(1, CARD_BORDER)
 
 # Sticker slots share the artwork's 3:4 ratio, so imported art fills the tile
 # without being cropped.
 _TILE_W, _TILE_H = 147.0, 196.0
-_TILE_RADIUS = 12
+_TILE_RADIUS = 0
 
 
 def _slot_border_color(rarity: str) -> str:
@@ -48,7 +53,7 @@ def _slot_border_color(rarity: str) -> str:
     warmer orange-red used for spicy chrome elsewhere in the Creator."""
     if rarity == "spicy":
         return _SPICY_COLOR
-    return RARITY_COLORS.get(rarity, "#9e9e9e")
+    return RARITY_PAPER.get(rarity, ("#ffffff", "#c8bda6"))[1]
 
 
 def _art_scrim() -> ft.LinearGradient:
@@ -191,8 +196,8 @@ def build_creator(page: ft.Page, ctx, nav,
             nav.go_collections()
 
         dialog.actions = [
-            ft.TextButton("Cancel", on_click=lambda e: page.close(dialog)),
-            ft.FilledButton("Publish", icon=ft.Icons.ROCKET_LAUNCH, on_click=do_publish),
+            outline_button("CANCEL", lambda e: page.close(dialog)),
+            ink_button("PUBLISH", do_publish, icon=ft.Icons.ROCKET_LAUNCH),
         ]
         page.open(dialog)
 
@@ -261,8 +266,8 @@ def build_creator(page: ft.Page, ctx, nav,
                 render()
 
         dialog.actions = [
-            ft.TextButton("Cancel", on_click=lambda e: page.close(dialog)),
-            ft.FilledButton("Create draft" if is_new else "Save", on_click=save),
+            outline_button("CANCEL", lambda e: page.close(dialog)),
+            ink_button("CREATE DRAFT" if is_new else "SAVE", save),
         ]
         page.open(dialog)
 
@@ -284,9 +289,8 @@ def build_creator(page: ft.Page, ctx, nav,
             render()
 
         dialog.actions = [
-            ft.TextButton("Cancel", on_click=lambda e: page.close(dialog)),
-            ft.FilledButton("Delete draft", icon=ft.Icons.DELETE_OUTLINE,
-                            on_click=do_delete),
+            outline_button("CANCEL", lambda e: page.close(dialog)),
+            ink_button("DELETE DRAFT", do_delete, icon=ft.Icons.DELETE_OUTLINE),
         ]
         page.open(dialog)
 
@@ -296,43 +300,44 @@ def build_creator(page: ft.Page, ctx, nav,
         complete = creator.collection_complete(draft)
         total = _TOTAL_STICKERS
         return ft.Container(
-            width=330, bgcolor=_CARD_BG, border_radius=14, border=_BORDER,
+            width=330, bgcolor=_CARD_BG, border_radius=0, border=_BORDER,
+            padding=10, shadow=PAPER_SHADOW,
             clip_behavior=ft.ClipBehavior.ANTI_ALIAS,
             content=ft.Column([
                 cover_band(draft.cover_image, draft.theme_color, height=70),
                 ft.Container(padding=16, content=ft.Column([
                     ft.Row([
                         ft.Text(draft.name or "(unnamed)", size=17,
-                                weight=ft.FontWeight.BOLD, expand=True,
+                                font_family=DISPLAY_FONT,
+                                weight=ft.FontWeight.W_700, color=INK, expand=True,
                                 max_lines=1, overflow=ft.TextOverflow.ELLIPSIS),
                         ft.Container(
-                            content=ft.Text(draft.id, size=11, weight=ft.FontWeight.BOLD),
-                            border=ft.border.all(1, "#4a4a5a"), border_radius=8,
+                            content=ft.Text(draft.id, size=11, font_family=META_FONT),
+                            border=ft.border.all(1, "#2f261859"), border_radius=0,
                             padding=ft.padding.symmetric(horizontal=8, vertical=2),
                         ),
                     ]),
                     ft.Text(
                         f"{chars_done} / {chars_total} characters · "
                         f"{stickers_done} / {total} stickers named",
-                        size=12, color=ft.Colors.GREY_400,
+                        size=12, font_family=META_FONT, color=INK_SOFT,
                     ),
-                    ft.ProgressBar(
-                        value=stickers_done / total,
-                        color=draft.theme_color or "#7c4dff",
-                        bgcolor=ft.Colors.with_opacity(0.1, ft.Colors.WHITE),
-                    ),
+                    paper_progress(stickers_done / total, width=278),
                     ft.Row([
-                        ft.FilledTonalButton("Continue", icon=ft.Icons.EDIT,
-                                             on_click=lambda e, d=draft: open_editor(d)),
-                        ft.FilledButton(
-                            "Publish", icon=ft.Icons.ROCKET_LAUNCH, disabled=not complete,
+                        outline_button("CONTINUE",
+                                       lambda e, d=draft: open_editor(d),
+                                       icon=ft.Icons.EDIT),
+                        ink_button(
+                            "PUBLISH",
+                            lambda e, d=draft: publish(d),
+                            icon=ft.Icons.ROCKET_LAUNCH,
+                            disabled=not complete,
                             tooltip=None if complete else
                             "Every character needs a name and 15 named stickers "
-                            "(10 regular + 5 spicy)",
-                            on_click=lambda e, d=draft: publish(d),
+                            "(10 regular + 5 spicy)"
                         ),
-                        ft.IconButton(ft.Icons.DELETE_OUTLINE, tooltip="Delete draft",
-                                      on_click=lambda e, d=draft: delete_draft(d)),
+                        tool_button("rm", lambda e, d=draft: delete_draft(d),
+                                    "Delete draft"),
                     ], spacing=8),
                 ], spacing=10)),
             ], spacing=0),
@@ -378,8 +383,8 @@ def build_creator(page: ft.Page, ctx, nav,
             nav.go_creator()
 
         dialog.actions = [
-            ft.TextButton("Cancel", on_click=lambda ev: page.close(dialog)),
-            ft.FilledButton("Restore", icon=ft.Icons.RESTORE, on_click=do_restore),
+            outline_button("CANCEL", lambda ev: page.close(dialog)),
+            ink_button("RESTORE", do_restore, icon=ft.Icons.RESTORE),
         ]
         page.open(dialog)
 
@@ -427,13 +432,9 @@ def build_creator(page: ft.Page, ctx, nav,
             nav.go_creator()
 
         dialog.actions = [
-            ft.TextButton("Cancel", on_click=lambda ev: page.close(dialog)),
-            ft.FilledButton(
-                "Delete everything",
-                icon=ft.Icons.DELETE_FOREVER,
-                style=ft.ButtonStyle(bgcolor="#b71c1c", color=ft.Colors.WHITE),
-                on_click=do_reset,
-            ),
+            outline_button("CANCEL", lambda ev: page.close(dialog)),
+            ink_button("DELETE EVERYTHING", do_reset,
+                       icon=ft.Icons.DELETE_FOREVER, bgcolor=STAMP_RED),
         ]
         page.open(dialog)
 
@@ -448,39 +449,38 @@ def build_creator(page: ft.Page, ctx, nav,
         )
         root.content = ft.Column([
             ft.Row([
-                ft.Text("Creator", size=26, weight=ft.FontWeight.BOLD),
+                ft.Text("CREATOR", size=30, font_family=DISPLAY_FONT,
+                        weight=ft.FontWeight.W_900, color=INK),
                 ft.Container(expand=True),
-                ft.FilledButton("New collection", icon=ft.Icons.ADD,
-                                on_click=lambda e: collection_dialog(None)),
+                ink_button("NEW COLLECTION",
+                           lambda e: collection_dialog(None), icon=ft.Icons.ADD),
             ]),
             ft.Text(
                 "Drafts live only here until they're complete: 10 characters, "
                 "each with 15 named stickers — 10 regular (3 common, "
                 "3 uncommon, 2 rare, 1 epic, 1 legendary) plus 5 special "
                 "spicy stickers.",
-                size=13, color=ft.Colors.GREY_400,
+                size=13, font_family=META_FONT, color=INK_SOFT,
             ),
             body,
             ft.Container(
                 padding=ft.padding.only(top=8),
                 content=ft.Column([
-                    ft.Text("Catalog data", size=14, weight=ft.FontWeight.BOLD,
-                            color=ft.Colors.GREY_300),
+                    ft.Text("CATALOG DATA", size=14, font_family=DISPLAY_FONT,
+                            weight=ft.FontWeight.W_700, color=INK),
                     ft.Text(
                         "The authored collections, characters, and stickers "
                         "(not your playthrough progress).",
-                        size=12, color=ft.Colors.GREY_500,
+                        size=12, font_family=META_FONT, color=INK_SOFT,
                     ),
                     ft.Row([
-                        ft.FilledTonalButton("Backup catalog…", icon=ft.Icons.UPLOAD,
-                                             on_click=backup_catalog),
-                        ft.FilledTonalButton("Restore backup…", icon=ft.Icons.DOWNLOAD,
-                                             on_click=restore_catalog),
-                        ft.OutlinedButton(
-                            "Reset catalog…", icon=ft.Icons.DELETE_FOREVER,
-                            style=ft.ButtonStyle(color="#e57373"),
-                            on_click=reset_catalog,
-                        ),
+                        ink_button("BACKUP CATALOG…", backup_catalog,
+                                   icon=ft.Icons.UPLOAD),
+                        outline_button("RESTORE BACKUP…", restore_catalog,
+                                       icon=ft.Icons.DOWNLOAD),
+                        outline_button("RESET CATALOG…", reset_catalog,
+                                       icon=ft.Icons.DELETE_FOREVER,
+                                       color=STAMP_RED),
                     ], wrap=True, spacing=12),
                 ], spacing=8),
             ),
@@ -510,7 +510,7 @@ def build_creator(page: ft.Page, ctx, nav,
         )
         sound_label = ft.Text(
             f"🔊 {s.sound.split('/')[-1]}" if s.sound else "",
-            size=11, color=ft.Colors.GREY_500, visible=bool(s.sound),
+            size=11, color=INK_SOFT, font_family=META_FONT, visible=bool(s.sound),
             text_align=ft.TextAlign.CENTER,
         )
         # Imports commit as soon as they're picked, so a cancelled dialog
@@ -527,23 +527,27 @@ def build_creator(page: ft.Page, ctx, nav,
                           + (" 🌶️" if s.spicy else "")),
             content=ft.Column([
                 preview,
-                ft.Row([*spicy_marker, rarity_chip(rarity),
+                ft.Row([*spicy_marker,
+                        paper_label(RARITY_LABELS.get(rarity, rarity).upper(),
+                                    rarity),
                         ft.Text(sticker_id(draft.id, char_index, position),
-                                size=12, color=ft.Colors.GREY_500)],
+                                size=12, color=INK_SOFT, font_family=META_FONT)],
                        alignment=ft.MainAxisAlignment.CENTER, spacing=10),
                 name_field,
                 flavor_field,
                 ft.Row([
-                    ft.OutlinedButton(
-                        "Image…", icon=ft.Icons.IMAGE,
-                        on_click=lambda e: pick_image(
+                    outline_button(
+                        "IMAGE…",
+                        lambda e: pick_image(
                             "sticker", char_index, position, after=refresh_preview),
+                        icon=ft.Icons.IMAGE,
                     ),
-                    ft.OutlinedButton(
-                        "Sound…", icon=ft.Icons.MUSIC_NOTE,
-                        tooltip="Optional voice line for the flavor text",
-                        on_click=lambda e: pick_image(
+                    outline_button(
+                        "SOUND…",
+                        lambda e: pick_image(
                             "sound", char_index, position, after=refresh_sound),
+                        icon=ft.Icons.MUSIC_NOTE,
+                        tooltip="Optional voice line for the flavor text",
                     ),
                 ], spacing=8, alignment=ft.MainAxisAlignment.CENTER),
                 sound_label,
@@ -572,8 +576,8 @@ def build_creator(page: ft.Page, ctx, nav,
             render()
 
         dialog.actions = [
-            ft.TextButton("Cancel", on_click=lambda e: page.close(dialog)),
-            ft.FilledButton("Save", on_click=save),
+            outline_button("CANCEL", lambda e: page.close(dialog)),
+            ink_button("SAVE", save),
         ]
         page.open(dialog)
 
@@ -592,9 +596,10 @@ def build_creator(page: ft.Page, ctx, nav,
 
         sidebar = ft.Column(spacing=4, scroll=ft.ScrollMode.AUTO, expand=True,
         alignment=ft.MainAxisAlignment.START)
-        publish_button = ft.FilledButton("Publish", icon=ft.Icons.ROCKET_LAUNCH,
-                                         on_click=lambda e: publish(draft))
-        progress_text = ft.Text(size=13, color=ft.Colors.GREY_300)
+        publish_button = ink_button(
+            "PUBLISH", lambda e: publish(draft), icon=ft.Icons.ROCKET_LAUNCH
+        )
+        progress_text = ft.Text(size=12, color=INK_SOFT, font_family=META_FONT)
 
         def sidebar_tile(i: int) -> ft.Control:
             c = draft.characters[i - 1]
@@ -603,33 +608,38 @@ def build_creator(page: ft.Page, ctx, nav,
             selected = i == state["char"]
             tile_src = character_tile_image(character_id(draft.id, i))
             thumb = ft.Container(
-                width=64, height=36, border_radius=6,
+                width=52, height=30, border_radius=0,
                 clip_behavior=ft.ClipBehavior.ANTI_ALIAS,
                 image=ft.DecorationImage(src=tile_src, fit=ft.ImageFit.COVER)
                 if tile_src else None,
                 gradient=None if tile_src else ft.LinearGradient(
                     begin=ft.alignment.top_left, end=ft.alignment.bottom_right,
-                    colors=[ft.Colors.with_opacity(0.6, theme), "#14141c"],
+                    colors=[ft.Colors.with_opacity(0.45, theme), CARD_BG],
                 ),
             )
             return ft.Container(
-                bgcolor=ft.Colors.with_opacity(0.18, theme) if selected else None,
-                border_radius=10,
-                padding=ft.padding.symmetric(horizontal=10, vertical=6),
+                width=214,
+                bgcolor="#ebe2d6" if selected else CARD_BG,
+                border=ft.border.all(1, CARD_BORDER),
+                border_radius=0,
+                padding=ft.padding.symmetric(horizontal=8, vertical=7),
+                shadow=ft.BoxShadow(blur_radius=3, color="#00000020",
+                                    offset=ft.Offset(1, 2)),
                 on_click=lambda e, i=i: switch_character(i),
                 ink=True,
                 content=ft.Row([
                     thumb,
                     ft.Column([
-                        ft.Text(c.name or f"Character #{i}", size=13,
-                                weight=ft.FontWeight.BOLD if selected else None,
-                                color=None if c.name else ft.Colors.GREY_500,
+                        ft.Text(c.name or f"Character #{i}", size=12,
+                                font_family=DISPLAY_FONT,
+                                weight=ft.FontWeight.W_700 if selected else None,
+                                color=INK if c.name else INK_SOFT,
                                 max_lines=1, overflow=ft.TextOverflow.ELLIPSIS),
-                        ft.Text(f"{done} / {total} stickers", size=11,
-                                color=ft.Colors.GREY_400),
+                        ft.Text(f"{done}/{total} slots", size=10,
+                                font_family=META_FONT, color=INK_SOFT),
                     ], spacing=1, tight=True, expand=True),
-                    ft.Icon(ft.Icons.CHECK_CIRCLE, size=16, color="#81c784")
-                    if complete else ft.Container(width=16),
+                    ft.Container(width=14, height=14, bgcolor=INK)
+                    if complete else ft.Container(width=14),
                 ], spacing=10, vertical_alignment=ft.CrossAxisAlignment.CENTER),
             )
 
@@ -639,6 +649,7 @@ def build_creator(page: ft.Page, ctx, nav,
             progress_text.value = f"{done} / {total} characters complete"
             complete = creator.collection_complete(draft)
             publish_button.disabled = not complete
+            publish_button.opacity = 1 if complete else 0.45
             publish_button.tooltip = (
                 None if complete
                 else "Every character needs a name and 15 named stickers "
@@ -676,11 +687,15 @@ def build_creator(page: ft.Page, ctx, nav,
         name_field = ft.TextField(
             label="Character name", value=character.name, width=320,
             on_change=bind(lambda v: setattr(character, "name", v)), on_blur=persist,
+            border=ft.InputBorder.UNDERLINE, border_color="#2f261859",
+            text_style=ft.TextStyle(font_family=META_FONT, size=15, color=INK),
         )
         desc_field = ft.TextField(
             label="Character description", value=character.description, expand=True,
             on_change=bind(lambda v: setattr(character, "description", v)),
             on_blur=persist,
+            border=ft.InputBorder.UNDERLINE, border_color="#2f261859",
+            text_style=ft.TextStyle(font_family=META_FONT, size=15, color=INK),
         )
 
         def sticker_tile(position: int) -> ft.Control:
@@ -697,49 +712,46 @@ def build_creator(page: ft.Page, ctx, nav,
                 # With art in the tile, the image icon is only worth showing
                 # while it's still missing.
                 indicators.append(ft.Icon(
-                    ft.Icons.IMAGE_OUTLINED, size=14, color=ft.Colors.GREY_700,
+                    ft.Icons.IMAGE_OUTLINED, size=14, color=INK_SOFT,
                     tooltip="No image yet"))
             indicators.append(ft.Icon(
                 ft.Icons.VOLUME_UP if s.sound else ft.Icons.VOLUME_OFF_OUTLINED,
-                size=14, color="#81c784" if s.sound else ft.Colors.GREY_700,
+                size=14, color=INK if s.sound else INK_SOFT,
                 tooltip="Has voice line" if s.sound else "No voice line yet"))
 
-            edge = 2 if named else 1
+            edge = 1
             # Art and scrim live one level in, clipped to the radius *inside*
             # the border: clipping the bordered container itself shaves the
             # border off at the rounded corners.
             face = ft.Container(
-                border_radius=_TILE_RADIUS - edge,
+                border_radius=0,
                 clip_behavior=ft.ClipBehavior.ANTI_ALIAS,
                 image=ft.DecorationImage(src=art, fit=ft.ImageFit.COVER,
                                          opacity=0.9) if art else None,
                 content=ft.Container(
-                    padding=10,
+                    padding=8,
                     gradient=_art_scrim() if art else None,
                     content=ft.Column([
                         ft.Row([
                             ft.Text(f"#{sticker_number(ci, position):02d}", size=12,
-                                    weight=ft.FontWeight.BOLD,
-                                    color=ft.Colors.GREY_300 if art
-                                    else ft.Colors.GREY_400),
+                                    font_family=META_FONT,
+                                    color="#ffffff" if art else "#2f261859"),
                             *([ft.Text("🌶️", size=12)] if s.spicy else []),
                             ft.Container(expand=True),
                             *indicators,
                         ], spacing=4),
-                        ft.Text(s.name or "Unnamed", size=13,
-                                color=None if named else ft.Colors.GREY_500,
-                                max_lines=3, overflow=ft.TextOverflow.ELLIPSIS,
-                                weight=ft.FontWeight.BOLD if named else None,
-                                style=_NAME_ON_ART if art else None,
-                                expand=True),
+                        ft.Container(expand=True),
+                        paper_label(s.name or "Unnamed", rarity, size=10,
+                                    max_width=_TILE_W - 18),
                     ], spacing=6),
                 ),
             )
             return ft.Container(
                 width=_TILE_W, height=_TILE_H,
-                bgcolor=_CARD_BG, border_radius=_TILE_RADIUS,
-                border=ft.border.all(edge, color if named
-                                     else ft.Colors.with_opacity(0.4, color)),
+                bgcolor="#ffffff", border_radius=0,
+                border=ft.border.all(1, "#2f261833"),
+                shadow=ft.BoxShadow(blur_radius=2, color="#00000024",
+                                    offset=ft.Offset(1, 1)),
                 ink=True,
                 on_click=lambda e, p=position: sticker_dialog(draft, ci, p),
                 content=face,
@@ -748,36 +760,47 @@ def build_creator(page: ft.Page, ctx, nav,
 
         live = state["live"]
         banner = (
-            ft.Text("LIVE — edits apply to the published collection "
-                    "immediately; your progress is kept",
-                    size=11, color="#81c784")
+            ft.Column([
+                ft.Container(
+                    border=ft.border.all(2, STAMP_RED),
+                    rotate=ft.Rotate(-0.05),
+                    padding=ft.padding.symmetric(horizontal=8, vertical=4),
+                    content=ft.Text("LIVE EDIT", size=10,
+                                    font_family=DISPLAY_FONT,
+                                    weight=ft.FontWeight.W_900,
+                                    color=STAMP_RED),
+                ),
+                ft.Text("edits apply to the published collection immediately · "
+                        "progress is kept", size=11, font_family=META_FONT,
+                        color=INK_SOFT),
+            ], spacing=5, tight=True)
             if live else
             ft.Text("DRAFT — visible only in the Creator until published",
-                    size=11, color="#ffb300")
+                    size=11, font_family=META_FONT, color=INK_SOFT)
         )
         header_right = (
-            ft.FilledTonalButton("Done", icon=ft.Icons.CHECK, on_click=back_to_list)
+            ink_button("DONE", back_to_list, icon=ft.Icons.CHECK)
             if live else
             ft.Column([progress_text, publish_button], spacing=6,
                       horizontal_alignment=ft.CrossAxisAlignment.END, tight=True)
         )
         header = ft.Row([
-            ft.IconButton(ft.Icons.ARROW_BACK,
-                          tooltip="Back to collections" if live else "Back to drafts",
-                          on_click=back_to_list),
+            tool_button("←", back_to_list,
+                        "Back to collections" if live else "Back to drafts"),
             ft.Column([
                 ft.Row([
-                    ft.Text(draft.name, size=22, weight=ft.FontWeight.BOLD),
+                    ft.Text(draft.name.upper(), size=22, font_family=DISPLAY_FONT,
+                            weight=ft.FontWeight.W_900, color=INK),
                     ft.Container(
-                        content=ft.Text(draft.id, size=11, weight=ft.FontWeight.BOLD),
-                        border=ft.border.all(1, "#4a4a5a"), border_radius=8,
+                        content=ft.Text(draft.id, size=11, font_family=META_FONT),
+                        border=ft.border.all(1, "#2f261859"), border_radius=0,
                         padding=ft.padding.symmetric(horizontal=8, vertical=2),
                     ),
-                    ft.IconButton(ft.Icons.EDIT_OUTLINED, icon_size=18,
-                                  tooltip="Edit name, description, color",
-                                  on_click=lambda e: collection_dialog(draft)),
-                    ft.OutlinedButton("Cover image…", icon=ft.Icons.IMAGE,
-                                      on_click=lambda e: pick_image("cover")),
+                    tool_button("ed", lambda e: collection_dialog(draft),
+                                "Edit name, description, color"),
+                    outline_button("COVER IMAGE…",
+                                   lambda e: pick_image("cover"),
+                                   icon=ft.Icons.IMAGE),
                 ], spacing=8, vertical_alignment=ft.CrossAxisAlignment.CENTER),
                 banner,
             ], spacing=2, tight=True, expand=True),
@@ -786,13 +809,13 @@ def build_creator(page: ft.Page, ctx, nav,
 
         panel_tile_src = character_tile_image(character_id(draft.id, ci))
         panel_thumb = ft.Container(
-            width=128, height=72, border_radius=8,
+            width=128, height=72, border_radius=0,
             clip_behavior=ft.ClipBehavior.ANTI_ALIAS,
             image=ft.DecorationImage(src=panel_tile_src, fit=ft.ImageFit.COVER)
             if panel_tile_src else None,
             gradient=None if panel_tile_src else ft.LinearGradient(
                 begin=ft.alignment.top_left, end=ft.alignment.bottom_right,
-                colors=[ft.Colors.with_opacity(0.6, theme), "#14141c"],
+                colors=[ft.Colors.with_opacity(0.45, theme), CARD_BG],
             ),
             tooltip="16:9 tile art (shown in album sidebars)",
         )
@@ -802,20 +825,24 @@ def build_creator(page: ft.Page, ctx, nav,
                 ft.Column([
                     ft.Row([
                         name_field,
-                        ft.OutlinedButton(
-                            "Tile…", icon=ft.Icons.PANORAMA_WIDE_ANGLE,
+                        outline_button(
+                            "TILE…",
+                            lambda e: pick_image("tile", ci),
+                            icon=ft.Icons.PANORAMA_WIDE_ANGLE,
                             tooltip="16:9 landscape banner (e.g. the eyes)",
-                            on_click=lambda e: pick_image("tile", ci)),
-                        ft.OutlinedButton(
-                            "Card…", icon=ft.Icons.PORTRAIT,
+                        ),
+                        outline_button(
+                            "CARD…",
+                            lambda e: pick_image("card", ci),
+                            icon=ft.Icons.PORTRAIT,
                             tooltip="9:16 full-body card",
-                            on_click=lambda e: pick_image("card", ci)),
+                        ),
                     ], spacing=10, run_spacing=8, wrap=True),
                     desc_field,
                 ], spacing=10, tight=True, expand=True),
             ], spacing=16, vertical_alignment=ft.CrossAxisAlignment.START),
             ft.Text("Sticker slots — tap to name them and add art",
-                    size=13, color=ft.Colors.GREY_400),
+                    size=13, font_family=META_FONT, color=INK_SOFT),
             ft.Column([
                 ft.Row([sticker_tile(p) for p in range(1, 11)],
                        wrap=True, spacing=12, run_spacing=12),
@@ -835,9 +862,10 @@ def build_creator(page: ft.Page, ctx, nav,
         root.content = ft.Column([
             header,
             ft.Row([
-                ft.Container(width=230, bgcolor="#2b2735", border_radius=12,
-                             padding=8, content=sidebar),
-                character_panel,
+                ft.Container(width=230, bgcolor=CARD_BG, border_radius=0,
+                             padding=8, shadow=PAPER_SHADOW, content=sidebar),
+                ft.Container(bgcolor=CARD_BG, padding=16, shadow=PAPER_SHADOW,
+                             content=character_panel, expand=True),
             ], spacing=16, expand=True, vertical_alignment=ft.CrossAxisAlignment.START),
         ], spacing=14, expand=True)
         refresh_sidebar()

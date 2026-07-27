@@ -16,13 +16,24 @@ RARITY_ORDER: dict[str, int] = {
 RARITIES: tuple[str, ...] = tuple(RARITY_ORDER)
 
 RARITY_COLORS: dict[str, str] = {
-    "common": "#9e9e9e",
-    "uncommon": "#4caf50",
-    "rare": "#2196f3",
-    "epic": "#9c27b0",
-    "legendary": "#fbc02d",
-    "spicy": "#f44336",
+    "common": "#c8bda6",
+    "uncommon": "#b6c2a4",
+    "rare": "#a8bdd2",
+    "epic": "#bfa9d4",
+    "legendary": "#b8973f",
+    "spicy": "#c9856d",
 }
+
+# Presentation only: rarity reads as the paper stock a label is printed on.
+RARITY_PAPER: dict[str, tuple[str, str]] = {
+    "common": ("#ffffff", "#c8bda6"),
+    "uncommon": ("#edf0e4", "#b6c2a4"),
+    "rare": ("#e2eaf2", "#a8bdd2"),
+    "epic": ("#ebe2f2", "#bfa9d4"),
+    "legendary": ("#f1dfa8", "#b8973f"),
+    "spicy": ("#f6ddd4", "#c9856d"),
+}
+RARITY_INK = "#2f2618"
 
 RARITY_LABELS: dict[str, str] = {
     "common": "Common",

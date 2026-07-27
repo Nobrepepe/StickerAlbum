@@ -7,8 +7,10 @@ import flet as ft
 from components.assets import resolve_image, sticker_mask_image
 from components.audio_player import play_sound
 from components.foil_shimmer import FoilShimmer
+from components.paper import ink_button, outline_button, paper_label, tool_button
 from components.placeholders import sticker_art
-from components.rarity_chip import rarity_chip
+from components.theme import BODY_FONT, CARD_BG, DISPLAY_FONT, INK, INK_SOFT, META_FONT
+from models.rarity import RARITY_LABELS
 from models.catalog import Character, Sticker
 from services.album_service import APPLIED, OWNED, AlbumService
 from services.errors import ApplyError
@@ -73,45 +75,52 @@ def open_sticker_dialog(
 
     info: list[ft.Control] = [
         ft.Row(
-            [rarity_chip(sticker.rarity), ft.Text(sticker.id, color=ft.Colors.GREY_500, size=12)],
+            [paper_label(RARITY_LABELS.get(sticker.rarity, sticker.rarity).upper(),
+                         sticker.rarity),
+             ft.Text(sticker.id, color=INK_SOFT, size=12, font_family=META_FONT)],
             alignment=ft.MainAxisAlignment.CENTER,
             spacing=10,
         ),
-        ft.Text(f"Character: {character.name}", size=13, color=ft.Colors.GREY_400),
+        ft.Text(f"Character: {character.name}", size=13, color=INK_SOFT,
+                font_family=META_FONT),
     ]
 
     if state == APPLIED:
         body_art: ft.Control = _art_display(sticker, foil=applied_style == "foil")
         info.append(ft.Text(
             f"Applied · {_STYLE_LABELS.get(applied_style, applied_style)}",
-            size=13, color="#81c784", weight=ft.FontWeight.BOLD,
+            size=13, color=INK, font_family=META_FONT,
         ))
         if sticker.flavor_text:
             info.append(ft.Text(
                 f"“{sticker.flavor_text}”", size=13, italic=True,
-                color=ft.Colors.GREY_400, text_align=ft.TextAlign.CENTER,
+                color=INK_SOFT, font_family=BODY_FONT,
+                text_align=ft.TextAlign.LEFT,
             ))
         dups = album.duplicate_count(sticker.id)
         if dups:
-            info.append(ft.Text(f"Spare copies: {dups}", size=12, color=ft.Colors.GREY_500))
+            info.append(ft.Text(f"Spare copies: {dups}", size=12,
+                                font_family=META_FONT, color=INK_SOFT))
     elif state == OWNED:
         # Preview shimmers if the only owned style is foil.
         body_art = _art_display(sticker, foil="normal" not in owned)
         counts = " · ".join(
             f"{_STYLE_LABELS[s]} ×{q}" for s, q in owned.items()
         )
-        info.append(ft.Text(f"Owned, not applied yet — {counts}", size=13, color="#ffb300"))
+        info.append(ft.Text(f"Owned, not applied yet — {counts}", size=13,
+                            font_family=META_FONT, color=INK))
     else:
         body_art = ft.Container(
             width=_ART_W, height=_ART_H, border_radius=8,
-            border=ft.border.all(1, ft.Colors.GREY_800),
+            border=ft.border.all(1, "#d8d2c4"),
             alignment=ft.alignment.center,
-            content=ft.Text("Not collected yet", color=ft.Colors.GREY_600),
+            content=ft.Text("Not collected yet", color=INK_SOFT,
+                            font_family=META_FONT),
         )
         info.append(ft.Text("Open packs in the Shop to find this sticker.",
-                            size=13, color=ft.Colors.GREY_500))
+                            size=13, color=INK_SOFT, font_family=META_FONT))
 
-    right_actions: list[ft.Control] = [ft.TextButton("Close", on_click=close)]
+    right_actions: list[ft.Control] = [outline_button("CLOSE", close)]
 
     if vice is not None and vice.spare_count(sticker.id):
         spare_count = vice.spare_count(sticker.id)
@@ -158,15 +167,14 @@ def open_sticker_dialog(
                 on_change(sticker)
 
             confirm.actions = [
-                ft.TextButton("Cancel", on_click=lambda ev: page.close(confirm)),
-                ft.FilledButton("Convert", on_click=convert),
+                outline_button("CANCEL", lambda ev: page.close(confirm)),
+                ink_button("CONVERT", convert),
             ]
             page.open(confirm)
 
-        right_actions.append(ft.OutlinedButton(
-            f"Vice Conversion (+{spare_count * each})",
-            icon=ft.Icons.RECYCLING,
-            on_click=confirm_conversion,
+        right_actions.append(outline_button(
+            f"VICE CONVERSION (+{spare_count * each})",
+            confirm_conversion, icon=ft.Icons.RECYCLING,
         ))
     for style, qty in owned.items():
         if style == applied_style:
@@ -176,9 +184,12 @@ def open_sticker_dialog(
             if applied_style is None
             else f"Switch to {_STYLE_LABELS[style]}"
         )
-        right_actions.append(ft.FilledButton(f"{label} (×{qty})", on_click=apply_style(style)))
+        right_actions.append(ink_button(f"{label} (×{qty})", apply_style(style)))
 
-    dialog.title = ft.Text(sticker.name, text_align=ft.TextAlign.CENTER)
+    dialog.bgcolor = CARD_BG
+    dialog.title = ft.Text(sticker.name.upper(), font_family=DISPLAY_FONT,
+                           weight=ft.FontWeight.W_700, color=INK,
+                           text_align=ft.TextAlign.CENTER)
     dialog.content = ft.Column(
         [body_art, *info],
         horizontal_alignment=ft.CrossAxisAlignment.CENTER,
@@ -190,10 +201,8 @@ def open_sticker_dialog(
         # Pinned on the opposite side from Close/Apply so it never shifts
         # around with the flavor text's line count.
         dialog.actions = [
-            ft.IconButton(
-                ft.Icons.VOLUME_UP, icon_size=18, tooltip="Play voice line",
-                on_click=lambda e: play_sound(page, sticker.sound),
-            ),
+            tool_button("♪", lambda e: play_sound(page, sticker.sound),
+                        "Play voice line"),
             ft.Row(right_actions, spacing=8, tight=True),
         ]
         dialog.actions_alignment = ft.MainAxisAlignment.SPACE_BETWEEN

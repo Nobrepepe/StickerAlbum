@@ -2,9 +2,9 @@ from typing import Callable
 
 import flet as ft
 
-from components.theme import PANEL_BG, PANEL_BORDER
-
+from components.paper import PAPER_SHADOW, ink_button, paper_progress, tool_button
 from components.placeholders import cover_band
+from components.theme import CARD_BG, DISPLAY_FONT, INK, INK_SOFT, META_FONT
 from models.catalog import Collection
 
 
@@ -18,74 +18,84 @@ def collection_card(
     on_revert: Callable[[], None] | None = None,
     on_edit: Callable[[], None] | None = None,
 ) -> ft.Control:
-    pct = (applied / total * 100) if total else 0.0
-    width = 330.0
+    width = 328.0
+    body_width = width - 20
     return ft.Container(
         width=width,
-        bgcolor=PANEL_BG,
-        border_radius=14,
-        border=ft.border.all(1, PANEL_BORDER),
-        clip_behavior=ft.ClipBehavior.ANTI_ALIAS,
+        bgcolor=CARD_BG,
+        padding=10,
+        shadow=PAPER_SHADOW,
         content=ft.Column(
             [
-                # Widescreen 16:9 cover so the collection art is the hero.
                 cover_band(collection.cover_image, collection.theme_color,
-                           height=width * 9 / 16),
+                           height=body_width * 9 / 16),
                 ft.Container(
-                    padding=16,
+                    padding=ft.padding.only(left=6, right=6, top=12, bottom=4),
                     content=ft.Column(
                         [
-                            ft.Text(collection.name, size=18, weight=ft.FontWeight.BOLD),
                             ft.Text(
-                                collection.description, size=12,
-                                color=ft.Colors.GREY_400, max_lines=2,
+                                collection.name,
+                                size=17,
+                                font_family=DISPLAY_FONT,
+                                weight=ft.FontWeight.W_700,
+                                color=INK,
+                            ),
+                            ft.Text(
+                                collection.description,
+                                size=11.5,
+                                font_family=META_FONT,
+                                color=INK_SOFT,
+                                max_lines=2,
                                 overflow=ft.TextOverflow.ELLIPSIS,
+                                height=34,
                             ),
                             ft.Row(
                                 [
-                                    ft.Text(f"{applied} / {total}", size=14,
-                                            weight=ft.FontWeight.BOLD),
-                                    ft.Text(f"{pct:.0f}%", size=13, color=ft.Colors.GREY_400),
-                                    ft.Container(expand=True),
                                     ft.Text(
-                                        f"Characters {chars_done} / {chars_total}",
-                                        size=12, color=ft.Colors.GREY_400,
+                                        str(applied),
+                                        size=18,
+                                        font_family=DISPLAY_FONT,
+                                        weight=ft.FontWeight.W_900,
+                                        color=INK,
+                                    ),
+                                    ft.Text(
+                                        f"of {total} pasted · chars "
+                                        f"{chars_done}/{chars_total}",
+                                        size=11,
+                                        font_family=META_FONT,
+                                        color=INK_SOFT,
+                                        expand=True,
                                     ),
                                 ],
+                                spacing=8,
+                                vertical_alignment=ft.CrossAxisAlignment.CENTER,
                             ),
-                            ft.ProgressBar(
-                                value=(applied / total) if total else 0,
-                                color=collection.theme_color or "#7c4dff",
-                                bgcolor=ft.Colors.with_opacity(0.1, ft.Colors.WHITE),
-                            ),
+                            paper_progress(applied / total if total else 0,
+                                           width=body_width - 12),
                             ft.Row(
                                 [
-                                    ft.FilledButton(
-                                        "Open album",
-                                        icon=ft.Icons.MENU_BOOK,
-                                        on_click=lambda e: on_open(),
+                                    ink_button(
+                                        "OPEN ALBUM",
+                                        lambda e: on_open(),
                                     ),
                                     ft.Container(expand=True),
-                                    ft.IconButton(
-                                        ft.Icons.EDIT_OUTLINED,
-                                        tooltip="Hot-edit live: names, images, "
-                                                "sounds — progress is kept",
-                                        icon_color=ft.Colors.GREY_400,
-                                        on_click=lambda e: on_edit(),
-                                        visible=on_edit is not None,
-                                    ),
-                                    ft.IconButton(
-                                        ft.Icons.UNPUBLISHED_OUTLINED,
-                                        tooltip="Revert to draft for editing "
-                                                "(erases this collection's progress)",
-                                        icon_color=ft.Colors.GREY_400,
-                                        on_click=lambda e: on_revert(),
-                                        visible=on_revert is not None,
-                                    ),
+                                    tool_button(
+                                        "ed",
+                                        lambda e: on_edit(),
+                                        "Hot-edit live: names, images, "
+                                        "sounds — progress is kept",
+                                    ) if on_edit else ft.Container(),
+                                    tool_button(
+                                        "un",
+                                        lambda e: on_revert(),
+                                        "Revert to draft for editing "
+                                        "(erases this collection's progress)",
+                                    ) if on_revert else ft.Container(),
                                 ],
+                                spacing=7,
                             ),
                         ],
-                        spacing=10,
+                        spacing=9,
                     ),
                 ),
             ],

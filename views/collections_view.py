@@ -1,6 +1,8 @@
 import flet as ft
 
 from components.collection_card import collection_card
+from components.paper import destructive_button, outline_button
+from components.theme import BODY_FONT, CARD_BG, DISPLAY_FONT, INK, INK_SOFT, META_FONT
 from repositories.errors import AppError
 from views.errors_ui import show_error, show_info
 
@@ -14,7 +16,10 @@ def build_collections(page: ft.Page, ctx, nav) -> ft.Control:
         placed = sum(1 for s in stickers if ctx.state.get_placement(s.id))
         dialog = ft.AlertDialog(
             modal=True,
-            title=ft.Text(f"Revert {collection.name} to a draft?"),
+            bgcolor=CARD_BG,
+            title=ft.Text(f"REVERT {collection.name} TO A DRAFT?",
+                          font_family=DISPLAY_FONT, weight=ft.FontWeight.W_700,
+                          color=INK),
             content=ft.Text(
                 f"'{collection.name}' ({collection.id}) leaves play and goes "
                 "back to the Creator with everything still filled in — names, "
@@ -24,7 +29,7 @@ def build_collections(page: ft.Page, ctx, nav) -> ft.Control:
                 "applied stickers will be removed. If your favorite character "
                 "is from this collection, it is cleared. Recorded savings are "
                 "kept. Consider exporting a progress backup first.",
-                size=14,
+                size=14, font_family=BODY_FONT, color=INK,
             ),
         )
 
@@ -40,12 +45,10 @@ def build_collections(page: ft.Page, ctx, nav) -> ft.Control:
             nav.go_creator()
 
         dialog.actions = [
-            ft.TextButton("Cancel", on_click=lambda e: page.close(dialog)),
-            ft.FilledButton(
+            outline_button("CANCEL", lambda e: page.close(dialog)),
+            destructive_button(
                 "Revert & erase progress",
-                icon=ft.Icons.EDIT_NOTE,
-                style=ft.ButtonStyle(bgcolor="#b71c1c", color=ft.Colors.WHITE),
-                on_click=do_revert,
+                do_revert, icon=ft.Icons.EDIT_NOTE,
             ),
         ]
         page.open(dialog)
@@ -65,10 +68,11 @@ def build_collections(page: ft.Page, ctx, nav) -> ft.Control:
         )
     return ft.Column(
         [
-            ft.Text("Collections", size=26, weight=ft.FontWeight.BOLD),
+            ft.Text("COLLECTIONS", size=30, font_family=DISPLAY_FONT,
+                    weight=ft.FontWeight.W_900, color=INK),
             ft.Text("Pick a world and start filling its album.",
-                    size=13, color=ft.Colors.GREY_400),
-            ft.Row(cards, wrap=True, spacing=16, run_spacing=16),
+                    size=12.5, font_family=META_FONT, color=INK_SOFT),
+            ft.Row(cards, wrap=True, spacing=20, run_spacing=20),
         ],
         spacing=18,
         scroll=ft.ScrollMode.AUTO,

@@ -14,6 +14,7 @@ from components.assets import resolve_sound
 
 STAMP_SOUND = "sounds/stamp.wav"
 SPICY_SOUND = "sounds/spicy.wav"  # placeholder — swap in a real cue later
+TEAR_SOUND = "sounds/tear.wav"
 STAMP_DURATION_SECONDS = 1.0
 
 

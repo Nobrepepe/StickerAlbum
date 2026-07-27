@@ -1,13 +1,25 @@
-"""The app's single fixed look.
+"""The app's single fixed look: a kraft-paper desk and cream card stock."""
 
-There are deliberately no themes or dark/light modes: the character art is
-authored against the white boards, so the surrounding chrome is a soft warm
-graphite that lets the boards glow without harsh contrast.
-"""
+DESK_BG = "#c8b9a2"
+SPINE_BG = "#6b5842"
+CARD_BG = "#f4efe6"
+CARD_BORDER = "#ded2bc"
+BOARD_BG = "#ffffff"
+INK = "#2f2618"
+INK_SOFT = "#6b5f4c"
+TAPE = "#f0e6cd"
+GOLD = "#c9a86a"
+STAMP_RED = "#a8563a"
+TRACK_BG = "#d9cdb8"
 
-PAGE_BG = "#282431"      # app background behind the boards
-RAIL_BG = "#211d2a"      # navigation rail
-PANEL_BG = "#332e3e"     # cards, tiles, panels
-PANEL_BORDER = "#453e54" # hairline panel borders
-BOARD_BG = "#ffffff"     # the white boards the art blends into
-SIGN_BG = "#14141c"      # floating dark signs over artwork
+DISPLAY_FONT = "Archivo"
+META_FONT = "Courier Prime"
+BODY_FONT = "DM Sans"
+
+# Compatibility aliases for small presentation-only modules. New UI should
+# use the material names above.
+PAGE_BG = DESK_BG
+RAIL_BG = SPINE_BG
+PANEL_BG = CARD_BG
+PANEL_BORDER = CARD_BORDER
+SIGN_BG = INK
