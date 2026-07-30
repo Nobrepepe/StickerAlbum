@@ -3,7 +3,7 @@
 Applied stickers render as bare artwork — the art's white vignette edges
 blend into the board and into neighbouring stickers (grid spacing is 0).
 Floating "signs" carry the metadata: status signs (foil / duplicates /
-ready / spicy) overflow past the top edge, and a rarity-colored name sign
+ready) overflow past the top edge, and a rarity-colored name sign
 overflows past the bottom-left, slightly invading the adjacent stickers by
 design.
 """
@@ -49,8 +49,6 @@ def build_sticker_slot(
     sign_size = round(9 * k**0.5)
 
     status_signs: list[ft.Control] = []
-    if sticker.spicy:
-        status_signs.append(_sign("🌶️", "spicy", size=sign_size))
 
     layers: list[ft.Control] = []
     if state == APPLIED:

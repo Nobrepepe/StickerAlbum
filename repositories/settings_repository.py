@@ -15,7 +15,6 @@ log = logging.getLogger(__name__)
 @dataclass
 class Settings:
     creator_enabled: bool = False
-    spicy_enabled: bool = False
 
 
 class SettingsRepository:
@@ -36,22 +35,16 @@ class SettingsRepository:
             return Settings()
         return Settings(
             creator_enabled=bool(raw.get("creator_enabled", False)),
-            spicy_enabled=bool(raw.get("spicy_enabled", False)),
         )
 
     def save(self) -> None:
         try:
             atomic_write_json(self._path, {
                 "creator_enabled": self.state.creator_enabled,
-                "spicy_enabled": self.state.spicy_enabled,
             })
         except OSError as exc:
             raise StateSaveError(f"Could not save settings: {exc}") from exc
 
     def set_creator_enabled(self, value: bool) -> None:
         self.state.creator_enabled = value
-        self.save()
-
-    def set_spicy_enabled(self, value: bool) -> None:
-        self.state.spicy_enabled = value
         self.save()

@@ -90,10 +90,6 @@ def test_custom_distribution_loads_from_json(tmp_path):
     path.write_text(json.dumps({
         "MIX": {
             "collection_id": "TST", "name": "Mixed", "price": 5000,
-            "spicy_pools": [
-                {"pool": "TST", "weight": 0.6},
-                {"pool": "OTH", "weight": 0.4},
-            ],
             "distribution": [{
                 "quantity": 5,
                 "pools": ["TST", {"pool": "OTH", "weight": 0.5}],
@@ -109,7 +105,6 @@ def test_custom_distribution_loads_from_json(tmp_path):
     assert dict(dist.rarity_weights) == {
         "rare": 0.7, "epic": 0.25, "legendary": 0.05,
     }
-    assert pack.spicy_pools == (PackPool("TST", 0.6), PackPool("OTH", 0.4))
 
 
 def test_quantities_respected(repos, state_repo):

@@ -102,7 +102,7 @@ def test_normal_reveal_uses_reveal_sound_then_voice(monkeypatch):
     ]
 
 
-def test_spicy_reveal_replaces_normal_reveal_cue(monkeypatch):
+def test_new_sticker_uses_new_reveal_cue(monkeypatch):
     calls = []
     monkeypatch.setattr(
         audio_player, "play_sound", lambda page, rel: calls.append(rel)
@@ -111,28 +111,4 @@ def test_spicy_reveal_replaces_normal_reveal_cue(monkeypatch):
 
     asyncio.run(audio_player.play_reveal_then(object(), None, True))
 
-    assert calls == [audio_player.SPICY_SOUND]
-
-
-def test_new_sticker_uses_new_reveal_cue(monkeypatch):
-    calls = []
-    monkeypatch.setattr(
-        audio_player, "play_sound", lambda page, rel: calls.append(rel)
-    )
-    monkeypatch.setattr(audio_player, "resolve_sound", lambda rel: None)
-
-    asyncio.run(audio_player.play_reveal_then(object(), None, False, True))
-
     assert calls == [audio_player.NEW_SOUND]
-
-
-def test_spicy_takes_priority_over_new_reveal_cue(monkeypatch):
-    calls = []
-    monkeypatch.setattr(
-        audio_player, "play_sound", lambda page, rel: calls.append(rel)
-    )
-    monkeypatch.setattr(audio_player, "resolve_sound", lambda rel: None)
-
-    asyncio.run(audio_player.play_reveal_then(object(), None, True, True))
-
-    assert calls == [audio_player.SPICY_SOUND]

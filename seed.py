@@ -12,7 +12,7 @@ import json
 import sys
 from pathlib import Path
 
-from models.rarity import RARITY_PATTERN, SPICY_RARITY_PATTERN
+from models.rarity import RARITY_PATTERN
 
 CATALOG_FILES = ("collections.json", "characters.json", "stickers.json", "packs.json")
 
@@ -75,15 +75,6 @@ _STICKER_TEMPLATES = [
     ("Golden Portrait", "A legend, captured in gold."),
 ]
 
-# Five hidden special-rarity spicy stickers per character (numbers 101-150).
-_SPICY_TEMPLATES = [
-    ("Secret Side", "Not everyone gets to see this."),
-    ("After Hours", "When the day job ends, the real story begins."),
-    ("Guilty Pleasure", "Everybody has one. Theirs is showing."),
-    ("Masquerade", "Behind the mask, another mask."),
-    ("Heart of Fire", "Too hot for the regular album pages."),
-]
-
 _PACKS = {
     "HGT_standard": {
         "collection_id": "HGT",
@@ -91,7 +82,6 @@ _PACKS = {
         "description": "5 random Alturas Heights stickers: 4 standard, 1 guaranteed rare or better.",
         "price": 2500,
         "foil_rate": 0.10,
-        "spicy_rate": 0.2,
         "image": "packs/HGT_standard.png",
         "distribution": [
             {"pool": "HGT", "value": "standard", "quantity": 4},
@@ -104,7 +94,6 @@ _PACKS = {
         "description": "5 Alturas Heights stickers with a guaranteed epic or legendary.",
         "price": 5000,
         "foil_rate": 0.25,
-        "spicy_rate": 0.2,
         "image": "packs/HGT_premium.png",
         "distribution": [
             {"pool": "HGT", "value": "standard", "quantity": 3},
@@ -118,7 +107,6 @@ _PACKS = {
         "description": "5 random Tidelow Reef stickers: 4 standard, 1 guaranteed rare or better.",
         "price": 2500,
         "foil_rate": 0.10,
-        "spicy_rate": 0.2,
         "image": "packs/TDL_standard.png",
         "distribution": [
             {"pool": "TDL", "value": "standard", "quantity": 4},
@@ -131,7 +119,6 @@ _PACKS = {
         "description": "5 Tidelow Reef stickers with a guaranteed epic or legendary.",
         "price": 5000,
         "foil_rate": 0.25,
-        "spicy_rate": 0.2,
         "image": "packs/TDL_premium.png",
         "distribution": [
             {"pool": "TDL", "value": "standard", "quantity": 3},
@@ -145,7 +132,6 @@ _PACKS = {
         "description": "8 completely random Tidelow Reef stickers of any rarity.",
         "price": 3500,
         "foil_rate": 0.15,
-        "spicy_rate": 0.2,
         "image": "packs/TDL_wave.png",
         "distribution": [
             {"pool": "TDL", "value": "any", "quantity": 8},
@@ -188,22 +174,6 @@ def _build_stickers(characters: list[dict]) -> list[dict]:
                 "rarity": RARITY_PATTERN[pos - 1],
                 "image": f"stickers/{sid}.png",
                 "flavor_text": flavor,
-                "spicy": False,
-            })
-        for spos in range(1, 6):
-            number = 100 + (char_index - 1) * 5 + spos
-            sid = f"{col_id}_{number:03d}"
-            title, flavor = _SPICY_TEMPLATES[spos - 1]
-            stickers.append({
-                "id": sid,
-                "collection_id": col_id,
-                "character_id": char["id"],
-                "number": number,
-                "name": f"{first_name} — {title}",
-                "rarity": SPICY_RARITY_PATTERN[spos - 1],
-                "image": f"stickers/{sid}.png",
-                "flavor_text": flavor,
-                "spicy": True,
             })
     return stickers
 

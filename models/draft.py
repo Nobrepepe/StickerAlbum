@@ -1,28 +1,22 @@
 """Mutable draft entities edited in the Creator screen.
 
-A draft collection always carries the full skeleton — 10 characters with 15
-sticker slots each (10 regular + 5 spicy); completeness is "every character
-and sticker has a name". Drafts stay out of the published catalog until
-published.
+A draft collection always carries the full skeleton — 10 characters with 10
+sticker slots each; completeness is "every character and sticker has a name".
+Drafts stay out of the published catalog until published.
 """
 
 from dataclasses import dataclass, field
 
-SLOTS_PER_CHARACTER = 15  # positions 1-10 regular, 11-15 spicy
+SLOTS_PER_CHARACTER = 10
 
 
 @dataclass
 class DraftSticker:
-    position: int  # 1-15 within the character; fixes number, rarity, spicy
+    position: int  # 1-10 within the character; fixes number and rarity
     name: str = ""
     flavor_text: str = ""
     image: str | None = None
     sound: str | None = None  # optional voice line (attached in the Creator)
-
-    @property
-    def spicy(self) -> bool:
-        return self.position > 10
-
 
 @dataclass
 class DraftCharacter:

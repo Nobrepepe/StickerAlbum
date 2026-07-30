@@ -59,7 +59,6 @@ def build_shop(page: ft.Page, ctx, nav) -> ft.Control:
         cards.append(pack_card(
             pack, name, theme,
             on_open=lambda p=pack: confirm_and_open(p),
-            spicy_enabled=ctx.settings.state.spicy_enabled,
         ))
 
     return ft.Column(

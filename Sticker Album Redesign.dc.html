@@ -469,7 +469,7 @@ a{color:#2a78d6}a:hover{color:#1b5aa8}
     <li>One <code>page.run_task</code> coroutine owns the whole sequence; it checks <code>control.page is not None</code> after each sleep, like <code>_settle_stamp</code> already does, so navigating mid-reveal can’t explode.</li>
     <li>Stagger with <code>asyncio.sleep</code> between property sets — Flet has no per-child delay.</li>
     <li>The card never crosses over the pack: it starts behind it and lands fully above the mouth. No clipping, no masks.</li>
-    <li>Sound: <code>stamp.wav</code> on land, a paper-tear cue on beat 2, the sticker’s own voice line on beat 4 (reuse <code>play_stamp_then</code>), <code>play_spicy</code> unchanged.</li>
+    <li>Sound: <code>stamp.wav</code> on land, a paper-tear cue on beat 2, and the sticker’s own voice line on beat 4.</li>
   </ul>
 </div>
 </div>
@@ -980,7 +980,7 @@ const REVEAL = [
   { name: "Vine Tangle", who: "Tix", rar: "Uncommon", paper: "#edf0e4", edge: "rgba(60,80,40,.3)", hue: 128, chroma: 52, tag: "DUPLICATE", foil: false },
   { name: "Static Tease", who: "Carol", rar: "Rare", paper: "#e2eaf2", edge: "rgba(40,70,110,.32)", hue: 212, chroma: 58, tag: "NEW", foil: false },
   { name: "Thesis Golem", who: "Bridget", rar: "Legendary", paper: "linear-gradient(100deg,#f6e7b4,#e6ca7c)", edge: "#b8973f", hue: 32, chroma: 74, tag: "NEW", foil: true },
-  { name: "Pip's Great Idea", who: "Tix", rar: "Spicy", paper: "#f6ddd4", edge: "rgba(150,60,40,.34)", hue: 300, chroma: 48, tag: "DUPLICATE", foil: false }
+  { name: "Pip's Great Idea", who: "Tix", rar: "Rare", paper: "#e2eaf2", edge: "#a8bdd2", hue: 300, chroma: 48, tag: "DUPLICATE", foil: false }
 ];
 
 const BEATS = {
@@ -1254,7 +1254,6 @@ class Component extends DCLogic {
         { r: "Common", bg: "#ffffff", bd: "rgba(47,38,24,.24)", note: "nothing extra — speed is the reward" },
         { r: "Rare", bg: "#e2eaf2", bd: "rgba(40,70,110,.32)", note: "labels stamp with a harder overshoot; +80ms hold before the button re-enables" },
         { r: "Legendary", bg: "linear-gradient(100deg,#f6e7b4,#e6ca7c)", bd: "#b8973f", note: "desk dims to a warm vignette, gold sheen sweeps the silhouette via the existing ShaderMask, card holds 400ms longer" },
-        { r: "Spicy", bg: "#f6ddd4", bd: "rgba(150,60,40,.34)", note: "card arrives rotated −4° and settles; play_spicy fires on arrival, not on the batch" }
       ],
       stage: this._stage(),
       play: this.play,
@@ -1269,9 +1268,9 @@ class Component extends DCLogic {
         { name: "Eden Hidden Village", desc: "A hidden village of ninjas that hunt demons.", pasted: 0, total: 100, chars: "0 / 10", pct: "0%", w: "0%", tint: "hsl(336 46% 60%)" }
       ],
       packs: [
-        { name: "Mercenaries Starter Pack", col: "Eden Mercenaries", meta: "5 stickers · 10% foil · 30% spicy", price: "R$ 25,00", tint: "hsl(174 44% 58%)" },
-        { name: "Magic Academy Starter Pack", col: "Magic Academy", meta: "5 stickers · 10% foil · 30% spicy", price: "R$ 25,00", tint: "hsl(212 52% 62%)" },
-        { name: "Hidden Village Starter Pack", col: "Eden Hidden Village", meta: "5 stickers · 10% foil · 30% spicy", price: "R$ 25,00", tint: "hsl(336 46% 60%)" }
+        { name: "Mercenaries Starter Pack", col: "Eden Mercenaries", meta: "5 stickers · 10% foil", price: "R$ 25,00", tint: "hsl(174 44% 58%)" },
+        { name: "Magic Academy Starter Pack", col: "Magic Academy", meta: "5 stickers · 10% foil", price: "R$ 25,00", tint: "hsl(212 52% 62%)" },
+        { name: "Hidden Village Starter Pack", col: "Eden Hidden Village", meta: "5 stickers · 10% foil", price: "R$ 25,00", tint: "hsl(336 46% 60%)" }
       ],
       papers: [
         { r: "Common", bg: "#ffffff", bd: "rgba(47,38,24,.22)", note: "plain stock" },
@@ -1279,7 +1278,6 @@ class Component extends DCLogic {
         { r: "Rare", bg: "#e2eaf2", bd: "rgba(40,70,110,.32)", note: "tinted stock" },
         { r: "Epic", bg: "#ebe2f2", bd: "rgba(90,55,130,.32)", note: "tinted stock" },
         { r: "Legendary", bg: "linear-gradient(100deg,#f6e7b4,#e6ca7c)", bd: "#b8973f", note: "gold foil edge" },
-        { r: "Spicy", bg: "#f6ddd4", bd: "rgba(150,60,40,.34)", note: "red hairline" }
       ],
       swatches: [
         { n: "Desk", v: "#c8b9a2" }, { n: "Spine", v: "#6b5842" }, { n: "Card stock", v: "#f4efe6" },

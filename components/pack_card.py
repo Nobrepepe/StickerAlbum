@@ -35,13 +35,10 @@ def pack_card(
     collection_name: str,
     theme_color: str | None,
     on_open: Callable[[], None],
-    spicy_enabled: bool = False,
 ) -> ft.Control:
     details = [f"{pack.sticker_count} stickers"]
     if pack.foil_rate > 0:
         details.append(f"{pack.foil_rate:.0%} foil")
-    if spicy_enabled and pack.spicy_rate > 0:
-        details.append(f"🌶️ {pack.spicy_rate:.0%}")
     width = 298.0
     inner = width - 20
     return ft.Container(

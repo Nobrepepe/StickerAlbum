@@ -76,9 +76,7 @@ def test_new_draft_has_full_skeleton(env):
     service, *_ = env
     draft = service.create_collection("NEW", "Test")
     assert len(draft.characters) == 10
-    assert all(len(c.stickers) == 15 for c in draft.characters)
-    # positions 11-15 are the spicy slots
-    assert [s.spicy for s in draft.characters[0].stickers] == [False] * 10 + [True] * 5
+    assert all(len(c.stickers) == 10 for c in draft.characters)
     assert not service.collection_complete(draft)
     assert service.collection_progress(draft) == (0, 10)
 
@@ -94,21 +92,7 @@ def test_character_completeness_requires_name_and_all_stickers(env):
     assert service.character_complete(char)
     char.stickers[9].name = "  "
     assert not service.character_complete(char)
-    assert service.character_progress(char) == (14, 15)
-
-
-def test_unnamed_spicy_sticker_blocks_completion(env):
-    service, *_ = env
-    draft = service.create_collection("NEW", "Test")
-    char = draft.characters[0]
-    char.name = "Someone"
-    for s in char.stickers[:10]:  # only the regular ones
-        s.name = "x"
-    assert not service.character_complete(char)
-    assert service.character_progress(char) == (10, 15)
-    for s in char.stickers[10:]:
-        s.name = "spicy x"
-    assert service.character_complete(char)
+    assert service.character_progress(char) == (9, 10)
 
 
 def test_collection_complete_only_with_all_ten(env):
@@ -247,25 +231,17 @@ def test_publish_writes_catalog_and_removes_draft(env):
     assert [c["id"] for c in collections] == ["HGT", "NEW"]
     new_chars = [c for c in characters if c["collection_id"] == "NEW"]
     new_stickers = [s for s in stickers if s["collection_id"] == "NEW"]
-    normal = [s for s in new_stickers if not s["spicy"]]
-    spicy = [s for s in new_stickers if s["spicy"]]
     assert len(new_chars) == 10
-    assert len(normal) == 100
-    assert len(spicy) == 50
+    assert len(new_stickers) == 100
     assert new_chars[0]["id"] == "NEW_C01"
-    assert normal[0]["id"] == "NEW_001"
-    assert normal[99]["id"] == "NEW_100"
-    assert sorted(s["number"] for s in normal) == list(range(1, 101))
-    # spicy stickers number 101-150
-    assert sorted(s["number"] for s in spicy) == list(range(101, 151))
-    # 3/3/2/1/1 regular slots plus five special spicy slots per character
-    per_char = [s["rarity"] for s in normal if s["character_id"] == "NEW_C04"]
+    assert new_stickers[0]["id"] == "NEW_001"
+    assert new_stickers[99]["id"] == "NEW_100"
+    assert sorted(s["number"] for s in new_stickers) == list(range(1, 101))
+    per_char = [s["rarity"] for s in new_stickers if s["character_id"] == "NEW_C04"]
     assert per_char == list(RARITY_PATTERN)
-    per_char_spicy = [s["rarity"] for s in spicy if s["character_id"] == "NEW_C04"]
-    assert per_char_spicy == ["spicy"] * 5
     assert Counter(s["rarity"] for s in new_stickers) == {
         "common": 30, "uncommon": 30, "rare": 20, "epic": 10,
-        "legendary": 10, "spicy": 50,
+        "legendary": 10,
     }
     assert drafts.get("NEW") is None
 
@@ -278,16 +254,6 @@ def test_published_collection_loads_in_catalog_repos(env):
 
     from repositories.sticker_repository import StickerRepository
     stickers = StickerRepository.from_file(data_dir / "stickers.json")
-    assert len(stickers.list_by_collection("NEW")) == 150
-    assert len(stickers.list_by_character("NEW_C05", spicy=False)) == 10
-    assert len(stickers.list_by_character("NEW_C05", spicy=True)) == 5
+    assert len(stickers.list_by_collection("NEW")) == 100
+    assert len(stickers.list_by_character("NEW_C05")) == 10
     assert stickers.resolve_pool("NEW")  # usable as a pack pool immediately
-
-
-def test_spicy_image_path_uses_spicy_number(env, tmp_path):
-    service, _, _, assets_dir = env
-    draft = service.create_collection("NEW", "Test")
-    src = tmp_path / "photo.png"
-    src.write_bytes(b"fake-png")
-    # char 3, spicy slot 12 -> number 100 + 2*5 + 2 = 112
-    assert service.attach_image(draft, "sticker", str(src), 3, 12) == "stickers/NEW_112.png"

@@ -79,8 +79,7 @@ def test_apply_live_edits_updates_catalog_in_place(env, tmp_path):
     # structure untouched
     assert s2["rarity"] == "common"
     assert s2["number"] == 2
-    assert s2["spicy"] is False
-    assert len(stickers) == 150
+    assert len(stickers) == 100
     # and no phantom draft appeared
     assert drafts.get("LVE") is None
 

@@ -50,10 +50,8 @@ class PackRepository:
                     description=str(r.get("description", "")),
                     price=int(r["price"]),
                     foil_rate=float(r.get("foil_rate", 0.0)),
-                    spicy_rate=float(r.get("spicy_rate", 0.2)),
                     distribution=tuple(distribution(d) for d in r["distribution"]),
                     image=r.get("image"),
-                    spicy_pools=pools(r.get("spicy_pools")),
                 ))
             except (KeyError, TypeError, ValueError, AttributeError) as exc:
                 raise CatalogError(f"{path.name}: pack {pack_id!r} is malformed: {exc}") from exc

@@ -31,7 +31,6 @@ from components.theme import (
     INK,
     INK_SOFT,
     META_FONT,
-    STAMP_RED,
 )
 
 SIDEBAR_W = 252
@@ -41,7 +40,6 @@ SIDEBAR_W = 252
 CHAR_SLOT_W, CHAR_SLOT_H = 225.0, 300.0
 OVER_SLOT_W, OVER_SLOT_H = 150.0, 200.0
 
-_SPICY_COLOR = STAMP_RED
 _BOARD_BG = BOARD_BG
 
 
@@ -49,7 +47,6 @@ def build_album(page: ft.Page, ctx, nav, collection_id: str) -> ft.Control:
     collection = ctx.collections.get(collection_id)
     characters = ctx.characters.list_by_collection(collection_id)
     theme = collection.theme_color or "#7c4dff"
-    spicy_on = ctx.settings.state.spicy_enabled
 
     # None -> collection overview; 0-9 -> that character's page.
     state: dict = {
@@ -130,11 +127,6 @@ def build_album(page: ft.Page, ctx, nav, collection_id: str) -> ft.Control:
                 tight=True,
             ),
         ]
-        if spicy_on:
-            s_applied, s_total = ctx.album.spicy_character_progress(char.id)
-            if s_total:
-                lines.append(ft.Text(f"🌶️ {s_applied} / {s_total}", size=11,
-                                     color=_SPICY_COLOR))
         return ft.Column(
             [
                 character_card(char, theme, lines, width=SIDEBAR_W),
@@ -169,21 +161,6 @@ def build_album(page: ft.Page, ctx, nav, collection_id: str) -> ft.Control:
             state["stamp_control"] = slot
         return slot
 
-    def spicy_header(applied: int, total: int) -> ft.Control:
-        # Rendered on the white board, so text needs dark-on-light colors.
-        return ft.Row(
-            [
-                ft.Text("🌶️", size=18),
-                ft.Text("SPICY STICKERS", size=14, font_family=DISPLAY_FONT,
-                        weight=ft.FontWeight.W_700, color=_SPICY_COLOR),
-                ft.Text(f"{applied} / {total}", size=12,
-                        font_family=META_FONT, color=INK_SOFT),
-                ft.Container(content=dashed_rule(320), expand=True),
-            ],
-            spacing=10,
-            vertical_alignment=ft.CrossAxisAlignment.CENTER,
-        )
-
     def board(sections: list[ft.Control]) -> ft.Control:
         """The big white board the stickers are placed on. Sticker edges and
         the board share the same white, so vignettes blend together."""
@@ -200,38 +177,20 @@ def build_album(page: ft.Page, ctx, nav, collection_id: str) -> ft.Control:
         )
 
     def build_overview_grid() -> list[ft.Control]:
-        stickers = ctx.stickers.list_by_collection(collection_id, spicy=False)
+        stickers = ctx.stickers.list_by_collection(collection_id)
         # spacing 0: white vignette edges touch and blend into one surface
         sections: list[ft.Control] = [
             ft.Row([make_slot(s, OVER_SLOT_W, OVER_SLOT_H) for s in stickers],
                    wrap=True, spacing=0, run_spacing=0),
         ]
-        if spicy_on:
-            spicy = ctx.stickers.list_by_collection(collection_id, spicy=True)
-            if spicy:
-                applied = sum(1 for s in spicy if ctx.album.applied_style(s.id))
-                sections.append(spicy_header(applied, len(spicy)))
-                sections.append(
-                    ft.Row([make_slot(s, OVER_SLOT_W, OVER_SLOT_H) for s in spicy],
-                           wrap=True, spacing=0, run_spacing=0)
-                )
         return [board(sections)]
 
     def build_character_grid(char) -> list[ft.Control]:
-        stickers = ctx.stickers.list_by_character(char.id, spicy=False)
+        stickers = ctx.stickers.list_by_character(char.id)
         sections: list[ft.Control] = [
             ft.Row([make_slot(s, CHAR_SLOT_W, CHAR_SLOT_H) for s in stickers],
                    wrap=True, spacing=0, run_spacing=0),
         ]
-        if spicy_on:
-            spicy = ctx.stickers.list_by_character(char.id, spicy=True)
-            if spicy:
-                s_applied, s_total = ctx.album.spicy_character_progress(char.id)
-                sections.append(spicy_header(s_applied, s_total))
-                sections.append(
-                    ft.Row([make_slot(s, CHAR_SLOT_W, CHAR_SLOT_H) for s in spicy],
-                           wrap=True, spacing=0, run_spacing=0)
-                )
         return [board(sections)]
 
     # ---- refresh / navigation ---------------------------------------------------

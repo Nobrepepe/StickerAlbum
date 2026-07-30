@@ -25,8 +25,7 @@ from repositories.errors import AppError
 from services.creator_service import character_id, sticker_id, sticker_number
 from views.errors_ui import show_error, show_info
 
-_TOTAL_STICKERS = 10 * SLOTS_PER_CHARACTER  # 150 per collection
-_SPICY_COLOR = STAMP_RED
+_TOTAL_STICKERS = 10 * SLOTS_PER_CHARACTER
 
 _THEME_COLORS = {
     "Purple": "#7c4dff",
@@ -49,10 +48,7 @@ _TILE_RADIUS = 0
 
 
 def _slot_border_color(rarity: str) -> str:
-    """A slot's rarity is carried by its border color alone. Spicy keeps the
-    warmer orange-red used for spicy chrome elsewhere in the Creator."""
-    if rarity == "spicy":
-        return _SPICY_COLOR
+    """A slot's rarity is carried by its border color alone."""
     return RARITY_PAPER.get(rarity, ("#ffffff", "#c8bda6"))[1]
 
 
@@ -85,7 +81,6 @@ def _draft_sticker(draft: DraftCollection, char_index: int, position: int) -> St
         rarity=slot_rarity(position),
         image=s.image,
         flavor_text=s.flavor_text,
-        spicy=s.spicy,
     )
 
 
@@ -176,7 +171,7 @@ def build_creator(page: ft.Page, ctx, nav,
             title=ft.Text(f"Publish {draft.name}?"),
             content=ft.Text(
                 f"'{draft.name}' ({draft.id}) will appear in Collections and its "
-                "150 stickers (100 regular + 50 spicy) become collectible. Add "
+                "100 stickers become collectible. Add "
                 "packs for it in data/packs.json to make them obtainable. "
                 "Publishing can't be undone from the app.",
                 size=14,
@@ -333,8 +328,7 @@ def build_creator(page: ft.Page, ctx, nav,
                             icon=ft.Icons.ROCKET_LAUNCH,
                             disabled=not complete,
                             tooltip=None if complete else
-                            "Every character needs a name and 15 named stickers "
-                            "(10 regular + 5 spicy)"
+                            "Every character needs a name and 10 named stickers"
                         ),
                         tool_button("rm", lambda e, d=draft: delete_draft(d),
                                     "Delete draft"),
@@ -456,9 +450,8 @@ def build_creator(page: ft.Page, ctx, nav,
             ]),
             ft.Text(
                 "Drafts live only here until they're complete: 10 characters, "
-                "each with 15 named stickers — 10 regular (3 common, "
-                "3 uncommon, 2 rare, 1 epic, 1 legendary) plus 5 special "
-                "spicy stickers.",
+                "each with 10 named stickers (3 common, 3 uncommon, 2 rare, "
+                "1 epic, and 1 legendary).",
                 size=13, font_family=META_FONT, color=INK_SOFT,
             ),
             body,
@@ -499,14 +492,6 @@ def build_creator(page: ft.Page, ctx, nav,
             content=sticker_art(_draft_sticker(draft, char_index, position), 200, 200),
             alignment=ft.alignment.center,
         )
-        spicy_marker = (
-            [ft.Container(
-                content=ft.Text("SPICY 🌶️", size=10, weight=ft.FontWeight.BOLD,
-                                color="#101014"),
-                bgcolor=_SPICY_COLOR, border_radius=8,
-                padding=ft.padding.symmetric(horizontal=8, vertical=2),
-            )] if s.spicy else []
-        )
         sound_label = ft.Text(
             f"🔊 {s.sound.split('/')[-1]}" if s.sound else "",
             size=11, color=INK_SOFT, font_family=META_FONT, visible=bool(s.sound),
@@ -522,12 +507,10 @@ def build_creator(page: ft.Page, ctx, nav,
             on_dismiss=lambda e: (
                 render() if touched["assets"] and not touched["saved"] else None
             ),
-            title=ft.Text(f"Sticker #{sticker_number(char_index, position):02d}"
-                          + (" 🌶️" if s.spicy else "")),
+            title=ft.Text(f"Sticker #{sticker_number(char_index, position):02d}"),
             content=ft.Column([
                 preview,
-                ft.Row([*spicy_marker,
-                        paper_label(RARITY_LABELS.get(rarity, rarity).upper(),
+                ft.Row([paper_label(RARITY_LABELS.get(rarity, rarity).upper(),
                                     rarity),
                         ft.Text(sticker_id(draft.id, char_index, position),
                                 size=12, color=INK_SOFT, font_family=META_FONT)],
@@ -651,8 +634,7 @@ def build_creator(page: ft.Page, ctx, nav,
             publish_button.opacity = 1 if complete else 0.45
             publish_button.tooltip = (
                 None if complete
-                else "Every character needs a name and 15 named stickers "
-                     "(10 regular + 5 spicy)"
+                else "Every character needs a name and 10 named stickers"
             )
             page.update()
 
@@ -735,7 +717,6 @@ def build_creator(page: ft.Page, ctx, nav,
                             ft.Text(f"#{sticker_number(ci, position):02d}", size=12,
                                     font_family=META_FONT,
                                     color="#ffffff" if art else "#2f261859"),
-                            *([ft.Text("🌶️", size=12)] if s.spicy else []),
                             ft.Container(expand=True),
                             *indicators,
                         ], spacing=4),
@@ -843,17 +824,7 @@ def build_creator(page: ft.Page, ctx, nav,
             ft.Text("Sticker slots — tap to name them and add art",
                     size=13, font_family=META_FONT, color=INK_SOFT),
             ft.Column([
-                ft.Row([sticker_tile(p) for p in range(1, 11)],
-                       wrap=True, spacing=12, run_spacing=12),
-                ft.Row([
-                    ft.Text("🌶️", size=16),
-                    ft.Text("Spicy stickers — hidden in the album unless "
-                            "enabled in Settings" if live else
-                            "Spicy stickers — required before publishing, "
-                            "hidden in the album unless enabled in Settings",
-                            size=12, weight=ft.FontWeight.BOLD, color=_SPICY_COLOR),
-                ], spacing=8),
-                ft.Row([sticker_tile(p) for p in range(11, SLOTS_PER_CHARACTER + 1)],
+                ft.Row([sticker_tile(p) for p in range(1, SLOTS_PER_CHARACTER + 1)],
                        wrap=True, spacing=12, run_spacing=12),
             ], scroll=ft.ScrollMode.AUTO, expand=True, spacing=14),
         ], spacing=14, expand=True)

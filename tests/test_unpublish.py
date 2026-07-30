@@ -46,12 +46,8 @@ def _published_collection(service, tmp_path, code="NEW"):
 def test_slot_from_number_mapping():
     assert slot_from_number(1) == (1, 1)
     assert slot_from_number(100) == (10, 10)
-    assert slot_from_number(101) == (1, 11)
-    assert slot_from_number(105) == (1, 15)
-    assert slot_from_number(106) == (2, 11)
-    assert slot_from_number(150) == (10, 15)
     with pytest.raises(ValueError):
-        slot_from_number(151)
+        slot_from_number(101)
 
 
 def test_unpublish_restores_a_complete_prefilled_draft(env, tmp_path):
@@ -71,8 +67,6 @@ def test_unpublish_restores_a_complete_prefilled_draft(env, tmp_path):
     assert c1.stickers[1].flavor_text == "Flavor 1-2"
     assert c1.stickers[1].image == "stickers/NEW_002.png"
     assert c1.stickers[1].sound == "sounds/NEW_002.ogg"
-    # spicy slots come back to positions 11-15
-    assert draft.characters[3].stickers[12].name == "Sticker 4-13"
     # persisted, not just returned
     assert DraftRepository(data_dir / "drafts.json").get("NEW") is not None
 
@@ -141,8 +135,7 @@ def test_unpublish_then_publish_round_trip(env, tmp_path):
 
     stickers = [s for s in json.loads((data_dir / "stickers.json").read_text())
                 if s["collection_id"] == "NEW"]
-    assert len(stickers) == 150
+    assert len(stickers) == 100
     by_id = {s["id"]: s for s in stickers}
     assert by_id["NEW_002"]["sound"] == "sounds/NEW_002.ogg"
     assert by_id["NEW_002"]["image"] == "stickers/NEW_002.png"
-    assert by_id["NEW_101"]["spicy"] is True

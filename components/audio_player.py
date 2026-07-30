@@ -13,7 +13,6 @@ import flet as ft
 from components.assets import resolve_sound
 
 STAMP_SOUND = "sounds/stamp.wav"
-SPICY_SOUND = "sounds/spicy.wav"
 TEAR_SOUND = "sounds/tear.wav"
 REVEAL_SOUND = "sounds/reveal.wav"
 NEW_SOUND = "sounds/new.wav"
@@ -66,26 +65,16 @@ async def play_stamp_then(page: ft.Page, relative: str | None) -> None:
     play_sound(page, relative)
 
 
-def play_spicy(page: ft.Page) -> None:
-    """Cue for revealing a spicy sticker in a pack opening."""
-    play_sound(page, SPICY_SOUND)
-
-
 async def play_reveal_then(
     page: ft.Page,
     relative: str | None,
-    spicy: bool = False,
     is_new: bool = False,
 ) -> None:
     """Play one reveal cue, then the sticker's optional voice line.
 
-    Spicy takes priority, then newly acquired, then the normal reveal cue.
     The shared player cannot mix sounds, so exactly one cue plays per card.
     """
-    if spicy:
-        play_spicy(page)
-    else:
-        play_sound(page, NEW_SOUND if is_new else REVEAL_SOUND)
+    play_sound(page, NEW_SOUND if is_new else REVEAL_SOUND)
     if not resolve_sound(relative):
         return
     await asyncio.sleep(REVEAL_DURATION_SECONDS)

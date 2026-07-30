@@ -26,7 +26,7 @@ def test_paper_palette_preserves_white_board_and_dark_ink():
     assert BOARD_BG == "#ffffff"
     assert RARITY_INK == "#2f2618"
     assert set(RARITY_PAPER) == {
-        "common", "uncommon", "rare", "epic", "legendary", "spicy"
+        "common", "uncommon", "rare", "epic", "legendary"
     }
 
 

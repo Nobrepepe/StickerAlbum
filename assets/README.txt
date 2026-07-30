@@ -26,12 +26,9 @@ These exact WAV paths are used by the app:
   sounds/tear.wav                  pack crimp tearing
   sounds/reveal.wav                normal sticker reveal in an opened pack
   sounds/new.wav                   newly acquired sticker reveal
-  sounds/spicy.wav                 spicy sticker reveal (replaces reveal.wav
-                                   and new.wav for that card so the spicy cue
-                                   is audible)
 
-Reveal priority is spicy.wav, then new.wav, then reveal.wav. Missing cues
-safely no-op, but all five are needed for the complete sound
+Reveal priority is new.wav, then reveal.wav. Missing cues
+safely no-op, but all four are needed for the complete sound
 design.
 
 
@@ -81,8 +78,7 @@ silhouette. Its color is ignored; only alpha is used. It must have exactly
 the same canvas, crop, and framing as the corresponding sticker artwork so
 the shimmer aligns and never reaches the white vignette.
 
-Regular sticker IDs are <COLLECTION_ID>_001 through _100. Spicy sticker IDs
-are <COLLECTION_ID>_101 through _150.
+Sticker IDs are <COLLECTION_ID>_001 through _100.
 
 
 STICKER VOICE LINES

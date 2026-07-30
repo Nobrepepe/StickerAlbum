@@ -23,7 +23,7 @@ JSON schemas, or any business logic. Do not touch `tests/` expectations about be
 4. The pack result is committed *before* the reveal view opens (`PackOpeningService.open_pack`
    saves inventory + savings in one commit). **Every animation beat must be interruptible and
    skippable with zero consequence.**
-5. Keep all existing behaviour: live edit, unpublish, spicy gating by settings, vice shop,
+5. Keep all existing behaviour: live edit, unpublish, vice shop,
    backups, sounds, favourite character.
 
 ---
@@ -85,7 +85,6 @@ RARITY_PAPER: dict[str, tuple[str, str]] = {   # rarity -> (fill, edge)
     "rare":      ("#e2eaf2", "#a8bdd2"),
     "epic":      ("#ebe2f2", "#bfa9d4"),
     "legendary": ("#f1dfa8", "#b8973f"),   # gold edge; gradient where supported
-    "spicy":     ("#f6ddd4", "#c9856d"),
 }
 RARITY_INK = "#2f2618"  # label text is always ink, never white-on-colour
 ```
@@ -207,8 +206,7 @@ Everything about applied stickers stays exactly as it is. Two changes:
 2. **Signs become paper.** `_sign()` renders via `paper_label`: `border_radius=0`, Courier not
    Archivo-bold, ink text on rarity paper, 1px edge. The name sign keeps its position
    (`bottom=5, left=6`) and its deliberate overflow onto neighbours. `FOIL ✨` becomes `FOIL` on
-   gold paper; `+2` becomes ink-on-white; `READY TO APPLY` becomes ink on `#f1dfa8`; the spicy sign
-   keeps 🌶️ (it is the one sanctioned emoji).
+   gold paper; `+2` becomes ink-on-white; `READY TO APPLY` becomes ink on `#f1dfa8`.
 
 The owned-but-unpasted “sticker back” keeps its gradient but restyled: `CARD_BG` → `#d9cdb8`
 vertical gradient, ink icon at 55%, no rarity tint.
@@ -261,7 +259,6 @@ vertical gradient, ink icon at 55%, no rarity tint.
   Archivo 900 count + `paper_progress` (220px) — no `ft.ProgressBar`, no `GREY_300`.
 - The character sidebar strip keeps its white background, `spacing=0` and blended tiles. Add a
   `tape_strip` at its top edge and drop `border_radius` to 0 to match the boards.
-- Spicy section header: 🌶️ + Archivo 14px `STAMP_RED` + Courier count + `dashed_rule`.
 - Everything else in this file (slide animation, stamp settle, dialogs) is untouched.
 
 ### 3.7 `views/creator_view.py` — worktable
@@ -353,7 +350,7 @@ Not mocked. Apply §2 mechanically: cream panels, ink type, Courier metadata, `i
 ## 4. The pack-opening animation (`views/pack_result_view.py`)
 
 This is the emotional peak and gets the motion budget. **Rebuild this view**; keep its inputs
-(`PackOpenResult`), its outputs (`nav.go_shop`, `nav.go_album`) and the `_play_if_spicy` cue logic.
+(`PackOpenResult`) and its outputs (`nav.go_shop`, `nav.go_album`).
 
 ### 4.1 Structure
 
@@ -403,7 +400,6 @@ Beat 1 fires on view open (the deposit is already committed). Beats 4–5 fire p
 - **Legendary or any foil** — vignette fades in (`radial-gradient` equivalent: a full-stack
   container, `#140e0859`, opacity 0 → 1 over 400ms), the existing `FoilShimmer` `ShaderMask`
   sweeps the silhouette, card holds 400ms longer.
-- **Spicy** — card arrives rotated `−0.07rad` and settles to 0; `play_spicy` fires on arrival.
 - Sound: `play_stamp` on beat 1, a new paper-tear cue on beat 2 (add
   `TEAR_SOUND = "sounds/tear.wav"` to `audio_player.py`, no-op if the file is absent — the module
   already degrades gracefully), the sticker's own voice line on beat 4 via `play_stamp_then`.

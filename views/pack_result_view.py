@@ -10,7 +10,6 @@ from components.audio_player import (
     TEAR_SOUND,
     play_reveal_then,
     play_sound,
-    play_spicy,
     play_stamp,
 )
 from components.foil_shimmer import FoilShimmer
@@ -247,8 +246,6 @@ class _PackReveal(ft.Column):
         ]
         if item.style == "foil":
             labels.append(paper_label("FOIL", gold=True, size=7.5))
-        if item.sticker.spicy:
-            labels.append(paper_label("🌶️", "spicy", size=7.5))
         art_layers: list[ft.Control] = [
             sticker_art(item.sticker, CARD_W - 10, 136),
         ]
@@ -410,7 +407,7 @@ class _PackReveal(ft.Column):
             card.opacity = 1
             card.offset = ft.Offset(0, FOCUS_DY / CARD_H)
             card.scale = 1.55
-            card.rotate = ft.Rotate(-0.07 if self.items[self.index].sticker.spicy else 0)
+            card.rotate = ft.Rotate(0)
             self._raise_card(self.index)
             special = (
                 self.items[self.index].style == "foil"
@@ -430,7 +427,6 @@ class _PackReveal(ft.Column):
                 play_reveal_then,
                 self.host_page,
                 self.items[self.index].sticker.sound,
-                self.items[self.index].sticker.spicy,
                 self.items[self.index].is_new,
             )
             hold = 0.38
@@ -440,8 +436,6 @@ class _PackReveal(ft.Column):
                 hold += 0.4
             if not await self._wait(hold):
                 return
-            if self.items[self.index].sticker.spicy:
-                card.rotate = ft.Rotate(0)
             done = self.index >= len(self.items) - 1
             self.reveal_next.visible = not done
             self.reveal_all.visible = not done
@@ -454,10 +448,6 @@ class _PackReveal(ft.Column):
             pass
         finally:
             self._task = None
-
-    def _play_if_spicy(self, indices) -> None:
-        if any(self.items[i].sticker.spicy for i in indices):
-            play_spicy(self.host_page)
 
     def _on_reveal_all(self, e):
         start = self.index + 1
@@ -491,7 +481,6 @@ class _PackReveal(ft.Column):
             ) else 0
         )
         self._safe_update()
-        self._play_if_spicy(range(start, len(self.items)))
 
     def _start_file(self, callback):
         self._cancel_task()

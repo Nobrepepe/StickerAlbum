@@ -43,7 +43,6 @@ class StickerRepository:
                     rarity=str(r["rarity"]),
                     image=r.get("image"),
                     flavor_text=str(r.get("flavor_text", "")),
-                    spicy=bool(r.get("spicy", False)),
                     sound=r.get("sound"),
                 )
                 for r in raw
@@ -58,14 +57,11 @@ class StickerRepository:
     def all_ids(self) -> set[str]:
         return set(self._by_id)
 
-    def list_by_collection(self, collection_id: str, *, spicy: bool | None = None) -> list[Sticker]:
-        """spicy=None returns all; True/False filters to spicy/regular only."""
-        stickers = self._by_collection.get(collection_id, [])
-        return [s for s in stickers if spicy is None or s.spicy == spicy]
+    def list_by_collection(self, collection_id: str) -> list[Sticker]:
+        return list(self._by_collection.get(collection_id, []))
 
-    def list_by_character(self, character_id: str, *, spicy: bool | None = None) -> list[Sticker]:
-        stickers = self._by_character.get(character_id, [])
-        return [s for s in stickers if spicy is None or s.spicy == spicy]
+    def list_by_character(self, character_id: str) -> list[Sticker]:
+        return list(self._by_character.get(character_id, []))
 
     def list_by_rarity(self, collection_id: str, rarity: str) -> list[Sticker]:
         return [s for s in self._by_collection.get(collection_id, []) if s.rarity == rarity]

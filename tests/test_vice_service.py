@@ -11,14 +11,13 @@ def sticker(rarity="common"):
     return Sticker(
         id="TST_001", collection_id="TST", character_id="TST_C01",
         number=1, name="Test Sticker", rarity=rarity,
-        spicy=rarity == "spicy",
     )
 
 
 def test_conversion_values_follow_relative_drop_frequency():
     assert VICE_VALUES == {
         "common": 1, "uncommon": 1, "rare": 3,
-        "epic": 8, "legendary": 40, "spicy": 10,
+        "epic": 8, "legendary": 40,
     }
 
 

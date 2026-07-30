@@ -5,15 +5,9 @@ from models.catalog import Pack, PackDistribution, PackPool, Sticker
 from models.rarity import RARITY_ORDER, SELECTORS
 from models.results import OpenedSticker, PackOpenResult
 from repositories.pack_repository import PackRepository
-from repositories.settings_repository import SettingsRepository
 from repositories.sticker_repository import StickerRepository
 from repositories.user_state_repository import UserStateRepository
 from services.errors import PackConfigError
-
-# Spicy drops chain until a miss; the cap only guards against a
-# misconfigured spicy_rate of 1.0 looping forever.
-MAX_SPICY_CHAIN = 20
-
 
 class PackOpeningService:
     """Resolves pack distributions, rolls stickers/styles, updates inventory
@@ -24,18 +18,12 @@ class PackOpeningService:
         stickers: StickerRepository,
         packs: PackRepository,
         state: UserStateRepository,
-        settings: SettingsRepository | None = None,
         rng: random.Random | None = None,
     ):
         self._stickers = stickers
         self._packs = packs
         self._state = state
-        self._settings = settings
         self._rng = rng if rng is not None else random.Random()
-
-    @property
-    def _spicy_enabled(self) -> bool:
-        return bool(self._settings and self._settings.state.spicy_enabled)
 
     def roll(self, pack: Pack) -> list[tuple[Sticker, str]]:
         """Pure selection: returns (sticker, style) picks without side effects."""
@@ -45,7 +33,6 @@ class PackOpeningService:
                 sticker = self._roll_distribution(pack, dist)
                 style = "foil" if self._rng.random() < pack.foil_rate else "normal"
                 picks.append((sticker, style))
-        picks.extend(self._roll_spicy(pack))
         return picks
 
     def _roll_distribution(self, pack: Pack, dist: PackDistribution) -> Sticker:
@@ -71,9 +58,9 @@ class PackOpeningService:
             )
         self._validate_weights(pack, (s.weight for s in sources), "pool")
         unknown = set(weights) - set(RARITY_ORDER)
-        if unknown or "spicy" in weights:
+        if unknown:
             raise PackConfigError(
-                f"Pack {pack.id!r}: invalid regular rarity weights: {sorted(unknown or {'spicy'})}"
+                f"Pack {pack.id!r}: invalid rarity weights: {sorted(unknown)}"
             )
         self._validate_weights(pack, weights.values(), "rarity")
 
@@ -106,7 +93,7 @@ class PackOpeningService:
         excluded = set(exclude)
         return [
             s for s in self._stickers.resolve_pool(pool)
-            if not s.spicy and s.rarity in rarities
+            if s.rarity in rarities
             and (not included or s.id in included) and s.id not in excluded
         ]
 
@@ -119,35 +106,6 @@ class PackOpeningService:
             or not any(w > 0 for w in values)
         ):
             raise PackConfigError(f"Pack {pack.id!r}: invalid {label} weights")
-
-    def _roll_spicy(self, pack: Pack) -> list[tuple[Sticker, str]]:
-        """Bonus spicy drops: while the spicy_rate roll hits, add one random
-        sticker from the configured sources and roll again."""
-        if not self._spicy_enabled or pack.spicy_rate <= 0:
-            return []
-        sources = pack.spicy_pools or (PackPool(pack.collection_id),)
-        self._validate_weights(pack, (s.weight for s in sources), "spicy pool")
-        available = [
-            (self._stickers.resolve_pool(source.pool), source.weight)
-            for source in sources
-        ]
-        available = [
-            ([s for s in stickers if s.spicy], weight)
-            for stickers, weight in available if weight > 0
-        ]
-        available = [(stickers, weight) for stickers, weight in available if stickers]
-        pool = [stickers for stickers, _ in available]
-        if not pool:
-            return []  # collection without spicy stickers: nothing to drop
-        picks: list[tuple[Sticker, str]] = []
-        while len(picks) < MAX_SPICY_CHAIN and self._rng.random() < pack.spicy_rate:
-            source = self._rng.choices(
-                pool, weights=[weight for _, weight in available], k=1
-            )[0]
-            sticker = self._rng.choice(source)
-            style = "foil" if self._rng.random() < pack.foil_rate else "normal"
-            picks.append((sticker, style))
-        return picks
 
     def open_pack(self, pack_id: str) -> PackOpenResult:
         pack = self._packs.get(pack_id)

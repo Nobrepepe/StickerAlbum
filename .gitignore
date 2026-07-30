@@ -18,7 +18,6 @@ assets/*
 !assets/sounds/
 assets/sounds/*
 !assets/sounds/stamp.wav
-!assets/sounds/spicy.wav
 !assets/sounds/tear.wav
 !assets/sounds/reveal.wav
 !assets/sounds/new.wav

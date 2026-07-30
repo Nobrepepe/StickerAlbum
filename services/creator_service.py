@@ -8,7 +8,7 @@ import shutil
 from pathlib import Path
 
 from models.draft import DraftCharacter, DraftCollection, DraftSticker, new_draft_skeleton
-from models.rarity import SPICY_PER_CHARACTER, slot_rarity
+from models.rarity import slot_rarity
 from repositories._files import atomic_write_json
 from repositories._json_loading import load_json_file
 from repositories.collection_repository import CollectionRepository
@@ -32,10 +32,7 @@ def character_id(code: str, index: int) -> str:
 
 
 def sticker_number(char_index: int, position: int) -> int:
-    """Regular slots (1-10) number 1-100; spicy slots (11-15) number 101-150."""
-    if position <= 10:
-        return (char_index - 1) * 10 + position
-    return 100 + (char_index - 1) * SPICY_PER_CHARACTER + (position - 10)
+    return (char_index - 1) * 10 + position
 
 
 def sticker_id(code: str, char_index: int, position: int) -> str:
@@ -43,12 +40,9 @@ def sticker_id(code: str, char_index: int, position: int) -> str:
 
 
 def slot_from_number(number: int) -> tuple[int, int]:
-    """Inverse of sticker_number: (char_index, position) for numbers 1-150."""
+    """Inverse of sticker_number: (char_index, position) for numbers 1-100."""
     if 1 <= number <= 100:
         return (number - 1) // 10 + 1, (number - 1) % 10 + 1
-    if 101 <= number <= 150:
-        offset = number - 101
-        return offset // SPICY_PER_CHARACTER + 1, 10 + offset % SPICY_PER_CHARACTER + 1
     raise ValueError(f"Sticker number out of range: {number}")
 
 
@@ -227,7 +221,7 @@ class CreatorService:
             raise CreatorError(
                 f"'{draft.name or code}' is not complete yet "
                 f"({done}/{total} characters finished). Every character needs a "
-                "name and 15 named stickers (10 regular + 5 spicy)."
+                "name and 10 named stickers."
             )
 
         collections_path = self._data_dir / "collections.json"
@@ -265,7 +259,6 @@ class CreatorService:
                     "rarity": slot_rarity(s.position),
                     "image": s.image,
                     "flavor_text": s.flavor_text.strip(),
-                    "spicy": s.spicy,
                     "sound": s.sound,
                 })
 

@@ -130,10 +130,6 @@ def build_settings(page: ft.Page, ctx, nav) -> ft.Control:
         ctx.settings.set_creator_enabled(e.control.value)
         nav.rebuild_rail()
 
-    def toggle_spicy(e):
-        ctx.settings.set_spicy_enabled(e.control.value)
-        nav.refresh_masthead()
-
     progress_section = _section(
         "Playthrough progress",
         "Your inventory, album placements, favorite, savings, and Vice Shop.",
@@ -163,11 +159,6 @@ def build_settings(page: ft.Page, ctx, nav) -> ft.Control:
                 value=ctx.settings.state.creator_enabled,
                 on_change=toggle_creator,
                 tooltip="Show the collection-building screen in the navigation",
-            ),
-            ft.Switch(
-                label="🌶️",
-                value=ctx.settings.state.spicy_enabled,
-                on_change=toggle_spicy,
             ),
         ],
     )
