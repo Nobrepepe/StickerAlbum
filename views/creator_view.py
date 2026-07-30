@@ -11,8 +11,8 @@ import flet as ft
 from components.empty_state import empty_state
 from components.assets import character_tile_image, resolve_image
 from components.paper import (
-    PAPER_SHADOW, ink_button, outline_button, paper_label, paper_progress,
-    tool_button,
+    PAPER_SHADOW, ink_button, outline_button, page_caption, paper_label,
+    paper_progress, tool_button,
 )
 from components.placeholders import cover_band, sticker_art
 from components.theme import (
@@ -448,9 +448,8 @@ def build_creator(page: ft.Page, ctx, nav,
                         "Create a collection and fill in its 10 characters at your pace.")
         )
         root.content = ft.Column([
+            page_caption("live edit · changes publish immediately"),
             ft.Row([
-                ft.Text("CREATOR", size=30, font_family=DISPLAY_FONT,
-                        weight=ft.FontWeight.W_900, color=INK),
                 ft.Container(expand=True),
                 ink_button("NEW COLLECTION",
                            lambda e: collection_dialog(None), icon=ft.Icons.ADD),
@@ -860,6 +859,7 @@ def build_creator(page: ft.Page, ctx, nav,
         ], spacing=14, expand=True)
 
         root.content = ft.Column([
+            page_caption("live edit · changes publish immediately"),
             header,
             ft.Row([
                 ft.Container(width=230, bgcolor=CARD_BG, border_radius=0,

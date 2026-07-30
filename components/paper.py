@@ -205,3 +205,13 @@ def paper_progress(value: float, width: float = 220) -> ft.Control:
 
 def destructive_button(label: str, on_click: Callable | None, *, icon=None) -> ft.Control:
     return ink_button(label, on_click, icon=icon, bgcolor=STAMP_RED)
+
+
+def page_caption(text: str) -> ft.Control:
+    """Quiet typewriter caption used beneath the active binder tab."""
+    return ft.Text(
+        text,
+        size=11,
+        font_family=META_FONT,
+        color="#2f261880",
+    )

@@ -8,21 +8,30 @@ import flet as ft
 from components.assets import sticker_mask_image
 from components.audio_player import (
     TEAR_SOUND,
+    play_reveal_then,
     play_sound,
     play_spicy,
     play_stamp,
-    play_stamp_then,
 )
 from components.foil_shimmer import FoilShimmer
-from components.paper import dashed_rule, ink_button, outline_button, paper_label
+from components.paper import (
+    dashed_rule,
+    ink_button,
+    outline_button,
+    page_caption,
+    paper_label,
+)
 from components.placeholders import cover_band, sticker_art
 from components.theme import CARD_BG, DESK_BG, DISPLAY_FONT, INK, INK_SOFT, META_FONT
 from models.money import format_money
 from models.results import PackOpenResult
 
-STAGE_W, STAGE_H = 600.0, 660.0
+STAGE_W, STAGE_H = 600.0, 400.0
 CARD_W, CARD_H = 132.0, 176.0
-CARD_LEFT, CARD_TOP = 234.0, 390.0
+CARD_LEFT, CARD_TOP = 234.0, 205.0
+PACK_W, PACK_H = 260.0, 146.25
+PACK_LEFT, PACK_TOP = 170.0, 240.0
+FOCUS_DY = -145.0
 MAX_FAN = 5
 
 
@@ -47,7 +56,7 @@ class _PackReveal(ft.Column):
             width=100,
             height=14,
             left=250,
-            top=582,
+            top=382,
             border_radius=50,
             bgcolor="#2f26184f",
             opacity=0,
@@ -56,11 +65,11 @@ class _PackReveal(ft.Column):
         )
         self.cards = [self._item_card(i) for i in range(len(self.items))]
         self.pack_body = ft.Container(
-            width=150,
-            height=214,
-            left=225,
-            top=370,
-            offset=ft.Offset(0, -2.9),
+            width=PACK_W,
+            height=PACK_H,
+            left=PACK_LEFT,
+            top=PACK_TOP,
+            offset=ft.Offset(0, -4.25),
             scale=1.06,
             bgcolor=CARD_BG,
             shadow=ft.BoxShadow(blur_radius=10, color="#00000052",
@@ -69,19 +78,31 @@ class _PackReveal(ft.Column):
             content=cover_band(
                 result.pack.image,
                 self._pack_theme(),
-                height=214,
+                height=PACK_H,
             ),
             animate_offset=ft.Animation(460, ft.AnimationCurve.EASE_OUT_BACK),
             animate_scale=ft.Animation(240, ft.AnimationCurve.EASE_OUT),
         )
         self.crimp = ft.Container(
-            width=150,
+            width=PACK_W,
             height=18,
-            left=225,
-            top=354,
+            left=PACK_LEFT,
+            top=PACK_TOP - 18,
             bgcolor=CARD_BG,
             offset=ft.Offset(0, -34.5),
-            content=ft.Container(content=dashed_rule(144), bottom=0, left=3),
+            # Positioned controls must be direct children of a Stack. Keeping
+            # this rule in a bare Container made Flet render its red runtime
+            # error placeholder until the tear animation hid the crimp.
+            content=ft.Stack(
+                [
+                    ft.Container(
+                        content=dashed_rule(PACK_W - 6),
+                        bottom=0,
+                        left=3,
+                    )
+                ],
+                expand=True,
+            ),
             animate_offset=ft.Animation(300, ft.AnimationCurve.EASE_IN),
             animate_rotation=ft.Animation(300, ft.AnimationCurve.EASE_IN),
             animate_opacity=ft.Animation(300, ft.AnimationCurve.EASE_IN),
@@ -185,19 +206,27 @@ class _PackReveal(ft.Column):
         )
         new_count = sum(item.is_new for item in self.items)
         self.controls = [
-            ft.Text(
-                f"OPENING: {result.pack.name}".upper(),
-                size=24,
-                font_family=DISPLAY_FONT,
-                weight=ft.FontWeight.W_900,
-                color=INK,
-            ),
-            ft.Text(
-                f"{format_money(result.deposit)} deposited · "
-                f"{new_count} new · {len(self.items) - new_count} duplicate",
-                size=12,
-                font_family=META_FONT,
-                color=INK_SOFT,
+            ft.Row(
+                [
+                    ft.Text(
+                        f"OPENING: {result.pack.name}".upper(),
+                        size=22,
+                        font_family=DISPLAY_FONT,
+                        weight=ft.FontWeight.W_900,
+                        color=INK,
+                        expand=True,
+                    ),
+                    ft.Text(
+                        f"{format_money(result.deposit)} deposited · "
+                        f"{new_count} new · "
+                        f"{len(self.items) - new_count} duplicate",
+                        size=11,
+                        font_family=META_FONT,
+                        color=INK_SOFT,
+                    ),
+                ],
+                spacing=16,
+                vertical_alignment=ft.CrossAxisAlignment.CENTER,
             ),
             self.stage,
             footer,
@@ -344,6 +373,19 @@ class _PackReveal(ft.Column):
         card.rotate = ft.Rotate((slot - 2) * 5 * 3.141592653589793 / 180)
         card.scale = 1
 
+    def _raise_card(self, card_index: int) -> None:
+        """Paint the focused card above the fan, but still behind the pack."""
+        focused = self.cards[card_index]
+        self.stage.controls = [
+            self.shadow,
+            *(card for card in self.cards if card is not focused),
+            focused,
+            self.pack_body,
+            self.crimp,
+            self.vignette,
+            self.album_marker,
+        ]
+
     def _on_reveal_next(self, e):
         if self._task is not None or self.index >= len(self.items) - 1:
             return
@@ -366,9 +408,10 @@ class _PackReveal(ft.Column):
                     card.opacity = 0.4 if i < self.index else 1
             card = self.cards[self.index]
             card.opacity = 1
-            card.offset = ft.Offset(0, -270 / CARD_H)
+            card.offset = ft.Offset(0, FOCUS_DY / CARD_H)
             card.scale = 1.55
             card.rotate = ft.Rotate(-0.07 if self.items[self.index].sticker.spicy else 0)
+            self._raise_card(self.index)
             special = (
                 self.items[self.index].style == "foil"
                 or self.items[self.index].sticker.rarity == "legendary"
@@ -383,11 +426,12 @@ class _PackReveal(ft.Column):
             self.reveal_next.disabled = True
             self.reveal_next.opacity = 0.45
             self._safe_update()
-            self._play_if_spicy([self.index])
             self.host_page.run_task(
-                play_stamp_then,
+                play_reveal_then,
                 self.host_page,
                 self.items[self.index].sticker.sound,
+                self.items[self.index].sticker.spicy,
+                self.items[self.index].is_new,
             )
             hold = 0.38
             if self.items[self.index].sticker.rarity in {"rare", "epic"}:
@@ -429,9 +473,10 @@ class _PackReveal(ft.Column):
             card.scale = 0.92
         final = self.cards[-1]
         final.opacity = 1
-        final.offset = ft.Offset(0, -270 / CARD_H)
+        final.offset = ft.Offset(0, FOCUS_DY / CARD_H)
         final.scale = 1.55
         final.rotate = ft.Rotate(0)
+        self._raise_card(self.index)
         self.counter.value = f"{len(self.items)} / {len(self.items)}"
         self.beat_name.value = "PACK REVEALED"
         self.beat_note.value = "Every sticker is already safely in your collection."
@@ -471,4 +516,15 @@ class _PackReveal(ft.Column):
 
 def build_pack_result(page: ft.Page, ctx, nav, result: PackOpenResult) -> ft.Control:
     """The result is committed before this interruptible view is constructed."""
-    return _PackReveal(page, ctx, nav, result)
+    return ft.Container(
+        expand=True,
+        alignment=ft.alignment.top_center,
+        content=ft.Column(
+            [
+                page_caption("every pack you open records a real deposit"),
+                _PackReveal(page, ctx, nav, result),
+            ],
+            spacing=18,
+            expand=True,
+        ),
+    )

@@ -74,7 +74,11 @@ def build_sticker_slot(
             status_signs.append(_sign("FOIL", gold=True, size=sign_size))
         dups = album.duplicate_count(sticker.id)
         if dups > 0:
-            status_signs.append(_sign(f"+{dups}", size=sign_size))
+            status_signs.append(_sign(
+                f"+{dups}",
+                gold=album.has_foil_spare(sticker.id),
+                size=sign_size,
+            ))
     elif state == OWNED:
         # Owned but not pasted: a dark sticker "back", never the artwork.
         layers.append(ft.Container(

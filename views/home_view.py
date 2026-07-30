@@ -6,28 +6,23 @@ from components.character_tiles import character_card, character_tile
 from components.empty_state import empty_state
 from components.paper import (
     PAPER_SHADOW,
-    dashed_rule,
-    ink_button,
+    page_caption,
     tape_strip,
 )
 from components.sticker_dialog import open_sticker_dialog
 from components.sticker_slot import build_sticker_slot
 from components.theme import (
     BOARD_BG,
-    CARD_BG,
     DISPLAY_FONT,
     INK,
     INK_SOFT,
     META_FONT,
 )
-from models.money import format_money
-
 _GRID_TILE_W = 228.0
 _SLOT_W, _SLOT_H = 150.0, 200.0
 
 
 def build_home(page: ft.Page, ctx, nav) -> ft.Control:
-    summary = ctx.summary.home_summary()
     fav_area = ft.Container()
     state = {"choosing": False}
 
@@ -90,9 +85,15 @@ def build_home(page: ft.Page, ctx, nav) -> ft.Control:
 
     def on_slot_tap(sticker):
         character = ctx.characters.get(sticker.character_id)
+        collection = ctx.collections.get(character.collection_id)
+
+        def changed(_sticker):
+            nav.refresh_masthead()
+            nav.go_home()
+
         open_sticker_dialog(
-            page, ctx.album, sticker, character,
-            on_change=lambda st: nav.go_home(), vice=ctx.vice,
+            page, ctx.album, sticker, character, collection.name,
+            on_change=changed, vice=ctx.vice,
         )
 
     def build_fav_view(fav) -> ft.Control:
@@ -210,81 +211,10 @@ def build_home(page: ft.Page, ctx, nav) -> ft.Control:
         build_picker_board() if favorite is None else build_fav_view(favorite)
     )
 
-    savings_card = ft.Container(
-        width=212,
-        bgcolor=CARD_BG,
-        padding=ft.padding.symmetric(horizontal=14, vertical=12),
-        rotate=ft.Rotate(0.024),
-        shadow=PAPER_SHADOW,
-        content=ft.Stack(
-            [
-                ft.Column(
-                    [
-                        ft.Text(
-                            "DEPOSITED SO FAR",
-                            size=8.5,
-                            font_family=DISPLAY_FONT,
-                            weight=ft.FontWeight.W_700,
-                            color=INK_SOFT,
-                            style=ft.TextStyle(letter_spacing=1.35),
-                        ),
-                        ft.Text(
-                            format_money(summary.total_saved),
-                            size=26,
-                            font_family=META_FONT,
-                            color=INK,
-                        ),
-                        dashed_rule(180),
-                    ],
-                    spacing=8,
-                ),
-                ft.Container(content=tape_strip(78, -3), top=-21, left=50),
-            ],
-            clip_behavior=ft.ClipBehavior.NONE,
-        ),
-    )
-
     return ft.Column(
         [
-            ft.Row(
-                [
-                    ft.Column(
-                        [
-                            ft.Text(
-                                "MY STICKER ALBUM",
-                                size=33,
-                                font_family=DISPLAY_FONT,
-                                weight=ft.FontWeight.W_900,
-                                color=INK,
-                            ),
-                            ft.Text(
-                                f"{summary.unique_owned} owned · "
-                                f"{summary.total_applied} pasted · "
-                                f"{summary.completed_collections}/"
-                                f"{summary.total_collections} albums finished",
-                                size=12.5,
-                                font_family=META_FONT,
-                                color=INK_SOFT,
-                            ),
-                        ],
-                        spacing=9,
-                        expand=True,
-                    ),
-                    savings_card,
-                ],
-                vertical_alignment=ft.CrossAxisAlignment.START,
-            ),
+            page_caption("favourite character · everything you own of them"),
             fav_area,
-            ft.Row(
-                [
-                    ink_button(
-                        "BROWSE COLLECTIONS",
-                        lambda e: nav.go_collections(),
-                    ),
-                    ink_button("GO TO SHOP", lambda e: nav.go_shop()),
-                ],
-                spacing=12,
-            ),
         ],
         spacing=20,
         scroll=ft.ScrollMode.AUTO,

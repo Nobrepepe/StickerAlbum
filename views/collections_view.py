@@ -1,7 +1,7 @@
 import flet as ft
 
 from components.collection_card import collection_card
-from components.paper import destructive_button, outline_button
+from components.paper import destructive_button, outline_button, page_caption
 from components.theme import BODY_FONT, CARD_BG, DISPLAY_FONT, INK, INK_SOFT, META_FONT
 from repositories.errors import AppError
 from views.errors_ui import show_error, show_info
@@ -68,10 +68,7 @@ def build_collections(page: ft.Page, ctx, nav) -> ft.Control:
         )
     return ft.Column(
         [
-            ft.Text("COLLECTIONS", size=30, font_family=DISPLAY_FONT,
-                    weight=ft.FontWeight.W_900, color=INK),
-            ft.Text("Pick a world and start filling its album.",
-                    size=12.5, font_family=META_FONT, color=INK_SOFT),
+            page_caption("three worlds · pick one to fill"),
             ft.Row(cards, wrap=True, spacing=20, run_spacing=20),
         ],
         spacing=18,

@@ -3,7 +3,7 @@ import logging
 import flet as ft
 
 from components.pack_card import pack_card
-from components.paper import ink_button, outline_button
+from components.paper import ink_button, outline_button, page_caption
 from components.theme import BODY_FONT, CARD_BG, DISPLAY_FONT, INK, INK_SOFT, META_FONT
 from models.money import format_money
 from repositories.errors import AppError
@@ -32,6 +32,7 @@ def build_shop(page: ft.Page, ctx, nav) -> ft.Control:
                 log.exception("Unexpected failure opening pack %s", pack.id)
                 show_error(page, "Something went wrong opening the pack. See the log for details.")
                 return
+            nav.refresh_masthead()
             nav.go_pack_result(result)
 
         dialog.title = ft.Text("CONFIRM YOUR DEPOSIT", font_family=DISPLAY_FONT,
@@ -63,18 +64,7 @@ def build_shop(page: ft.Page, ctx, nav) -> ft.Control:
 
     return ft.Column(
         [
-            ft.Row(
-                [
-                    ft.Text("SHOP", size=30, font_family=DISPLAY_FONT,
-                            weight=ft.FontWeight.W_900, color=INK),
-                    ft.Text(
-                        f"saved so far · {format_money(ctx.state.state.total_saved)}",
-                        size=12.5, font_family=META_FONT, color=INK_SOFT,
-                    ),
-                ],
-                spacing=16,
-                vertical_alignment=ft.CrossAxisAlignment.CENTER,
-            ),
+            page_caption("every pack you open records a real deposit"),
             ft.Row(cards, wrap=True, spacing=20, run_spacing=20),
         ],
         spacing=18,

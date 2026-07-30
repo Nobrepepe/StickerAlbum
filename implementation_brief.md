@@ -40,7 +40,9 @@ printed, stamped, taped or typed.
 """The app's single fixed look: a kraft-paper desk, cream card stock, white boards."""
 
 DESK_BG      = "#c8b9a2"  # app background (was PAGE_BG #282431)
-SPINE_BG     = "#6b5842"  # navigation rail (was RAIL_BG)
+TAB_IDLE     = "#c4b298"  # unselected binder tab (there is no navigation rail any more)
+TAB_ACTIVE   = "#fdfaf3"  # selected binder tab — same stock as the page below it
+PAGE_BG      = "#fdfaf3"  # the page every screen is printed on
 CARD_BG      = "#f4efe6"  # panels, cards, tiles (was PANEL_BG)
 CARD_BORDER  = "#ded2bc"  # hairline on cream panels (was PANEL_BORDER)
 BOARD_BG     = "#ffffff"  # unchanged — the boards the art blends into
@@ -132,16 +134,58 @@ paper has square corners.
 
 ## 3. Screen-by-screen changes
 
-### 3.1 `main.py` — the spine
+### 3.1 `main.py` — masthead, binder tabs, page (mock <a>5a</a>)
 
-- Rail: `bgcolor=SPINE_BG`, `min_width=92`, `label_type=ALL`.
-- `NavigationRail` cannot be styled far enough. Replace it with a hand-built `ft.Column` of
-  clickable `ft.Container`s (keep the same `_entries` list, keys, and `go_*` callbacks, and keep
-  `rebuild_rail()` working): 78px wide items, 17px outlined square icon, Archivo 700 8.5px
-  uppercase label centred, `#ffffffb3` idle / `#ffffff` + `#ffffff21` fill when selected.
-- Circular cream monogram “SA” 38px at the top, 14px below it.
-- Content padding stays 24; add the faint desk hatch as a `ft.DecorationImage` or accept flat
-  `DESK_BG` (a 7px diagonal hatch at 2% ink is the mock; skip it if it costs an asset).
+**Delete the `NavigationRail` entirely.** There is no vertical rail in the redesign. The whole
+window is one album: a masthead that never changes, a row of binder tabs, and the page under them.
+Shell layout, top to bottom, inside a `ft.Column` with `spacing=0`:
+
+**a. Masthead — static, built once, never rebuilt on navigation.**
+Padding `26, 30, 30, 34`. A `ft.Row`:
+- left, `expand=True`: “MY STICKER ALBUM” Archivo 900 33px uppercase ink; below it, Courier 12.5px
+  ink@62% `f"{unique_owned} owned · {total_applied} pasted · {completed} of {total} albums finished"`.
+- right, 212px: the taped “DEPOSITED SO FAR” index card from §3.3 (it moves out of `home_view` and
+  into the shell — it is global state, not a Home fact).
+
+Expose `refresh_masthead()` on the shell and call it from the two places those numbers change:
+after `PackOpeningService.open_pack` commits, and after a vice withdrawal. Navigation must not
+call it. **The masthead is the fix for the app re-titling itself on every screen change — no view
+may render its own screen title any more.**
+
+**b. Tab row.** `ft.Row(spacing=5)`, `padding.only(left=24)`, `vertical_alignment=END`, one
+`ft.Container` per entry — same `_entries` list, keys and `go_*` callbacks as the old rail, and
+`rebuild_rail()` keeps its name and its job (re-styling tabs after a selection change).
+
+Per tab: Archivo 700 9px uppercase, `letter_spacing=0.9`, `animate=ft.Animation(280, ft.AnimationCurve.EASE_OUT_BACK)`
+plus `animate_offset` and `animate_padding` on the same curve.
+
+| | selected | idle |
+| --- | --- | --- |
+| `bgcolor` | `TAB_ACTIVE` | `TAB_IDLE` |
+| `color` | `INK` | ink@64% |
+| `padding` | `11, 20, 17, 20` | `9, 20, 12, 20` |
+| `offset` | `ft.Offset(0, 0.03)` | `ft.Offset(0, 0.11)` |
+| `shadow` | `BoxShadow(10, ft.Offset(0, -4), "#00000033")` | `BoxShadow(6, ft.Offset(0, -2), "#0000002e")` |
+
+The selected tab is the **same stock as the page**, sits 8px lower than the idle tabs and has no
+bottom edge against the page — the seam disappears and the tab reads as part of the sheet. That
+single relationship is the whole idea; if you get one thing pixel-right, get this.
+
+*Trapezoid edges:* the mock cuts 9px off each top corner. Flet has no `clip-path`. Ship the tabs as
+plain rectangles with `border_radius=ft.border_radius.only(top_left=3, top_right=3)` — do **not**
+fake the taper with rotated containers or images.
+
+**c. Page.** `ft.Container(bgcolor=PAGE_BG, expand=True, padding=ft.padding.only(20, 24, 28, 24),`
+`shadow=BoxShadow(26, ft.Offset(0, 12), "#0000006b"))`, holding the active view. `border_radius=0`.
+
+**d. Page caption.** Each view's first child is one Courier 11px ink@50% line — not a title:
+Home `favourite character · everything you own of them`; Collections `three worlds · pick one to fill`;
+Shop `every pack you open records a real deposit`; Vice Shop `spend the savings you earned — with a receipt`;
+Creator `live edit · changes publish immediately`; Settings `account, data and sound`.
+Album view is the exception: it keeps its collection/character header, since that names *which* album.
+
+Window background stays `DESK_BG`; content padding around the shell 24. The faint desk hatch is
+optional (7px diagonal at 2% ink) — skip it if it costs an asset.
 
 ### 3.2 `components/sticker_slot.py` — the one functional change
 
@@ -171,12 +215,9 @@ vertical gradient, ink icon at 55%, no rarity tint.
 
 ### 3.3 `views/home_view.py`
 
-- Delete `_stat_tile` and the four-tile `ft.Row`. Replace with:
-  - one Courier line under the title: `f"{unique_owned} owned · {total_applied} pasted · {completed}/{total} albums finished"`;
-  - one **taped index card** floated right (212px, `CARD_BG`, `ft.Rotate(0.024)`, a `tape_strip`
-    in a Stack over its top edge): Archivo 8.5px uppercase “DEPOSITED SO FAR”, then
-    `format_money(total_saved)` in **Courier 26px**, then a `dashed_rule`.
-- Title: “MY STICKER ALBUM”, Archivo 900 33px uppercase, ink.
+- Delete `_stat_tile` and the four-tile `ft.Row`. Delete the screen title too — the counts line and
+  the savings card both move up into the shell masthead (§3.1a), and Home starts at its page caption.
+  Home's own content is now just the polaroid + the owned-stickers board.
 - Favourite character becomes a **polaroid**: white container, `padding=9`, the 9:16
   `character_card` art inside, then a caption row *below the art on the white border* — Archivo 14px
   name + Courier 11px `8/10 · Magic Academy`. Rotate `-0.017`. This replaces the floating dark
@@ -238,6 +279,69 @@ vertical gradient, ink icon at 55%, no rarity tint.
   pencil ghost from §3.2, not a coloured gradient.
 - “Tile…”, “Card…”, “Cover image…” become `tool_button`-style outlined controls; “Done” an
   `ink_button`.
+
+### 3.9 The sticker inspect dialog (mock <a>6a</a>)
+
+The current dialog is a rounded box with centred, stacked metadata and a real layout bug: the
+`Spare copies: N` label sits on top of the button row. Rebuild it as a **catalogue slip**:
+`ft.AlertDialog` with `shape=ft.RoundedRectangleBorder(radius=0)`, `bgcolor=CARD_BG`,
+`content_padding=ft.padding.symmetric(24, 26)`, `barrier_color="#0000009e"`, no `title` and no
+`actions` — the slip builds its own footer so nothing can float over it.
+
+772px wide, `ft.Row(spacing=24)`:
+
+**Left, 296px:** white container, `padding=10`, holding the 3:4 art at 276×368. Nothing else — no
+border, no radius, no rarity tint on the art.
+
+**Right, expand:** a single left-aligned `ft.Column` — never centred, one fact per line:
+1. Row: rarity `paper_label` + Courier 10.5px ink@50% sticker id.
+2. Name — Archivo 900 25px uppercase ink, `max_lines=2`.
+3. Courier 11.5px ink@60%: `f"{character} · {collection} · {state}"` where state is
+   `applied to the board` / `owned, not applied`. This single line replaces the old
+   `Character:` and `Applied · Normal` lines — the variant belongs to the switch now, not to prose.
+4. `dashed_rule`, then flavour text: Courier 12.5px, `line_height=1.65`, ink@82%. Not italic
+   (Courier Prime italic is a separate face — skip it), quoted with real quote marks.
+5. `dashed_rule`, then **VARIANT ON THE BOARD** (Archivo 8.5px uppercase ink@50%) and a two-position
+   paper switch: `NORMAL` and `FOIL`, 8×16 padding, Archivo 700 9.5px uppercase.
+   - selected `NORMAL`: white fill, `rgba(47,38,24,.42)` 1px edge, small shadow.
+   - selected `FOIL`: the gold foil gradient, `GOLD` edge.
+   - unselected: ink@7% fill, ink@18% edge, ink@45% text, `offset=ft.Offset(0, 0.02)` — it sits
+     *pressed down*, which is what makes the pair read as physical.
+   - **no foil copy owned:** the `FOIL` position renders in the unselected style with
+     `disabled=True` and a `tooltip="no foil copy yet"`. Never hide it — its absence is information.
+   - Flipping it calls the existing apply-variant path and swaps the art through an
+     `ft.AnimatedSwitcher(duration=300, transition=FADE)`; the foil sheen is the same overlay used
+     on foil slots. If the collection has no foil art file, tint-sheen the normal art rather than
+     failing.
+6. Spacer (`expand=True`), then footer:
+   - one Courier 11px ink@60% line: `f"{spares} spare copies · worth {points} vice points"`
+     (`0 spare copies` when none — the line stays, the button below it disables);
+   - a Row: `ink_button` `CONVERT SPARES → +N VICE` with `expand=True`, and an outlined button
+     `▶ VOICE LINE`. Full words on both — the bare `♪` glyph goes away. Disable the voice button
+     with a tooltip when the character has no clip.
+
+Close is a Courier `×` at 15px ink@50% pinned top-right of the slip (`ft.Stack`), not a `CLOSE`
+button in the footer — the footer is for actions that change something.
+
+### 3.10 Foil spares must be visible on the board
+
+Today the only way to learn that a spare copy is a **foil** is to open the dialog. Fix it in
+`components/sticker_slot.py` where the duplicate-count sign is built: the `+N` sign keeps its
+position and its Courier type, but takes gold stock when any of those spares is foil.
+
+```python
+# spare_is_foil: True if at least one unapplied duplicate of this sticker is a foil copy
+if spare_is_foil:
+    fill, edge, text = GOLD_PAPER, GOLD, INK      # "#f1dfa8", GOLD
+else:
+    fill, edge, text = "#ffffff", "#00000038", INK
+```
+
+Same rule anywhere else the `+N` chip appears (album boards, Home's owned sheet, the character
+picker tiles). It needs one new read from the inventory — a per-sticker `has_foil_spare` flag
+alongside the existing spare count. **Read-only: do not change how variants are stored or applied.**
+Where a slot already shows the gold `FOIL` sign because the *applied* copy is foil, the `+N` stays
+white — gold on the count means "there's a foil in the pile you haven't used".
 
 ### 3.8 `views/vice_shop_view.py`, `views/settings_view.py`
 
@@ -315,8 +419,9 @@ coroutine's pending sleeps, snap every property, then render.
 
 ## 5. Order of work
 
-1. `components/theme.py` + `components/paper.py` + `main.py` light theme & rail. *(App must run and
-   be navigable after this step, even if ugly.)*
+1. `components/theme.py` + `components/paper.py` + `main.py` light theme, masthead, binder tabs and
+   page (§3.1 — the `NavigationRail` dies here). *(App must run and be navigable after this step,
+   even if ugly.)*
 2. `models/rarity.py` paper table + `paper_label`; delete `components/rarity_chip.py` usages.
 3. `components/sticker_slot.py` (empty-slot ghost + paper signs) — verify against a real album with
    ~40% missing stickers.
@@ -324,6 +429,7 @@ coroutine's pending sleeps, snap every property, then render.
 5. `home_view.py`, `collections_view.py`, `shop_view.py`, `album_view.py`.
 6. `creator_view.py`.
 7. `pack_result_view.py` rebuild + animation.
+8. The inspect dialog (§3.9) and the gold `+N` foil-spare chip (§3.10).
 8. `vice_shop_view.py`, `settings_view.py` parity pass.
 
 Run `pytest` after each step. Existing tests cover services and live edit, not styling — if a test
@@ -343,8 +449,15 @@ fails you changed behaviour, so revert that part.
 - [ ] `ft.ProgressBar`, `ft.Divider` and ghost `IconButton`s are gone from the redesigned views.
 - [ ] Pack opening: land → tear → fan → present plays within ~1.9s to the first card; “Reveal all”
       is instant; navigating away mid-reveal raises nothing in the log.
+- [ ] No view renders a screen title, and the masthead numbers change only after a pack open or a
+      vice withdrawal — never on navigation.
+- [ ] The selected binder tab is exactly `PAGE_BG` and shows no seam against the page below it.
+- [ ] Six tabs fit the 1000px minimum width without wrapping (shorten “Vice Shop” before you wrap).
 - [ ] Window at the 1000×700 minimum: no clipped cards, no horizontal scroll on Collections or Shop
       (three 328px cards + 20px gaps must fit or wrap cleanly).
+- [ ] Inspect dialog: square corners, nothing overlaps at any spare count (test 0, 1, 12), and the
+      FOIL position is visible-but-disabled when no foil copy is owned.
+- [ ] A sticker with a foil spare shows a gold `+N` on the board without opening the dialog.
 - [ ] `python main.py` starts clean; no new warnings in the log.
 
 ## 7. Do not

@@ -2,7 +2,13 @@
 
 import flet as ft
 
-from components.paper import PAPER_SHADOW, destructive_button, ink_button, outline_button
+from components.paper import (
+    PAPER_SHADOW,
+    destructive_button,
+    ink_button,
+    outline_button,
+    page_caption,
+)
 from components.theme import (
     BODY_FONT, CARD_BG, CARD_BORDER, DISPLAY_FONT, INK, INK_SOFT, META_FONT,
 )
@@ -62,6 +68,7 @@ def build_settings(page: ft.Page, ctx, nav) -> ft.Control:
         for w in warnings[:3]:
             show_info(page, w)
         show_info(page, "Progress imported.")
+        nav.refresh_masthead()
         nav.go_settings()
 
     save_picker = ft.FilePicker(on_result=on_save_result)
@@ -107,6 +114,7 @@ def build_settings(page: ft.Page, ctx, nav) -> ft.Control:
                 show_error(page, str(exc))
                 return
             show_info(page, "Progress reset. Fresh album, fresh start!")
+            nav.refresh_masthead()
             nav.go_settings()
 
         dialog.actions = [
@@ -124,6 +132,7 @@ def build_settings(page: ft.Page, ctx, nav) -> ft.Control:
 
     def toggle_spicy(e):
         ctx.settings.set_spicy_enabled(e.control.value)
+        nav.refresh_masthead()
 
     progress_section = _section(
         "Playthrough progress",
@@ -165,8 +174,7 @@ def build_settings(page: ft.Page, ctx, nav) -> ft.Control:
 
     return ft.Column(
         [
-            ft.Text("SETTINGS", size=30, font_family=DISPLAY_FONT,
-                    weight=ft.FontWeight.W_900, color=INK),
+            page_caption("account, data and sound"),
             progress_section,
             features_section,
         ],

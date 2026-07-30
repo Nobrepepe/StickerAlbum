@@ -79,3 +79,60 @@ def test_stamp_then_voice_waits_for_stamp(monkeypatch):
 
     assert calls == ["stamp", audio_player.STAMP_DURATION_SECONDS,
                      "sounds/voice.mp3"]
+
+
+def test_normal_reveal_uses_reveal_sound_then_voice(monkeypatch):
+    calls = []
+    page = object()
+    monkeypatch.setattr(
+        audio_player, "play_sound", lambda p, rel: calls.append((p, rel))
+    )
+    monkeypatch.setattr(audio_player, "resolve_sound", lambda rel: f"/{rel}")
+
+    async def no_wait(delay):
+        calls.append(delay)
+
+    monkeypatch.setattr(asyncio, "sleep", no_wait)
+    asyncio.run(audio_player.play_reveal_then(page, "sounds/voice.mp3"))
+
+    assert calls == [
+        (page, audio_player.REVEAL_SOUND),
+        audio_player.REVEAL_DURATION_SECONDS,
+        (page, "sounds/voice.mp3"),
+    ]
+
+
+def test_spicy_reveal_replaces_normal_reveal_cue(monkeypatch):
+    calls = []
+    monkeypatch.setattr(
+        audio_player, "play_sound", lambda page, rel: calls.append(rel)
+    )
+    monkeypatch.setattr(audio_player, "resolve_sound", lambda rel: None)
+
+    asyncio.run(audio_player.play_reveal_then(object(), None, True))
+
+    assert calls == [audio_player.SPICY_SOUND]
+
+
+def test_new_sticker_uses_new_reveal_cue(monkeypatch):
+    calls = []
+    monkeypatch.setattr(
+        audio_player, "play_sound", lambda page, rel: calls.append(rel)
+    )
+    monkeypatch.setattr(audio_player, "resolve_sound", lambda rel: None)
+
+    asyncio.run(audio_player.play_reveal_then(object(), None, False, True))
+
+    assert calls == [audio_player.NEW_SOUND]
+
+
+def test_spicy_takes_priority_over_new_reveal_cue(monkeypatch):
+    calls = []
+    monkeypatch.setattr(
+        audio_player, "play_sound", lambda page, rel: calls.append(rel)
+    )
+    monkeypatch.setattr(audio_player, "resolve_sound", lambda rel: None)
+
+    asyncio.run(audio_player.play_reveal_then(object(), None, True, True))
+
+    assert calls == [audio_player.SPICY_SOUND]

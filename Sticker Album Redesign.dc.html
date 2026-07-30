@@ -28,6 +28,392 @@ a{color:#2a78d6}a:hover{color:#1b5aa8}
 .dv-next{margin:24px 0 0;font:12px/1.6 system-ui,sans-serif;color:rgba(0,0,0,.5)}
 </style></helmet>
 
+<section class="dv-turn" id="t6">
+<div class="dv-thd"><a class="dv-tid" href="#t6">6</a><span class="dv-tname">Sticker inspect dialog — the rounded box becomes paper. Toggle Normal / Foil in both.</span></div>
+<div class="dv-opts">
+
+<div class="dv-opt" id="6a">
+<div class="dv-olabel"><a class="dv-oid" href="#6a">6a</a><span><b>Catalogue slip.</b> My pick. Landscape: art on its white board at left, a typewritten record at right. Every action is a labelled paper button in one column, so nothing can collide the way <i>Spare copies: 4</i> collides with the button row today — the count is a line of the record, not a floating label. Variant is a two-position paper switch; foil sheens the art when you flip it.</span></div>
+<div class="dv-card" style="width:1180px;background:#6d6355;background-image:repeating-linear-gradient(120deg,rgba(0,0,0,.06) 0 2px,transparent 2px 7px);padding:46px 0;display:grid;place-items:center">
+  <div style="width:772px;background:#f4efe6;box-shadow:0 26px 60px -18px rgba(0,0,0,.72);position:relative;display:flex;gap:24px;padding:24px 26px 26px;transform:rotate(-.4deg)">
+    <div style="position:absolute;top:-12px;left:56px;width:104px;height:26px;background:rgba(240,230,205,.86);border-left:1px dashed rgba(0,0,0,.14);border-right:1px dashed rgba(0,0,0,.14);transform:rotate(-2.5deg);box-shadow:0 2px 4px rgba(0,0,0,.18)"></div>
+    <div style="position:absolute;top:14px;right:16px;width:22px;height:22px;display:grid;place-items:center;font:400 15px/1 'Courier Prime',monospace;color:rgba(47,38,24,.5);cursor:pointer" style-hover="color:#2f2618">×</div>
+    <div style="width:296px;flex:none;background:#fff;padding:10px;box-shadow:0 4px 12px -4px rgba(0,0,0,.3)">
+      <div style="position:relative;width:276px;height:368px;display:grid;place-items:center">
+        <div style="{{ artA }}"></div>
+        <div style="position:relative;font:400 10px/1.5 'Courier Prime',monospace;color:rgba(47,38,24,.6);text-align:center">sticker art 3:4<br>MGA_033.png</div>
+      </div>
+    </div>
+    <div style="flex:1;min-width:0;display:flex;flex-direction:column;padding-top:2px">
+      <div style="display:flex;align-items:center;gap:9px">
+        <div style="background:#fff;border:1px solid rgba(47,38,24,.24);font:400 9.5px/1 'Courier Prime',monospace;color:#2f2618;padding:5px 7px">COMMON</div>
+        <div style="font:400 10.5px/1 'Courier Prime',monospace;color:rgba(47,38,24,.5)">MGA_033</div>
+      </div>
+      <div style="font:900 25px/1.1 'Archivo',sans-serif;text-transform:uppercase;color:#2f2618;margin-top:13px">Pip's “Great” Idea</div>
+      <div style="font:400 11.5px/1 'Courier Prime',monospace;color:rgba(47,38,24,.6);margin-top:9px">Tix · Magic Academy · applied to the board</div>
+      <div style="height:1px;background:repeating-linear-gradient(90deg,rgba(47,38,24,.24) 0 4px,transparent 4px 8px);margin:16px 0"></div>
+      <div style="font:400 12.5px/1.65 'Courier Prime',monospace;color:rgba(47,38,24,.82);text-wrap:pretty">“Pip says we should see if the library's carpets can be turned into a jungle. I mean, the books would be much happier if they had leaves to lean on, right?”</div>
+      <div style="height:1px;background:repeating-linear-gradient(90deg,rgba(47,38,24,.24) 0 4px,transparent 4px 8px);margin:16px 0"></div>
+      <div style="font:700 8.5px/1 'Archivo',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:rgba(47,38,24,.5)">Variant on the board</div>
+      <div style="display:flex;gap:7px;margin-top:9px">
+        <sc-for list="{{ varA }}" as="v" hint-placeholder-count="2">
+          <div onClick="{{ v.pick }}" style="padding:8px 16px;cursor:pointer;font:700 9.5px/1 'Archivo',sans-serif;letter-spacing:.12em;text-transform:uppercase;transition:transform 200ms ease,background 220ms ease,box-shadow 220ms ease;{{ v.dyn }}">{{ v.label }}</div>
+        </sc-for>
+      </div>
+      <div style="flex:1;min-height:16px"></div>
+      <div style="font:400 11px/1 'Courier Prime',monospace;color:rgba(47,38,24,.6)">4 spare copies · worth 4 vice points</div>
+      <div style="display:flex;gap:9px;margin-top:10px">
+        <div style="flex:1;background:#2f2618;color:#f4efe6;font:700 10px/1 'Archivo',sans-serif;letter-spacing:.11em;text-transform:uppercase;padding:13px 14px;text-align:center;box-shadow:3px 3px 0 rgba(47,38,24,.22);cursor:pointer" style-hover="background:#4a3c26">Convert spares → +4 vice</div>
+        <div style="border:1.5px solid rgba(47,38,24,.45);color:#2f2618;font:700 10px/1 'Archivo',sans-serif;letter-spacing:.11em;text-transform:uppercase;padding:12px 14px;display:flex;align-items:center;gap:7px;cursor:pointer" style-hover="background:rgba(47,38,24,.08)"><span style="font:400 11px/1 'Courier Prime',monospace">▶</span>Voice line</div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="dv-opt" id="6b">
+<div class="dv-olabel"><a class="dv-oid" href="#6b">6b</a><span><b>Sleeve.</b> Keeps your portrait shape, but the variant switch becomes two binder tabs on the sleeve's top edge — the same gesture as the main nav, one level down. Record and actions sit on the cream flap under the art. Tighter on screen; the flavour text has less room to breathe.</span></div>
+<div class="dv-card" style="width:1180px;background:#6d6355;background-image:repeating-linear-gradient(120deg,rgba(0,0,0,.06) 0 2px,transparent 2px 7px);padding:46px 0;display:grid;place-items:center">
+  <div style="width:430px;position:relative">
+    <div style="display:flex;gap:5px;padding-left:20px;align-items:flex-end">
+      <sc-for list="{{ varB }}" as="v" hint-placeholder-count="2">
+        <div onClick="{{ v.pick }}" style="padding:9px 18px 11px;cursor:pointer;font:700 9px/1 'Archivo',sans-serif;letter-spacing:.12em;text-transform:uppercase;transition:transform 220ms ease,background 220ms ease,box-shadow 220ms ease;{{ v.dyn }}">{{ v.label }}</div>
+      </sc-for>
+    </div>
+    <div style="background:#f4efe6;box-shadow:0 26px 60px -18px rgba(0,0,0,.72);padding:12px 12px 20px;position:relative">
+      <div style="position:absolute;top:24px;right:20px;width:22px;height:22px;display:grid;place-items:center;font:400 15px/1 'Courier Prime',monospace;color:rgba(47,38,24,.5);cursor:pointer;z-index:2" style-hover="color:#2f2618">×</div>
+      <div style="background:#fff;padding:9px;box-shadow:0 3px 10px -4px rgba(0,0,0,.28)">
+        <div style="position:relative;height:392px;display:grid;place-items:center">
+          <div style="{{ artB }}"></div>
+          <div style="position:relative;font:400 10px/1.5 'Courier Prime',monospace;color:rgba(47,38,24,.6);text-align:center">sticker art 3:4<br>MGA_033.png</div>
+        </div>
+      </div>
+      <div style="padding:16px 6px 0">
+        <div style="display:flex;align-items:center;gap:9px">
+          <div style="background:#fff;border:1px solid rgba(47,38,24,.24);font:400 9.5px/1 'Courier Prime',monospace;color:#2f2618;padding:5px 7px">COMMON</div>
+          <div style="font:400 10.5px/1 'Courier Prime',monospace;color:rgba(47,38,24,.5)">MGA_033 · applied</div>
+        </div>
+        <div style="font:900 22px/1.15 'Archivo',sans-serif;text-transform:uppercase;color:#2f2618;margin-top:12px">Pip's “Great” Idea</div>
+        <div style="font:400 11px/1 'Courier Prime',monospace;color:rgba(47,38,24,.6);margin-top:8px">Tix · Magic Academy</div>
+        <div style="height:1px;background:repeating-linear-gradient(90deg,rgba(47,38,24,.24) 0 4px,transparent 4px 8px);margin:14px 0"></div>
+        <div style="font:400 12px/1.6 'Courier Prime',monospace;color:rgba(47,38,24,.82);text-wrap:pretty">“Pip says we should see if the library's carpets can be turned into a jungle. I mean, the books would be much happier if they had leaves to lean on, right?”</div>
+        <div style="font:400 11px/1 'Courier Prime',monospace;color:rgba(47,38,24,.6);margin-top:16px">4 spare copies · worth 4 vice points</div>
+        <div style="display:flex;gap:8px;margin-top:10px">
+          <div style="flex:1;background:#2f2618;color:#f4efe6;font:700 9.5px/1 'Archivo',sans-serif;letter-spacing:.1em;text-transform:uppercase;padding:12px 10px;text-align:center;box-shadow:3px 3px 0 rgba(47,38,24,.22);cursor:pointer" style-hover="background:#4a3c26">Convert → +4</div>
+          <div style="border:1.5px solid rgba(47,38,24,.45);color:#2f2618;font:700 9.5px/1 'Archivo',sans-serif;letter-spacing:.1em;text-transform:uppercase;padding:11px 12px;display:flex;align-items:center;gap:6px;cursor:pointer" style-hover="background:rgba(47,38,24,.08)"><span style="font:400 11px/1 'Courier Prime',monospace">▶</span>Voice</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+</div>
+</section>
+
+<section class="dv-turn" id="t5">
+<div class="dv-thd"><a class="dv-tid" href="#t5">5</a><span class="dv-tname">Binder tabs (<a class="dv-oid" href="#4c">4c</a>) applied — static masthead, tabbed pages. Click the tabs.</span></div>
+<div class="dv-opts">
+
+<div class="dv-opt" id="5a">
+<div class="dv-olabel"><a class="dv-oid" href="#5a">5a</a><span><b>The shell.</b> Masthead never changes — album name, the three counts, savings card. Under it the tab row, and under that the page. Only the page swaps, so the app stops re-titling itself on every navigation; the pulled-forward tab is the only thing that says where you are. Each page gets one typewriter caption line instead of a heading, because the tab already named it.</span></div>
+<div class="dv-card" style="width:1180px;background:#c8b9a2;font-family:'DM Sans',sans-serif;background-image:repeating-linear-gradient(120deg,rgba(0,0,0,.018) 0 2px,transparent 2px 7px);padding:26px 30px 34px">
+  <div style="display:flex;align-items:flex-start;gap:24px;margin-bottom:20px">
+    <div style="flex:1;min-width:0">
+      <div style="font:900 33px/1 'Archivo',sans-serif;text-transform:uppercase;letter-spacing:-.01em;color:#2f2618">My Sticker Album</div>
+      <div style="font:400 12.5px/1.5 'Courier Prime',monospace;color:rgba(47,38,24,.62);margin-top:9px">196 owned · 196 pasted · 1 of 3 albums finished</div>
+    </div>
+    <div style="width:212px;flex:none;background:#f7f3ea;padding:12px 14px 13px;transform:rotate(1.4deg);box-shadow:0 3px 8px rgba(0,0,0,.2);position:relative">
+      <div style="position:absolute;top:-9px;left:64px;width:78px;height:20px;background:rgba(240,230,205,.85);border-left:1px dashed rgba(0,0,0,.12);border-right:1px dashed rgba(0,0,0,.12);transform:rotate(-3deg)"></div>
+      <div style="font:700 8.5px/1 'Archivo',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:rgba(47,38,24,.5)">Deposited so far</div>
+      <div style="font:400 26px/1 'Courier Prime',monospace;color:#2f2618;margin-top:8px">R$ 6.525,00</div>
+      <div style="height:1px;background:repeating-linear-gradient(90deg,rgba(47,38,24,.25) 0 4px,transparent 4px 8px);margin-top:10px"></div>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:5px;padding-left:24px;align-items:flex-end">
+    <sc-for list="{{ tabs5 }}" as="n" hint-placeholder-count="6">
+      <div onClick="{{ n.pick }}" style="cursor:pointer;font:700 9px/1 'Archivo',sans-serif;letter-spacing:.1em;text-transform:uppercase;clip-path:polygon(9px 0,calc(100% - 9px) 0,100% 100%,0 100%);transition:transform 280ms cubic-bezier(.34,1.4,.64,1),background 220ms ease,padding 260ms ease;{{ n.dyn }}" style-hover="filter:brightness(1.05)">{{ n.name }}</div>
+    </sc-for>
+  </div>
+
+  <div style="position:relative;background:#fdfaf3;padding:20px 24px 28px;box-shadow:0 12px 26px -10px rgba(0,0,0,.42);min-height:420px">
+    <div style="position:absolute;bottom:-10px;right:56px;width:82px;height:22px;background:rgba(240,230,205,.82);border-left:1px dashed rgba(0,0,0,.12);border-right:1px dashed rgba(0,0,0,.12);transform:rotate(2deg);box-shadow:0 1px 3px rgba(0,0,0,.14)"></div>
+    <div style="font:400 11px/1 'Courier Prime',monospace;color:rgba(47,38,24,.5);margin-bottom:18px">{{ pageNote }}</div>
+
+    <sc-if value="{{ p5home }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;gap:22px;align-items:flex-start">
+        <div style="width:210px;flex:none">
+          <div style="background:#fff;padding:8px 8px 11px;box-shadow:0 5px 14px -4px rgba(0,0,0,.3);transform:rotate(-1deg)">
+            <div style="height:268px;background:repeating-linear-gradient(135deg,rgba(47,38,24,.07) 0 6px,rgba(47,38,24,.025) 6px 12px),hsl(148 44% 62%);display:grid;place-items:center;font:400 9.5px 'Courier Prime',monospace;color:rgba(47,38,24,.6)">TIX_card.png</div>
+            <div style="display:flex;align-items:baseline;gap:7px;margin-top:9px;padding:0 3px">
+              <div style="font:700 14px/1 'Archivo',sans-serif;color:#2f2618">Tix</div>
+              <div style="font:400 10.5px/1 'Courier Prime',monospace;color:rgba(47,38,24,.55)">9/10 · Magic Academy</div>
+            </div>
+          </div>
+          <div style="display:inline-block;margin-top:14px;font:700 9.5px/1 'Archivo',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#2f2618;border-bottom:1.5px solid rgba(47,38,24,.4);padding-bottom:3px;cursor:pointer" style-hover="border-color:#2f2618">Change favourite</div>
+        </div>
+        <div style="flex:1;min-width:0;display:grid;grid-template-columns:repeat(5,1fr);gap:14px 11px">
+          <sc-for list="{{ gridB }}" as="s" hint-placeholder-count="10">
+            <div style="position:relative;aspect-ratio:3/4;display:flex;align-items:flex-end;justify-content:center">
+              <div style="{{ s.artStyle }}"></div>
+              <div style="{{ s.labelStyle }}">{{ s.name }}</div>
+              <div style="{{ s.dupStyle }}">{{ s.dup }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ p5cols }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <sc-for list="{{ cols }}" as="c" hint-placeholder-count="3">
+          <div style="display:flex;gap:18px;align-items:center;background:#f4efe6;padding:14px 16px;box-shadow:0 3px 9px -3px rgba(0,0,0,.28)">
+            <div style="width:120px;height:74px;flex:none;background:repeating-linear-gradient(135deg,rgba(47,38,24,.09) 0 6px,rgba(47,38,24,.03) 6px 12px),{{ c.tint }};display:grid;place-items:center;font:400 9px 'Courier Prime',monospace;color:rgba(47,38,24,.6)">cover 16:9</div>
+            <div style="flex:1;min-width:0">
+              <div style="font:700 17px/1 'Archivo',sans-serif;color:#2f2618">{{ c.name }}</div>
+              <div style="font:400 11px/1.4 'Courier Prime',monospace;color:rgba(47,38,24,.6);margin-top:7px">{{ c.desc }}</div>
+              <div style="display:flex;align-items:center;gap:12px;margin-top:12px">
+                <div style="flex:1;height:9px;background:rgba(47,38,24,.1)">
+                  <div style="width:{{ c.w }};height:100%;background:#2f2618"></div>
+                </div>
+                <div style="font:400 10.5px/1 'Courier Prime',monospace;color:rgba(47,38,24,.65);width:150px;flex:none">{{ c.pct }} pasted · {{ c.chars }} characters</div>
+              </div>
+            </div>
+            <div style="border:1.5px solid rgba(47,38,24,.45);color:#2f2618;font:700 9.5px/1 'Archivo',sans-serif;letter-spacing:.12em;text-transform:uppercase;padding:10px 14px;cursor:pointer;flex:none" style-hover="background:rgba(47,38,24,.08)">Open</div>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ p5shop }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;gap:22px;align-items:flex-start">
+        <sc-for list="{{ packs }}" as="p" hint-placeholder-count="3">
+          <div style="width:326px;flex:none;box-shadow:0 8px 18px -6px rgba(0,0,0,.34)">
+            <div style="height:16px;background:#f4efe6;border-bottom:2px dashed rgba(47,38,24,.28);display:flex;align-items:center;justify-content:center;gap:3px">
+              <div style="width:5px;height:5px;background:rgba(47,38,24,.3)"></div>
+              <div style="width:5px;height:5px;background:rgba(47,38,24,.3)"></div>
+              <div style="width:5px;height:5px;background:rgba(47,38,24,.3)"></div>
+            </div>
+            <div style="background:#f4efe6;padding:10px 10px 14px">
+              <div style="height:150px;background:repeating-linear-gradient(135deg,rgba(47,38,24,.08) 0 6px,rgba(47,38,24,.03) 6px 12px),{{ p.tint }};display:grid;place-items:center;font:400 10px 'Courier Prime',monospace;color:rgba(47,38,24,.62)">pack art 16:9</div>
+              <div style="padding:13px 5px 0">
+                <div style="font:700 15px/1.15 'Archivo',sans-serif;color:#2f2618">{{ p.name }}</div>
+                <div style="font:400 10.5px/1 'Courier Prime',monospace;color:rgba(47,38,24,.55);margin-top:7px">{{ p.meta }}</div>
+                <div style="display:flex;align-items:center;gap:10px;margin-top:15px">
+                  <div style="border:2px solid rgba(47,38,24,.55);color:#2f2618;font:900 14px/1 'Archivo',sans-serif;padding:7px 9px;transform:rotate(-2deg)">{{ p.price }}</div>
+                  <div style="flex:1"></div>
+                  <div style="background:#2f2618;color:#f4efe6;font:700 9.5px/1 'Archivo',sans-serif;letter-spacing:.1em;text-transform:uppercase;padding:11px 13px;box-shadow:3px 3px 0 rgba(47,38,24,.22);cursor:pointer" style-hover="background:#4a3c26">Deposit &amp; open</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ p5vice }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;gap:11px;max-width:640px">
+        <sc-for list="{{ vices }}" as="v" hint-placeholder-count="3">
+          <div style="display:flex;align-items:center;gap:16px;background:#f4efe6;padding:14px 16px;box-shadow:0 2px 6px -2px rgba(0,0,0,.24)">
+            <div style="flex:1;min-width:0">
+              <div style="font:700 14px/1 'Archivo',sans-serif;color:#2f2618">{{ v.name }}</div>
+              <div style="font:400 10.5px/1 'Courier Prime',monospace;color:rgba(47,38,24,.55);margin-top:6px">{{ v.note }}</div>
+            </div>
+            <div style="font:400 15px/1 'Courier Prime',monospace;color:#2f2618">{{ v.price }}</div>
+            <div style="border:1.5px solid rgba(47,38,24,.45);color:#2f2618;font:700 9px/1 'Archivo',sans-serif;letter-spacing:.12em;text-transform:uppercase;padding:9px 12px;cursor:pointer" style-hover="background:rgba(47,38,24,.08)">Withdraw</div>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ p5creator }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;gap:20px;align-items:flex-start">
+        <div style="width:214px;flex:none;display:flex;flex-direction:column;gap:8px">
+          <sc-for list="{{ tabsA }}" as="t" hint-placeholder-count="5">
+            <div style="background:#f4efe6;padding:7px;display:flex;align-items:center;gap:10px;box-shadow:0 2px 5px rgba(0,0,0,.18);cursor:pointer" style-hover="background:#fbf7ef">
+              <div style="width:52px;height:30px;flex:none;background:{{ t.tab }}"></div>
+              <div style="flex:1;min-width:0">
+                <div style="font:700 12px/1 'Archivo',sans-serif;color:#2f2618">{{ t.name }}</div>
+                <div style="font:400 10px/1 'Courier Prime',monospace;color:rgba(47,38,24,.55);margin-top:4px">{{ t.count }} slots</div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="flex:1;min-width:0;background:#f4efe6;padding:18px 20px 22px;box-shadow:0 6px 16px -6px rgba(0,0,0,.3)">
+          <div style="display:flex;align-items:center;gap:14px">
+            <div style="font:700 8.5px/1 'Archivo',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:rgba(47,38,24,.5)">Character name</div>
+            <div style="border:2px solid #a8563a;color:#a8563a;font:900 9px/1 'Archivo',sans-serif;letter-spacing:.16em;padding:5px 8px;transform:rotate(-3deg)">LIVE EDIT</div>
+          </div>
+          <div style="font:400 15px/1.4 'Courier Prime',monospace;color:#2f2618;border-bottom:1.5px solid rgba(47,38,24,.35);padding:4px 0;max-width:320px">Karmen</div>
+          <div style="font:700 9px/1 'Archivo',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:rgba(47,38,24,.55);margin:22px 0 12px">Sticker slots — tap to name and add art</div>
+          <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:12px 10px">
+            <sc-for list="{{ gridB }}" as="s" hint-placeholder-count="12">
+              <div style="position:relative;aspect-ratio:3/4;background:#fff;display:flex;align-items:flex-end;justify-content:center;box-shadow:0 1px 3px rgba(47,38,24,.2)">
+                <div style="{{ s.artStyle }}"></div>
+                <div style="{{ s.labelStyle }}">{{ s.name }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ p5settings }}" hint-placeholder-val="{{ false }}">
+      <div style="max-width:520px;display:flex;flex-direction:column;gap:0">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px dashed rgba(47,38,24,.25)">
+          <div style="font:400 13px/1 'Courier Prime',monospace;color:#2f2618">Sound effects</div>
+          <div style="width:44px;height:22px;background:#2f2618;position:relative"><div style="position:absolute;top:3px;right:3px;width:16px;height:16px;background:#f4efe6"></div></div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px dashed rgba(47,38,24,.25)">
+          <div style="font:400 13px/1 'Courier Prime',monospace;color:#2f2618">Confirm before every deposit</div>
+          <div style="width:44px;height:22px;background:rgba(47,38,24,.18);position:relative"><div style="position:absolute;top:3px;left:3px;width:16px;height:16px;background:#f4efe6"></div></div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px dashed rgba(47,38,24,.25)">
+          <div style="font:400 13px/1 'Courier Prime',monospace;color:#2f2618">Export collection data</div>
+          <div style="border:1.5px solid rgba(47,38,24,.45);color:#2f2618;font:700 9px/1 'Archivo',sans-serif;letter-spacing:.12em;text-transform:uppercase;padding:9px 12px;cursor:pointer" style-hover="background:rgba(47,38,24,.08)">Export</div>
+        </div>
+      </div>
+    </sc-if>
+  </div>
+</div>
+</div>
+
+</div>
+</section>
+
+<section class="dv-turn" id="t4">
+<div class="dv-thd"><a class="dv-tid" href="#t4">4</a><span class="dv-tname">Killing the dark sidebar — three ways to make navigation part of the object. All three are clickable.</span></div>
+<div class="dv-opts">
+
+<div class="dv-opt" id="4a">
+<div class="dv-olabel"><a class="dv-oid" href="#4a">4a</a><span><b>Divider tabs.</b> My pick. The box goes away entirely — the desk shows through. Nav is a stack of kraft divider tabs, and the active one is <i>pulled out</i>: it slides 24px right, turns board-white and lifts a shadow, so it reads as the divider you're currently parked on. Cheapest to build in Flet too — <code>AnimatedContainer</code> per tab, offset + bgcolor only.</span></div>
+<div class="dv-card" style="width:1180px;background:#c8b9a2;display:flex;font-family:'DM Sans',sans-serif;background-image:repeating-linear-gradient(120deg,rgba(0,0,0,.018) 0 2px,transparent 2px 7px)">
+  <div style="width:146px;flex:none;padding:26px 0 30px;display:flex;flex-direction:column;gap:7px">
+    <div style="margin:0 0 18px 18px;width:38px;height:38px;border-radius:50%;background:#f4efe6;color:#6b5842;display:grid;place-items:center;font:900 13px 'Archivo',sans-serif;box-shadow:2px 3px 7px rgba(0,0,0,.2)">SA</div>
+    <sc-for list="{{ tabsNavA }}" as="n" hint-placeholder-count="6">
+      <div onClick="{{ n.pick }}" style="width:126px;padding:10px 12px 10px 15px;display:flex;align-items:center;gap:9px;cursor:pointer;clip-path:polygon(0 0,100% 0,calc(100% - 11px) 50%,100% 100%,0 100%);transition:transform 300ms cubic-bezier(.34,1.42,.64,1),background 220ms ease,box-shadow 220ms ease;{{ n.dyn }}" style-hover="filter:brightness(1.06)">
+        <div style="width:13px;height:13px;border:1.6px solid currentColor;flex:none"></div>
+        <div style="font:700 8.5px/1.2 'Archivo',sans-serif;letter-spacing:.09em;text-transform:uppercase">{{ n.name }}</div>
+      </div>
+    </sc-for>
+  </div>
+  <div style="flex:1;min-width:0;padding:26px 30px 30px 14px;display:flex;flex-direction:column;gap:20px">
+    <div style="display:flex;align-items:flex-start;gap:24px">
+      <div style="flex:1;min-width:0">
+        <div style="font:900 32px/1 'Archivo',sans-serif;text-transform:uppercase;color:#2f2618">My Sticker Album</div>
+        <div style="font:400 12px/1.5 'Courier Prime',monospace;color:rgba(47,38,24,.62);margin-top:9px">196 owned · 196 pasted · 1 of 3 albums finished</div>
+      </div>
+      <div style="width:206px;flex:none;background:#f7f3ea;padding:12px 14px 13px;transform:rotate(1.4deg);box-shadow:0 3px 8px rgba(0,0,0,.2)">
+        <div style="font:700 8px/1 'Archivo',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:rgba(47,38,24,.5)">Deposited so far</div>
+        <div style="font:400 24px/1 'Courier Prime',monospace;color:#2f2618;margin-top:8px">R$ 6.525,00</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:20px;align-items:flex-start">
+      <div style="width:196px;flex:none;background:#fff;padding:8px 8px 11px;box-shadow:0 5px 14px -4px rgba(0,0,0,.35);transform:rotate(-1deg)">
+        <div style="height:250px;background:repeating-linear-gradient(135deg,rgba(47,38,24,.07) 0 6px,rgba(47,38,24,.025) 6px 12px),hsl(148 44% 62%);display:grid;place-items:center;font:400 9.5px 'Courier Prime',monospace;color:rgba(47,38,24,.6)">TIX_card.png</div>
+        <div style="display:flex;align-items:baseline;gap:7px;margin-top:9px;padding:0 3px">
+          <div style="font:700 13px/1 'Archivo',sans-serif;color:#2f2618">Tix</div>
+          <div style="font:400 10px/1 'Courier Prime',monospace;color:rgba(47,38,24,.55)">9/10 · Magic Academy</div>
+        </div>
+      </div>
+      <div style="flex:1;min-width:0;position:relative;background:#fff;padding:18px;box-shadow:0 10px 22px -8px rgba(0,0,0,.4)">
+        <div style="position:absolute;top:-11px;left:44px;width:88px;height:23px;background:rgba(240,230,205,.82);border-left:1px dashed rgba(0,0,0,.12);border-right:1px dashed rgba(0,0,0,.12);transform:rotate(-2.5deg);box-shadow:0 1px 3px rgba(0,0,0,.14)"></div>
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px 10px">
+          <sc-for list="{{ mini }}" as="s" hint-placeholder-count="5">
+            <div style="aspect-ratio:3/4;background:repeating-linear-gradient(135deg,rgba(47,38,24,.06) 0 6px,rgba(47,38,24,.02) 6px 12px),hsl(148 40% 66%);display:flex;align-items:flex-end;justify-content:center;padding:6px">
+              <div style="background:#f7f3ea;font:400 8px/1.3 'Courier Prime',monospace;color:#2f2618;padding:3px 5px;box-shadow:0 1px 3px rgba(0,0,0,.2)">{{ s }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="dv-opt" id="4b">
+<div class="dv-olabel"><a class="dv-oid" href="#4b">4b</a><span><b>Ribbon bookmarks.</b> Your idea, literally: cloth ribbons pinned to the top edge, notched ends, hanging over the page. The active one <i>drops</i> 50px lower and saturates to the ink-red. Most characterful, but vertical labels cost legibility and six ribbons eat 150px of vertical room.</span></div>
+<div class="dv-card" style="width:1180px;background:#c8b9a2;font-family:'DM Sans',sans-serif;background-image:repeating-linear-gradient(120deg,rgba(0,0,0,.018) 0 2px,transparent 2px 7px);padding:0 30px 30px;position:relative">
+  <div style="display:flex;align-items:flex-start;gap:26px;min-height:178px">
+    <div style="display:flex;gap:8px;flex:none;padding-top:0">
+      <sc-for list="{{ tabsNavB }}" as="n" hint-placeholder-count="6">
+        <div onClick="{{ n.pick }}" style="width:44px;display:flex;justify-content:center;padding:13px 0 26px;cursor:pointer;clip-path:polygon(0 0,100% 0,100% 100%,50% calc(100% - 15px),0 100%);box-shadow:2px 3px 9px -2px rgba(0,0,0,.34);transition:height 320ms cubic-bezier(.34,1.34,.64,1),background 240ms ease;{{ n.dyn }}" style-hover="filter:brightness(1.1)">
+          <div style="writing-mode:vertical-rl;font:700 8.5px/1 'Archivo',sans-serif;letter-spacing:.13em;text-transform:uppercase">{{ n.name }}</div>
+        </div>
+      </sc-for>
+    </div>
+    <div style="flex:1;min-width:0;padding-top:30px">
+      <div style="font:900 32px/1 'Archivo',sans-serif;text-transform:uppercase;color:#2f2618">My Sticker Album</div>
+      <div style="font:400 12px/1.5 'Courier Prime',monospace;color:rgba(47,38,24,.62);margin-top:9px">196 owned · 196 pasted · 1 of 3 albums finished</div>
+    </div>
+    <div style="width:206px;flex:none;background:#f7f3ea;padding:12px 14px 13px;transform:rotate(1.4deg);box-shadow:0 3px 8px rgba(0,0,0,.2);margin-top:30px">
+      <div style="font:700 8px/1 'Archivo',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:rgba(47,38,24,.5)">Deposited so far</div>
+      <div style="font:400 24px/1 'Courier Prime',monospace;color:#2f2618;margin-top:8px">R$ 6.525,00</div>
+    </div>
+  </div>
+  <div style="display:flex;gap:20px;align-items:flex-start;margin-top:6px">
+    <div style="width:196px;flex:none;background:#fff;padding:8px 8px 11px;box-shadow:0 5px 14px -4px rgba(0,0,0,.35);transform:rotate(-1deg)">
+      <div style="height:250px;background:repeating-linear-gradient(135deg,rgba(47,38,24,.07) 0 6px,rgba(47,38,24,.025) 6px 12px),hsl(148 44% 62%);display:grid;place-items:center;font:400 9.5px 'Courier Prime',monospace;color:rgba(47,38,24,.6)">TIX_card.png</div>
+      <div style="display:flex;align-items:baseline;gap:7px;margin-top:9px;padding:0 3px">
+        <div style="font:700 13px/1 'Archivo',sans-serif;color:#2f2618">Tix</div>
+        <div style="font:400 10px/1 'Courier Prime',monospace;color:rgba(47,38,24,.55)">9/10 · Magic Academy</div>
+      </div>
+    </div>
+    <div style="flex:1;min-width:0;position:relative;background:#fff;padding:18px;box-shadow:0 10px 22px -8px rgba(0,0,0,.4)">
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px 10px">
+        <sc-for list="{{ mini }}" as="s" hint-placeholder-count="5">
+          <div style="aspect-ratio:3/4;background:repeating-linear-gradient(135deg,rgba(47,38,24,.06) 0 6px,rgba(47,38,24,.02) 6px 12px),hsl(148 40% 66%);display:flex;align-items:flex-end;justify-content:center;padding:6px">
+            <div style="background:#f7f3ea;font:400 8px/1.3 'Courier Prime',monospace;color:#2f2618;padding:3px 5px;box-shadow:0 1px 3px rgba(0,0,0,.2)">{{ s }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="dv-opt" id="4c">
+<div class="dv-olabel"><a class="dv-oid" href="#4c">4c</a><span><b>Binder tabs.</b> No rail at all — the whole screen becomes one album, and nav is the row of tabs along its top edge. The active tab is the same white as the page and the seam between them disappears, so switching sections literally flips to another page. Strongest concept read; costs you the vertical rail pattern desktop users expect.</span></div>
+<div class="dv-card" style="width:1180px;background:#c8b9a2;font-family:'DM Sans',sans-serif;background-image:repeating-linear-gradient(120deg,rgba(0,0,0,.018) 0 2px,transparent 2px 7px);padding:24px 30px 32px">
+  <div style="display:flex;align-items:flex-start;gap:24px;margin-bottom:18px">
+    <div style="flex:1;min-width:0">
+      <div style="font:900 32px/1 'Archivo',sans-serif;text-transform:uppercase;color:#2f2618">My Sticker Album</div>
+      <div style="font:400 12px/1.5 'Courier Prime',monospace;color:rgba(47,38,24,.62);margin-top:9px">196 owned · 196 pasted · 1 of 3 albums finished</div>
+    </div>
+    <div style="width:206px;flex:none;background:#f7f3ea;padding:12px 14px 13px;transform:rotate(1.4deg);box-shadow:0 3px 8px rgba(0,0,0,.2)">
+      <div style="font:700 8px/1 'Archivo',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:rgba(47,38,24,.5)">Deposited so far</div>
+      <div style="font:400 24px/1 'Courier Prime',monospace;color:#2f2618;margin-top:8px">R$ 6.525,00</div>
+    </div>
+  </div>
+  <div style="display:flex;gap:5px;padding-left:22px;align-items:flex-end">
+    <sc-for list="{{ tabsNavC }}" as="n" hint-placeholder-count="6">
+      <div onClick="{{ n.pick }}" style="cursor:pointer;font:700 8.5px/1 'Archivo',sans-serif;letter-spacing:.1em;text-transform:uppercase;clip-path:polygon(9px 0,calc(100% - 9px) 0,100% 100%,0 100%);transition:transform 280ms cubic-bezier(.34,1.4,.64,1),background 220ms ease,padding 260ms ease;{{ n.dyn }}" style-hover="filter:brightness(1.06)">{{ n.name }}</div>
+    </sc-for>
+  </div>
+  <div style="position:relative;background:#fdfaf3;padding:24px 24px 28px;box-shadow:0 12px 26px -10px rgba(0,0,0,.42);display:flex;gap:20px;align-items:flex-start">
+    <div style="position:absolute;bottom:-10px;right:56px;width:82px;height:22px;background:rgba(240,230,205,.82);border-left:1px dashed rgba(0,0,0,.12);border-right:1px dashed rgba(0,0,0,.12);transform:rotate(2deg);box-shadow:0 1px 3px rgba(0,0,0,.14)"></div>
+    <div style="width:196px;flex:none;background:#fff;padding:8px 8px 11px;box-shadow:0 4px 12px -4px rgba(0,0,0,.3);transform:rotate(-1deg)">
+      <div style="height:250px;background:repeating-linear-gradient(135deg,rgba(47,38,24,.07) 0 6px,rgba(47,38,24,.025) 6px 12px),hsl(148 44% 62%);display:grid;place-items:center;font:400 9.5px 'Courier Prime',monospace;color:rgba(47,38,24,.6)">TIX_card.png</div>
+      <div style="display:flex;align-items:baseline;gap:7px;margin-top:9px;padding:0 3px">
+        <div style="font:700 13px/1 'Archivo',sans-serif;color:#2f2618">Tix</div>
+        <div style="font:400 10px/1 'Courier Prime',monospace;color:rgba(47,38,24,.55)">9/10 · Magic Academy</div>
+      </div>
+    </div>
+    <div style="flex:1;min-width:0;display:grid;grid-template-columns:repeat(5,1fr);gap:12px 10px">
+      <sc-for list="{{ mini }}" as="s" hint-placeholder-count="5">
+        <div style="aspect-ratio:3/4;background:repeating-linear-gradient(135deg,rgba(47,38,24,.06) 0 6px,rgba(47,38,24,.02) 6px 12px),hsl(148 40% 66%);display:flex;align-items:flex-end;justify-content:center;padding:6px">
+          <div style="background:#f7f3ea;font:400 8px/1.3 'Courier Prime',monospace;color:#2f2618;padding:3px 5px;box-shadow:0 1px 3px rgba(0,0,0,.2)">{{ s }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</div>
+</div>
+
+</div>
+</section>
+
 <section class="dv-turn" id="t3">
 <div class="dv-thd"><a class="dv-tid" href="#t3">3</a><span class="dv-tname">Pack opening — the reveal sequence, playable, with the Flet mapping</span></div>
 <div class="dv-opts">
@@ -607,6 +993,8 @@ const BEATS = {
   filed: ["5 · File", "all five fly to the album corner: offset + scale→0.2 + opacity→0 · 380ms, 60ms stagger · EASE_IN"]
 };
 
+const NAV = ["Home", "Collections", "Shop", "Vice Shop", "Creator", "Settings"];
+
 class Component extends DCLogic {
   blob(i, opacity) {
     const [h, c] = HUES[i % HUES.length];
@@ -761,10 +1149,97 @@ class Component extends DCLogic {
     }, kids);
   }
 
+  navPick = (k, i) => this.setState({ ["nav_" + k]: i });
+
+  _navA() {
+    const a = this.state.nav_a ?? 0;
+    return NAV.map((name, i) => ({
+      name, pick: () => this.navPick("a", i),
+      dyn: i === a
+        ? "transform:translateX(24px);background:#fdfaf3;color:#2f2618;box-shadow:6px 5px 14px -3px rgba(0,0,0,.34)"
+        : "transform:translateX(0);background:#bfae94;color:rgba(47,38,24,.7);box-shadow:2px 2px 6px rgba(0,0,0,.16)"
+    }));
+  }
+  _navB() {
+    const a = this.state.nav_b ?? 0;
+    return NAV.map((name, i) => ({
+      name, pick: () => this.navPick("b", i),
+      dyn: i === a
+        ? "height:164px;background:linear-gradient(96deg,#b8563f,#a04833);color:#fff6e8"
+        : "height:114px;background:linear-gradient(96deg,#a8967f,#94826c);color:rgba(255,246,232,.8)"
+    }));
+  }
+  _navC() {
+    const a = this.state.nav_c ?? 0;
+    return NAV.map((name, i) => ({
+      name, pick: () => this.navPick("c", i),
+      dyn: i === a
+        ? "background:#fdfaf3;color:#2f2618;transform:translateY(3px);padding:11px 18px 17px;box-shadow:0 -4px 10px -3px rgba(0,0,0,.2)"
+        : "background:#c4b298;color:rgba(47,38,24,.64);transform:translateY(11px);padding:9px 18px 12px;box-shadow:0 -2px 6px -3px rgba(0,0,0,.18)"
+    }));
+  }
+
+  _variant(k) {
+    const on = !!this.state["foil_" + k];
+    const mk = (label, isFoil) => ({
+      label,
+      pick: () => this.setState({ ["foil_" + k]: isFoil }),
+      dyn: (isFoil === on)
+        ? (isFoil
+            ? "background:linear-gradient(100deg,#f6e7b4,#e6ca7c);border:1px solid #b8973f;color:#2f2618;box-shadow:inset 0 0 0 1px rgba(255,255,255,.5),0 2px 5px rgba(0,0,0,.22);transform:translateY(0)"
+            : "background:#fff;border:1px solid rgba(47,38,24,.42);color:#2f2618;box-shadow:0 2px 5px rgba(0,0,0,.2);transform:translateY(0)")
+        : "background:rgba(47,38,24,.07);border:1px solid rgba(47,38,24,.18);color:rgba(47,38,24,.45);box-shadow:none;transform:translateY(2px)"
+    });
+    return [mk("Normal", false), mk("Foil", true)];
+  }
+
+  _nav5() {
+    const a = this.state.nav_5 ?? 0;
+    return NAV.map((name, i) => ({
+      name, pick: () => this.navPick("5", i),
+      dyn: i === a
+        ? "background:#fdfaf3;color:#2f2618;transform:translateY(3px);padding:11px 20px 17px;box-shadow:0 -4px 10px -3px rgba(0,0,0,.2)"
+        : "background:#c4b298;color:rgba(47,38,24,.64);transform:translateY(11px);padding:9px 20px 12px;box-shadow:0 -2px 6px -3px rgba(0,0,0,.18)"
+    }));
+  }
+
   renderVals() {
     const beat = BEATS[this.state.phase] || BEATS.idle;
     const tabTone = ["hsl(210 62% 66%)","hsl(24 72% 62%)","hsl(348 58% 64%)","hsl(148 48% 60%)","hsl(268 52% 68%)"];
     return {
+      varA: this._variant("a"),
+      varB: this._variant("b"),
+      artA: this.state.foil_a
+        ? "position:absolute;inset:0;background:linear-gradient(115deg,rgba(255,255,255,.42) 0 18%,rgba(246,231,180,.5) 30%,rgba(255,255,255,.18) 44%,rgba(230,202,124,.42) 60%,rgba(255,255,255,.4) 78%),repeating-linear-gradient(135deg,rgba(47,38,24,.06) 0 7px,rgba(47,38,24,.02) 7px 14px),hsl(148 42% 64%);transition:background 300ms ease"
+        : "position:absolute;inset:0;background:repeating-linear-gradient(135deg,rgba(47,38,24,.06) 0 7px,rgba(47,38,24,.02) 7px 14px),hsl(148 42% 64%);transition:background 300ms ease",
+      artB: this.state.foil_b
+        ? "position:absolute;inset:0;background:linear-gradient(115deg,rgba(255,255,255,.42) 0 18%,rgba(246,231,180,.5) 30%,rgba(255,255,255,.18) 44%,rgba(230,202,124,.42) 60%,rgba(255,255,255,.4) 78%),repeating-linear-gradient(135deg,rgba(47,38,24,.06) 0 7px,rgba(47,38,24,.02) 7px 14px),hsl(148 42% 64%);transition:background 300ms ease"
+        : "position:absolute;inset:0;background:repeating-linear-gradient(135deg,rgba(47,38,24,.06) 0 7px,rgba(47,38,24,.02) 7px 14px),hsl(148 42% 64%);transition:background 300ms ease",
+      tabs5: this._nav5(),
+      is5: (this.state.nav_5 ?? 0),
+      p5home: (this.state.nav_5 ?? 0) === 0,
+      p5cols: (this.state.nav_5 ?? 0) === 1,
+      p5shop: (this.state.nav_5 ?? 0) === 2,
+      p5vice: (this.state.nav_5 ?? 0) === 3,
+      p5creator: (this.state.nav_5 ?? 0) === 4,
+      p5settings: (this.state.nav_5 ?? 0) === 5,
+      pageNote: [
+        "favourite character · everything you own of them",
+        "three worlds · pick one to fill",
+        "every pack you open records a real deposit",
+        "spend the savings you earned — with a receipt",
+        "live edit · changes publish immediately",
+        "account, data and sound"
+      ][this.state.nav_5 ?? 0],
+      vices: [
+        { name: "One beer", price: "R$ 12,00", note: "small tax on the savings" },
+        { name: "Takeaway dinner", price: "R$ 65,00", note: "logged against this month" },
+        { name: "Night out", price: "R$ 180,00", note: "needs a 3-day cooldown" }
+      ],
+      tabsNavA: this._navA(),
+      tabsNavB: this._navB(),
+      tabsNavC: this._navC(),
+      mini: ["The Scenic Route", "Botanical Bedlam", "Vine Tangle", "Jam-Brain Daydream", "The Prune Theory"],
       navA: ["Home","Album","Shop","Vices","Creator","Settings"],
       tabsA: ["Carol","Bridget","Ashley","Tix","Elian"].map((name, i) => ({ name, tab: tabTone[i], count: ["4/10","5/10","4/10","8/10","2/10"][i] })),
       beats: [

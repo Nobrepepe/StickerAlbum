@@ -2,7 +2,7 @@ import flet as ft
 
 from components.paper import (
     PAPER_SHADOW, destructive_button, ink_button, outline_button, paper_label,
-    tool_button,
+    page_caption, tool_button,
 )
 from components.theme import (
     BODY_FONT, CARD_BG, CARD_BORDER, DISPLAY_FONT, INK, INK_SOFT, META_FONT,
@@ -113,6 +113,7 @@ def build_vice_shop(page: ft.Page, ctx, nav) -> ft.Control:
                 return
             page.close(dialog)
             show_info(page, f"{offering.name} claimed. Enjoy it guilt-free.")
+            nav.refresh_masthead()
             nav.go_vice_shop()
 
         dialog.actions = [
@@ -191,19 +192,10 @@ def build_vice_shop(page: ft.Page, ctx, nav) -> ft.Control:
 
     return ft.Column(
         [
+            page_caption("spend the savings you earned — with a receipt"),
             ft.Row(
                 [
-                    ft.Column(
-                        [
-                            ft.Text("VICE SHOP", size=30, font_family=DISPLAY_FONT,
-                                    weight=ft.FontWeight.W_900, color=INK),
-                            ft.Text(
-                                "Turn chosen spare stickers into permission to indulge.",
-                                size=13, font_family=META_FONT, color=INK_SOFT,
-                            ),
-                        ],
-                        expand=True, spacing=3,
-                    ),
+                    ft.Container(expand=True),
                     ft.Container(
                         content=paper_label(
                             f"{ctx.vice.points} VICE POINTS", fill="#f6ddd4",

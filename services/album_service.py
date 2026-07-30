@@ -44,6 +44,16 @@ class AlbumService:
         total = self._state.total_owned(sticker_id)
         return max(0, total - 1) if self._state.get_placement(sticker_id) else total
 
+    def has_foil_spare(self, sticker_id: str) -> bool:
+        """Whether an unapplied copy in the spare pile is foil.
+
+        Inventory is not consumed when a sticker is placed, so the foil copy
+        on the board must be subtracted from the owned foil quantity.
+        """
+        foil_owned = self._state.get_quantity(sticker_id, "foil")
+        foil_on_board = self._state.get_placement(sticker_id) == "foil"
+        return foil_owned - (1 if foil_on_board else 0) > 0
+
     # ---- applying --------------------------------------------------------
 
     def apply(self, sticker: Sticker, style: str) -> bool:

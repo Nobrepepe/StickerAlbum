@@ -88,5 +88,80 @@
         }
       }
     ]
+  },
+  "MRC_rares": {
+    "collection_id": "MRC",
+    "name": "Mercenaries Rares Pack",
+    "description": "3 random Eden Mercenaries rare stickers: 3 guaranteed rare or better.",
+    "price": 5000,
+    "foil_rate": 0.1,
+    "spicy_rate": 0.3,
+    "image": "packs/MRC_rares.png",
+    "distribution": [
+      {
+        "quantity": 3,
+        "pools": [
+          {
+            "pool": "MRC",
+            "weight": 1.0
+          }
+        ],
+        "rarity_weights": {
+          "rare": 0.7,
+          "epic": 0.25,
+          "legendary": 0.05
+        }
+      }
+    ]
+  },
+  "MGA_rares": {
+    "collection_id": "MGA",
+    "name": "Magic Academy Rares Pack",
+    "description": "3 random Eden Magic Academy rare stickers: 3 guaranteed rare or better.",
+    "price": 5000,
+    "foil_rate": 0.1,
+    "spicy_rate": 0.3,
+    "image": "packs/MGA_rares.png",
+    "distribution": [
+      {
+        "quantity": 3,
+        "pools": [
+          {
+            "pool": "MGA",
+            "weight": 1.0
+          }
+        ],
+        "rarity_weights": {
+          "rare": 0.7,
+          "epic": 0.25,
+          "legendary": 0.05
+        }
+      }
+    ]
+  },
+  "HDV_rares": {
+    "collection_id": "HDV",
+    "name": "Hidden Village Rares Pack",
+    "description": "3 random Eden Hidden Village rare stickers: 3 guaranteed rare or better.",
+    "price": 5000,
+    "foil_rate": 0.1,
+    "spicy_rate": 0.3,
+    "image": "packs/HDV_rares.png",
+    "distribution": [
+      {
+        "quantity": 3,
+        "pools": [
+          {
+            "pool": "HDV",
+            "weight": 1.0
+          }
+        ],
+        "rarity_weights": {
+          "rare": 0.7,
+          "epic": 0.25,
+          "legendary": 0.05
+        }
+      }
+    ]
   }
 }

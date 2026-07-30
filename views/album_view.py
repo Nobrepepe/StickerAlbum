@@ -151,7 +151,8 @@ def build_album(page: ft.Page, ctx, nav, collection_id: str) -> ft.Control:
     def on_slot_tap(sticker):
         character = ctx.characters.get(sticker.character_id)
         open_sticker_dialog(
-            page, ctx.album, sticker, character, on_change=on_applied, vice=ctx.vice
+            page, ctx.album, sticker, character, collection.name,
+            on_change=on_applied, vice=ctx.vice,
         )
 
     def make_slot(s, w: float, h: float) -> ft.Control:
@@ -284,6 +285,7 @@ def build_album(page: ft.Page, ctx, nav, collection_id: str) -> ft.Control:
         state["stamp"] = sticker.id
         page.run_task(play_stamp_then, page, sticker.sound)
         refresh_content()
+        nav.refresh_masthead()
 
     async def _slide_to(target: int | None):
         if state["sliding"]:

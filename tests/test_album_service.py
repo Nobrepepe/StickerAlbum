@@ -69,6 +69,23 @@ def test_applying_does_not_reduce_inventory(repos, state_repo, album_service):
     assert album_service.duplicate_count("TST_001") == 2
 
 
+def test_foil_spare_excludes_the_foil_copy_on_the_board(
+    repos, state_repo, album_service
+):
+    sticker = _sticker(repos, "TST_001")
+    state_repo.add_copy(sticker.id, "normal")
+    state_repo.add_copy(sticker.id, "foil")
+
+    album_service.apply(sticker, "foil")
+    assert album_service.has_foil_spare(sticker.id) is False
+
+    state_repo.add_copy(sticker.id, "foil")
+    assert album_service.has_foil_spare(sticker.id) is True
+
+    album_service.apply(sticker, "normal")
+    assert album_service.has_foil_spare(sticker.id) is True
+
+
 def test_slot_states(repos, state_repo, album_service):
     assert album_service.slot_state("TST_001") == MISSING
     state_repo.add_copy("TST_001", "normal")
